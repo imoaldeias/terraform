@@ -1,0 +1,60 @@
+/* ESTILOS TERRAPRIMUS - VINTAGE & MODERN MIX */
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Instrument Sans', sans-serif; /* Atualizado */
+    background-color: #FBFBF9; 
+    color: #3D4532; /* Garante que o texto usa o tom de verde escuro da marca */
+    overflow-x: hidden;
+    line-height: 1.6; /* Melhora a legibilidade */
+}
+
+/* Toque Vintage Extra: Kerning (espaçamento entre letras) */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.02em; /* Títulos mais elegantes */
+}
+
+.tracking-widest {
+    letter-spacing: 0.2em !important; /* Para aqueles labels pequenos em maiúsculas */
+}
+
+/* Transição de Fade Suave entre Páginas */
+#app {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f4f7f5; }
+::-webkit-scrollbar-thumb { background: #3D4532; border-radius: 10px; }
+
+/* Efeito de Zoom em Imagens (Recuperado do original) */
+.img-hover-zoom { overflow: hidden; }
+.img-hover-zoom img { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.img-hover-zoom:hover img { transform: scale(1.1); }
+
+/* Estilização de Inputs e Selects */
+input, select, textarea {
+    transition: all 0.4s ease;
+    background-color: transparent !important;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: #3D4532 !important;
+    outline: none;
+}
+
+/* Ajuste na Barra de Navegação ao fazer Scroll (Recuperado) */
+#navbar.scrolled {
+    background-color: rgba(212, 217, 193, 0.98); /* oliveLight com opacidade */
+    height: 5rem !important;
+    box-shadow: 0 4px 20px -10px rgba(0,0,0,0.1);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
