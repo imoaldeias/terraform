@@ -31,16 +31,28 @@ function toNumber(value) {
 /**
  * Normaliza cada propriedade recebida do Google Sheets.
  */
+
+function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function normalizeProperty(p) {
     return {
         id: toNumber(p.id),
 
         title: (p.title || '').trim(),
         location: (p.location || '').trim(),
-        tipologia: (p.tipologia || '').trim().toLowerCase(),
+        tipologia: capitalizeFirst((p.tipologia || '').trim()),
 
         price: (p.price || '').trim(),
-        priceValue: toNumber(p.priceValue),
+        priceValue: p.priceValue && p.priceValue.trim() !== ''
+            ? parseInt(
+                p.priceValue
+                    .replace(/\./g, '')
+                    .replace(/\s/g, '')
+                    .replace('€', '')
+            )
+        : null,
 
         areaConstruida: toNumber(p.areaConstruida),
         areaTerreno: toNumber(p.areaTerreno),

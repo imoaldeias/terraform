@@ -97,7 +97,7 @@ export function renderPropertyDetail(id) {
                                         Terreno
                                     </div>
                                     <div class="text-base font-light leading-relaxed">
-                                        ${(prop.areaTerreno / 10000).toLocaleString('pt-PT')} ha
+                                        ${prop.areaTerreno} ha
                                     </div>
                                 </div>
 

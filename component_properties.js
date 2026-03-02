@@ -55,7 +55,7 @@ export function renderPropertyCards(properties) {
 
     <!-- LINHA 3 -->
     <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-500">
-        <span>${p.areaTerreno} m²</span>
+        <span>${p.areaTerreno} ha</span>
         <span>${p.quartos} quartos</span>
     </div>
 
@@ -82,6 +82,18 @@ export function renderProperties(filteredList = null) {
         <section class="pt-12 pb-24 px-6 sm:px-8 max-w-7xl mx-auto">
 
             <!-- FILTROS -->
+
+            <div class="mb-8 flex justify-end">
+    <select 
+        id="sort-select"
+        class="border-b border-gray-300 bg-transparent py-2 px-2 text-sm font-light"
+    >
+        <option value="default">Ordenar por</option>
+        <option value="price-asc">Preço: Crescente</option>
+        <option value="price-desc">Preço: Decrescente</option>
+    </select>
+</div>
+
             <div id="filters-bar"
      class="mb-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 transition-all duration-300">
 
@@ -90,27 +102,31 @@ export function renderProperties(filteredList = null) {
 
                 ${renderSelect('filter-price', 'Preço',
                     [
-                        { value: '500000', label: 'Até 500k' },
-                        { value: '1000000', label: 'Até 1M' },
-                        { value: '2500000', label: 'Até 2.5M' },
-                        { value: 'max', label: '2.5M+' }
+                        { value: '500000', label: 'Até 500 000 €' },
+                        { value: '1000000', label: 'Até 1 000 000 €' },
+                        { value: '2500000', label: 'Até 2 500 000 €' },
+                        { value: '5000000', label: 'Até 5 000 000 €' },
+                        { value: '5000000+', label: 'Mais de 5 000 000 €' }
                     ])}
 
                 ${renderSelect('filter-type', 'Tipologia',
                     [...new Set(appData.properties.map(p => p.tipologia))])}
 
-                ${renderSelect('filter-land', 'Área Terreno',
+                ${renderSelect('filter-land', 'Área Terreno (ha)',
                     [
-                        { value: '10000', label: 'Até 10k m²' },
-                        { value: '50000', label: 'Até 50k m²' },
-                        { value: 'max', label: '50k+' }
+                        { value: '1', label: 'Até 1 ha' },
+                        { value: '10', label: 'Até 10 ha' },
+                        { value: '50', label: 'Até 50 ha' },
+                        { value: '100', label: 'Até 100 ha' },
+                        { value: '500', label: 'Até 500 ha' },
+                        { value: 'max', label: 'Mais de 500 ha' }
                     ])}
 
                 ${renderSelect('filter-build', 'Área Construída',
                     [
-                        { value: '300', label: 'Até 300 m²' },
-                        { value: '600', label: 'Até 600 m²' },
-                        { value: 'max', label: '600+' }
+                        { value: '300', label: 'Até 200 m²' },
+                        { value: '600', label: 'Até 500 m²' },
+                        { value: 'max', label: 'Mais de 500' }
                     ])}
 
                 ${renderSelect('filter-rooms', 'Quartos',

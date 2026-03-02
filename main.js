@@ -59,6 +59,39 @@ export const FavManager = {
 
 
 /* =====================================================
+   SORTING
+===================================================== */
+
+function applySorting(properties) {
+
+    const sortValue = document.getElementById('sort-select')?.value;
+
+    if (!sortValue || sortValue === 'default') return properties;
+
+    const sorted = [...properties];
+
+    if (sortValue === 'price-asc') {
+        sorted.sort((a, b) => {
+            if (a.priceValue === null) return 1;
+            if (b.priceValue === null) return -1;
+            return a.priceValue - b.priceValue;
+        });
+    }
+
+    if (sortValue === 'price-desc') {
+        sorted.sort((a, b) => {
+            if (a.priceValue === null) return 1;
+            if (b.priceValue === null) return -1;
+            return b.priceValue - a.priceValue;
+        });
+    }
+
+    return sorted;
+}
+
+
+
+/* =====================================================
    FILTROS
 ===================================================== */
 
@@ -75,24 +108,31 @@ function applyFilters() {
 
         if (locationFilter !== 'all' && p.location !== locationFilter) return false;
 
+        /* PRICE FILTER */
         if (priceLimit !== 'all') {
-            if (priceLimit === 'max') {
-                if (p.priceValue <= 2500000) return false;
+
+            if (priceLimit.endsWith('+')) {
+            const min = parseInt(priceLimit.replace('+', ''));
+            if (p.priceValue <= min) return false;
             } else {
                 if (p.priceValue > parseInt(priceLimit)) return false;
             }
         }
 
+        /* TIPOLOGIA */
         if (type !== 'all' && p.tipologia !== type) return false;
 
+        /* TERRENO (hectares directly stored) */
         if (landAreaLimit !== 'all') {
+
             if (landAreaLimit === 'max') {
-                if (p.areaTerreno <= 50000) return false;
+                if (p.areaTerreno <= 500) return false;
             } else {
                 if (p.areaTerreno > parseInt(landAreaLimit)) return false;
             }
         }
 
+        /* CONSTRUÇÃO */
         if (buildAreaLimit !== 'all') {
             if (buildAreaLimit === 'max') {
                 if (p.areaConstruida <= 600) return false;
@@ -101,22 +141,27 @@ function applyFilters() {
             }
         }
 
+        /* QUARTOS */
         if (roomsLimit !== 'all' && p.quartos < parseInt(roomsLimit)) return false;
 
         return true;
     });
 
+    const finalList = applySorting(filtered);
+
     const listContainer = document.getElementById('properties-list');
 
     if (listContainer) {
         import('./component_properties.js').then(module => {
-            listContainer.innerHTML = module.renderPropertyCards(filtered);
+
+            listContainer.innerHTML = module.renderPropertyCards(finalList);
 
             if (window.lucide) lucide.createIcons();
             FavManager.updateUI();
         });
     }
 }
+
 
 
 function clearFilters() {
@@ -135,55 +180,16 @@ function clearFilters() {
         if (el) el.value = 'all';
     });
 
-    const listContainer = document.getElementById('properties-list');
+    const sort = document.getElementById('sort-select');
+    if (sort) sort.value = 'default';
 
-    if (listContainer) {
-        import('./component_properties.js').then(module => {
-            listContainer.innerHTML = module.renderPropertyCards(appData.properties);
-
-            if (window.lucide) lucide.createIcons();
-            FavManager.updateUI();
-        });
-    }
+    applyFilters();
 }
 
 
 
 /* =====================================================
-   FILTROS AUTO-HIDE AO SCROLL
-===================================================== */
-
-let lastScrollY = 0;
-
-function initFiltersAutoHide() {
-
-    window.addEventListener('scroll', () => {
-
-        const filters = document.getElementById('filters-bar');
-        if (!filters) return;
-
-        const currentScroll = window.scrollY;
-
-        if (currentScroll > 150 && currentScroll > lastScrollY) {
-            // Scroll para baixo
-            filters.style.opacity = '0';
-            filters.style.transform = 'translateY(-10px)';
-            filters.style.pointerEvents = 'none';
-        } else {
-            // Scroll para cima
-            filters.style.opacity = '1';
-            filters.style.transform = 'translateY(0)';
-            filters.style.pointerEvents = 'auto';
-        }
-
-        lastScrollY = currentScroll;
-    });
-}
-
-
-
-/* =====================================================
-   INICIALIZAÇÃO
+   INIT
 ===================================================== */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -199,8 +205,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         FavManager.updateUI();
 
-        initFiltersAutoHide(); // 🔥 importante
-
     } catch (error) {
 
         console.error('Erro ao carregar dados:', error);
@@ -214,7 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* =====================================================
-   LISTENER GLOBAL
+   GLOBAL LISTENERS
 ===================================================== */
 
 document.body.addEventListener('click', e => {
@@ -240,4 +244,12 @@ document.body.addEventListener('click', e => {
         FavManager.toggleFav(parseInt(favBtn.dataset.favId));
     }
 
+});
+
+
+/* SORT CHANGE LISTENER */
+document.body.addEventListener('change', e => {
+    if (e.target.id === 'sort-select') {
+        applyFilters();
+    }
 });
