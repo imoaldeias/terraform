@@ -91,7 +91,7 @@ export function renderProperties(filteredList = null) {
             </div>
 
             <div id="filters-bar"
-                class="hidden lg:grid mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                class="hidden grid mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
 
                 ${renderSelect('filter-location', 'Localização',
                     [...new Set(appData.properties.map(p => p.location))])}
