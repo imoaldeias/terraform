@@ -28,6 +28,8 @@ export function renderPropertyCards(properties) {
                         <img 
                             src="${p.image}" 
                             alt="${p.title}"
+                            loading="lazy"
+                            decoding="async"
                             class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
                         >
 
