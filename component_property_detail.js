@@ -40,7 +40,7 @@ export function renderPropertyDetail(id) {
 
     if (!prop) {
         return `
-            <div class="py-40 text-center text-gray-500">
+            <div class="py-40 text-center text-base font-light leading-relaxed text-gray-500">
                 Propriedade não encontrada.
             </div>
         `;
@@ -58,17 +58,15 @@ export function renderPropertyDetail(id) {
     currentImageIndex = 0;
 
     return `
-        <article class="bg-white min-h-screen">
+        <article class="bg-white min-h-screen pb-32">
 
             <!-- HEADER -->
-            <div class="max-w-7xl mx-auto px-6 pt-16 pb-10">
-                <span class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
-                    ${prop.tipologia} • ${prop.location}
-                </span>
+            <div class="max-w-7xl mx-auto px-6 pt-12 pb-6">
 
-                <h1 class="text-5xl lg:text-6xl font-serif font-light leading-tight mt-6">
-                    ${prop.title}
+                <h1 class="text-5xl font-serif font-light">
+                    ${prop.location} — ${prop.title}
                 </h1>
+
             </div>
 
             <div class="max-w-7xl mx-auto px-6">
@@ -100,15 +98,13 @@ export function renderPropertyDetail(id) {
                                 </button>
                             ` : ''}
 
-                            <!-- Fullscreen Open -->
                             <button onclick="openFullscreen()"
-                                class="absolute top-4 right-4 bg-white/80 hover:bg-white px-3 py-2 text-xs uppercase tracking-wider rounded-lg shadow transition">
+                                class="absolute top-4 right-4 bg-white/80 hover:bg-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow transition">
                                 Fullscreen
                             </button>
 
-                            <!-- Close (visible only in fullscreen) -->
                             <button onclick="closeFullscreen()"
-                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 text-xs uppercase tracking-wider rounded-lg shadow opacity-0 fullscreen:opacity-100 transition">
+                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow opacity-0 fullscreen:opacity-100 transition">
                                 Fechar
                             </button>
 
@@ -124,42 +120,87 @@ export function renderPropertyDetail(id) {
                     <!-- SIDEBAR -->
                     <div class="lg:col-span-1">
 
-                        <div class="border border-gray-200 p-10 rounded-3xl sticky top-32 space-y-10">
+                        <div class="border border-gray-200 p-10 rounded-3xl sticky top-32 space-y-8">
 
-                            <div class="space-y-2">
+                            <!-- Nome -->
+                            <div>
                                 <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
-                                    Valor
+                                    Nome
                                 </div>
-                                <div class="text-3xl font-serif font-light">
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.title}
+                                </div>
+                            </div>
+
+                            <!-- Localização -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Localização
+                                </div>
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.location}
+                                </div>
+                            </div>
+
+                            <!-- Tipologia -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Tipologia
+                                </div>
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.tipologia}
+                                </div>
+                            </div>
+
+                            <!-- Preço -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Preço
+                                </div>
+                                <div class="text-base font-light leading-relaxed">
                                     ${prop.price}
                                 </div>
                             </div>
 
-                            <div class="border-t border-gray-100 pt-8 space-y-6 text-sm font-light text-gray-600">
-
-                                <div class="flex justify-between">
-                                    <span>Terreno</span>
-                                    <span>${prop.areaTerreno} ha</span>
+                            <!-- Terreno -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Terreno
                                 </div>
-
-                                <div class="flex justify-between">
-                                    <span>Área Construída</span>
-                                    <span>${prop.areaConstruida} m²</span>
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.areaTerreno} ha
                                 </div>
-
-                                <div class="flex justify-between">
-                                    <span>Quartos</span>
-                                    <span>${prop.quartos || '-'}</span>
-                                </div>
-
                             </div>
 
-                            <button 
-                                data-route="contact"
-                                class="w-full border border-black py-4 uppercase tracking-[0.25em] text-xs font-semibold hover:bg-black hover:text-white transition"
-                            >
-                                Solicitar Informações
-                            </button>
+                            <!-- Área Construída -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Área Construída
+                                </div>
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.areaConstruida} m²
+                                </div>
+                            </div>
+
+                            <!-- Quartos -->
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                    Quartos
+                                </div>
+                                <div class="text-base font-light leading-relaxed">
+                                    ${prop.quartos || '-'}
+                                </div>
+                            </div>
+
+                            <!-- CTA -->
+                            <div class="pt-6 border-t border-gray-100">
+                                <button 
+                                    data-route="contact"
+                                    class="w-full border border-black py-5 uppercase tracking-[0.25em] text-xs font-semibold hover:bg-black hover:text-white transition"
+                                >
+                                    Solicitar Informações
+                                </button>
+                            </div>
 
                         </div>
 
