@@ -279,31 +279,48 @@ FavManager.updateUI();
 
 document.body.addEventListener('click', e => {
 
+    // ================================
+    // FAVORITOS (FIRST - very important)
+    // ================================
+    const favBtn = e.target.closest('[data-fav-id]');
+    if (favBtn) {
+        e.stopPropagation();
+        FavManager.toggleFav(parseInt(favBtn.dataset.favId));
+        return;
+    }
+
+    // ================================
+    // ROUTES (card navigation)
+    // ================================
     const routeBtn = e.target.closest('[data-route]');
     if (routeBtn) {
         e.preventDefault();
         navigateTo(routeBtn.dataset.route);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
     }
 
+    // ================================
+    // APPLY FILTERS
+    // ================================
     if (e.target.closest('#btn-apply-filters')) {
         applyFilters();
+        return;
     }
 
     if (e.target.closest('#btn-clear-filters')) {
         clearFilters();
+        return;
     }
 
+    // ================================
     // SORT
+    // ================================
     if (e.target.closest('#btn-sort')) {
 
-        if (currentSort === 'default') {
-            currentSort = 'price-asc';
-        } else if (currentSort === 'price-asc') {
-            currentSort = 'price-desc';
-        } else {
-            currentSort = 'default';
-        }
+        if (currentSort === 'default') currentSort = 'price-asc';
+        else if (currentSort === 'price-asc') currentSort = 'price-desc';
+        else currentSort = 'default';
 
         const btn = document.getElementById('btn-sort');
 
@@ -314,103 +331,30 @@ document.body.addEventListener('click', e => {
         }
 
         applyFilters();
+        return;
     }
 
-    // 🔽🔼 TOGGLE FILTROS MOBILE
-    if (e.target.closest('#btn-toggle-filters')) {
-        const filters = document.getElementById('filters-bar');
-        const btn = document.getElementById('btn-toggle-filters');
-
-    if (filters.classList.contains('hidden')) {
-        filters.classList.remove('hidden');
-        filters.classList.add('grid'); // Garante que vira grid ao aparecer
-        btn.innerText = 'Filtros ▴';
-    } else {
-        filters.classList.add('hidden');
-        filters.classList.remove('grid'); 
-        btn.innerText = 'Filtros ▾';
-    }
-}
-
-    // FAVORITOS
-    const favBtn = e.target.closest('[data-fav-id]');
-    if (favBtn) {
-        e.stopPropagation();
-        FavManager.toggleFav(parseInt(favBtn.dataset.favId));
-    
+    // ================================
     // PAGINATION
-// FAVORITOS
-const favBtn = e.target.closest('[data-fav-id]');
-if (favBtn) {
-    e.stopPropagation();
-    FavManager.toggleFav(parseInt(favBtn.dataset.favId));
-}
+    // ================================
+    const pageBtn = e.target.closest('[data-page]');
+    if (pageBtn) {
 
-// PAGINATION
-const pageBtn = e.target.closest('[data-page]');
-if (pageBtn) {
+        const action = pageBtn.dataset.page;
 
-    const action = pageBtn.dataset.page;
+        let filtered = appData.properties;
+        const finalList = applySorting(filtered);
+        const totalPages = Math.ceil(finalList.length / ITEMS_PER_PAGE);
 
-    const location = document.getElementById('filter-location')?.value;
-    const price = document.getElementById('filter-price')?.value;
-    const type = document.getElementById('filter-type')?.value;
-    const land = document.getElementById('filter-land')?.value;
-    const build = document.getElementById('filter-build')?.value;
-    const rooms = document.getElementById('filter-rooms')?.value;
+        if (action === 'prev') currentPage--;
+        else if (action === 'next') currentPage++;
+        else currentPage = parseInt(action);
 
-    let filtered = appData.properties.filter(p => {
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
 
-        if (location !== 'all' && p.locationNormalized !== location?.toLowerCase()) return false;
-
-        if (price !== 'all') {
-            if (p.priceValue === null) return false;
-            if (price.endsWith('+')) {
-                const min = parseInt(price.replace('+', ''));
-                if (p.priceValue < min) return false;
-            } else {
-                if (p.priceValue > parseInt(price)) return false;
-            }
-        }
-
-        if (type !== 'all' && p.tipologia !== type) return false;
-
-        if (land !== 'all') {
-            if (land === 'max') {
-                if (p.areaTerreno <= 500) return false;
-            } else {
-                if (p.areaTerreno > parseInt(land)) return false;
-            }
-        }
-
-        if (build !== 'all') {
-            if (build === 'max') {
-                if (p.areaConstruida <= 500) return false;
-            } else {
-                if (p.areaConstruida > parseInt(build)) return false;
-            }
-        }
-
-        if (rooms !== 'all' && p.quartos < parseInt(rooms)) return false;
-
-        return true;
-    });
-
-    const finalList = applySorting(filtered);
-    const totalPages = Math.ceil(finalList.length / ITEMS_PER_PAGE);
-
-    if (action === 'prev') currentPage--;
-    else if (action === 'next') currentPage++;
-    else currentPage = parseInt(action);
-
-    if (currentPage < 1) currentPage = 1;
-    if (currentPage > totalPages) currentPage = totalPages;
-
-    renderPaginatedProperties(finalList);
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-    
+        renderPaginatedProperties(finalList);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
 });
