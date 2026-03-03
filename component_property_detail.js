@@ -2,14 +2,25 @@ import { appData } from './content_data.js';
 
 let currentImageIndex = 0;
 let currentImages = [];
+let fullscreenListenerAdded = false;
 
-window.nextImage = function () {
+function escapeHTML(str) {
+    if (!str) return '';
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function nextImage() {
     if (!currentImages.length) return;
     currentImageIndex = (currentImageIndex + 1) % currentImages.length;
     updateImage();
 };
 
-window.prevImage = function () {
+function prevImage() {
     if (!currentImages.length) return;
     currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
     updateImage();
@@ -46,6 +57,17 @@ export function renderPropertyDetail(id) {
         `;
     }
 
+    if (!fullscreenListenerAdded) {
+    document.addEventListener('fullscreenchange', () => {
+        const btn = document.getElementById('close-fullscreen-btn');
+        if (!btn) return;
+
+        btn.style.opacity = document.fullscreenElement ? '1' : '0';
+    });
+
+    fullscreenListenerAdded = true;
+}
+
     const galleryImages = prop.gallery_ids
         ? prop.gallery_ids.split(',').map(img => img.trim()).filter(Boolean)
         : [];
@@ -63,7 +85,7 @@ export function renderPropertyDetail(id) {
             <!-- HEADER -->
             <div class="max-w-7xl mx-auto px-6 pt-12 pb-6">
 
-                <h1 class="text-5xl font-serif font-light">
+                <h1 class="text-2xl md:text-3xl font-serif font-light tracking-tight text-gray-800">
                     ${prop.location} — ${prop.title}
                 </h1>
 
@@ -103,16 +125,17 @@ export function renderPropertyDetail(id) {
                                 Fullscreen
                             </button>
 
-                            <button onclick="closeFullscreen()"
-                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow opacity-0 fullscreen:opacity-100 transition">
+                            <button id="close-fullscreen-btn"
+                                onclick="closeFullscreen()"
+                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow opacity-0 transition">
                                 Fechar
                             </button>
 
                         </div>
 
                         <!-- DESCRIPTION -->
-                        <div class="text-base font-light leading-relaxed text-gray-600 whitespace-pre-line">
-                            ${prop.description || 'Informação sob consulta.'}
+                        <div class="text-base font-light leading-relaxed text-gray-700 whitespace-pre-line">
+                            ${escapeHTML(prop.description) || 'Informação sob consulta.'}
                         </div>
 
                     </div>
@@ -124,7 +147,7 @@ export function renderPropertyDetail(id) {
 
                             <!-- Nome -->
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Nome
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
@@ -134,7 +157,7 @@ export function renderPropertyDetail(id) {
 
                             <!-- Localização -->
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Localização
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
@@ -144,7 +167,7 @@ export function renderPropertyDetail(id) {
 
                             <!-- Tipologia -->
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Tipologia
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
@@ -154,7 +177,7 @@ export function renderPropertyDetail(id) {
 
                             <!-- Preço -->
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Preço
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
@@ -164,7 +187,7 @@ export function renderPropertyDetail(id) {
 
                             <!-- Terreno -->
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Terreno
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
@@ -173,24 +196,28 @@ export function renderPropertyDetail(id) {
                             </div>
 
                             <!-- Área Construída -->
+                            ${prop.areaConstruida > 0 ? `
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Área Construída
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
                                     ${prop.areaConstruida} m²
                                 </div>
                             </div>
+                            ` : ''}
 
                             <!-- Quartos -->
+                            ${prop.quartos > 0 ? `
                             <div>
-                                <div class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-400">
+                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">
                                     Quartos
                                 </div>
                                 <div class="text-base font-light leading-relaxed">
-                                    ${prop.quartos || '-'}
+                                    ${prop.quartos === 1 ? '1 quarto' : `${prop.quartos} quartos`}
                                 </div>
                             </div>
+                            ` : ''}
 
                             <!-- CTA -->
                             <div class="pt-6 border-t border-gray-100">

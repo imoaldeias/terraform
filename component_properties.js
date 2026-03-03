@@ -39,25 +39,30 @@ export function renderPropertyCards(properties) {
                     </div>
 
 <!-- CONTEÚDO -->
-<div class="pt-4 space-y-2 text-sm font-light text-gray-800">
+<div class="pt-4 space-y-2 text-[15px] font-light text-gray-700">
 
     <!-- LINHA 1 -->
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-500">
+    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
         <span>${p.title}</span>
         <span>${p.location}</span>
     </div>
 
     <!-- LINHA 2 -->
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-500">
+    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
         <span>${p.price}</span>
         <span>${p.tipologia}</span>
     </div>
 
-    <!-- LINHA 3 -->
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-500">
+    ${p.quartos > 0 ? `
+    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
         <span>${p.areaTerreno} ha</span>
-        <span>${p.quartos} quartos</span>
+        <span>${p.quartos === 1 ? '1 quarto' : `${p.quartos} quartos`}</span>
     </div>
+    ` : `
+    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
+        <span>${p.areaTerreno} ha</span>
+    </div>
+    `}
 
 </div>
                 </div>
@@ -120,8 +125,8 @@ export function renderProperties(filteredList = null) {
 
                 ${renderSelect('filter-build', 'Área Construída',
                     [
-                        { value: '300', label: 'Até 200 m²' },
-                        { value: '600', label: 'Até 500 m²' },
+                        { value: '200', label: 'Até 200 m²' },
+                        { value: '500', label: 'Até 500 m²' },
                         { value: 'max', label: 'Mais de 500 m²' }
                     ])}
 
@@ -188,7 +193,7 @@ function renderSelect(id, label, options) {
 
             <label 
                 for="${id}" 
-                class="text-[10px] uppercase tracking-[0.2em] font-medium text-gray-400 mb-2"
+                class="text-[11px] uppercase tracking-[0.18em] font-medium text-gray-400"
             >
                 ${label}
             </label>

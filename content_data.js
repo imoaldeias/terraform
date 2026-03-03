@@ -42,6 +42,7 @@ function normalizeProperty(p) {
 
         title: (p.title || '').trim(),
         location: (p.location || '').trim(),
+        locationNormalized: (p.location || '').trim().toLowerCase(),
         tipologia: capitalizeFirst((p.tipologia || '').trim()),
 
         price: (p.price || '').trim(),

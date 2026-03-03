@@ -10,14 +10,9 @@ export function renderSell() {
 
                         <!-- Label (L3) -->
                         <span class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500 mb-8 block">
-                            Angariação Exclusiva
+                            Valorize o seu património
                         </span>
-
-                        <!-- Título Principal (L1) -->
-                        <h1 class="text-5xl font-serif font-light mb-10">
-                            Valorize o seu património com quem entende a terra.
-                        </h1>
-
+                        
                         <!-- Texto (L4) -->
                         <p class="text-base font-light leading-relaxed text-gray-600 mb-16">
                             Na TerraPrimus, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
@@ -32,7 +27,7 @@ export function renderSell() {
                                     <i data-lucide="shield-check" class="text-brand-800 w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h2 class="text-2xl font-serif font-light mb-4">
+                                    <h2 class="text-xl font-serif font-light mb-4">
                                         Confidencialidade Absoluta
                                     </h2>
                                     <p class="text-base font-light leading-relaxed text-gray-600">
@@ -47,7 +42,7 @@ export function renderSell() {
                                     <i data-lucide="bar-chart-3" class="text-brand-800 w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h2 class="text-2xl font-serif font-light mb-4">
+                                    <h2 class="text-xl font-serif font-light mb-4">
                                         Avaliação e Posicionamento
                                     </h2>
                                     <p class="text-base font-light leading-relaxed text-gray-600">
@@ -62,7 +57,7 @@ export function renderSell() {
                                     <i data-lucide="users" class="text-brand-800 w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h2 class="text-2xl font-serif font-light mb-4">
+                                    <h2 class="text-xl font-serif font-light mb-4">
                                         Acompanhamento Integral
                                     </h2>
                                     <p class="text-base font-light leading-relaxed text-gray-600">
@@ -92,7 +87,7 @@ export function renderSell() {
 
                     <!-- Título (L2) -->
                     <h2 class="text-2xl font-serif font-light mb-12 text-center">
-                        Solicitar Avaliação Reservada
+                        Solicitar Avaliação
                     </h2>
 
                     <form class="space-y-10" onsubmit="event.preventDefault(); alert('Pedido enviado.');">
@@ -168,7 +163,7 @@ export function renderSell() {
                             type="submit" 
                             class="w-full mt-12 border border-brand-900 text-brand-900 py-5 uppercase tracking-[0.25em] text-xs font-semibold hover:bg-brand-900 hover:text-white transition-all"
                         >
-                            Iniciar Processo de Avaliação
+                            Iniciar Processo
                         </button>
 
                     </form>

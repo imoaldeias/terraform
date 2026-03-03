@@ -44,7 +44,7 @@ export function renderRoute() {
 
         default:
             if (hash.startsWith('property-')) {
-                const id = hash.split('-')[1];
+                const id = hash.replace('property-', '');
                 content = renderPropertyDetail(id);
             } else {
                 content = renderProperties();

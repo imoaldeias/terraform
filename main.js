@@ -104,7 +104,9 @@ function applyFilters() {
 
     let filtered = appData.properties.filter(p => {
 
-        if (location !== 'all' && p.location !== location) return false;
+        if (location !== 'all' && p.locationNormalized !== location.toLowerCase()) {
+            return false;
+        }
 
         if (price !== 'all') {
 
@@ -112,7 +114,7 @@ function applyFilters() {
 
             if (price.endsWith('+')) {
                 const min = parseInt(price.replace('+', ''));
-                if (p.priceValue <= min) return false;
+                if (p.priceValue < min) return false;
             } else {
                 if (p.priceValue > parseInt(price)) return false;
             }
@@ -130,7 +132,7 @@ function applyFilters() {
 
         if (build !== 'all') {
             if (build === 'max') {
-                if (p.areaConstruida <= 600) return false;
+                if (p.areaConstruida <= 500) return false;
             } else {
                 if (p.areaConstruida > parseInt(build)) return false;
             }

@@ -74,7 +74,7 @@ function renderGrid(data) {
         return `
         <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-2xl transition-all group">
             <div class="relative h-48 overflow-hidden">
-                <img src="${p.image_capa}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400?text=Sem+Foto+Capa'">
+                <img src="${p.image_capa || p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400?text=Sem+Foto+Capa'">
                 <div class="absolute top-3 right-3 flex gap-2">
                     ${hasGallery ? '<span class="bg-green-500 text-white p-1 rounded-md text-[8px] font-bold uppercase">Galeria OK</span>' : '<span class="bg-amber-500 text-white p-1 rounded-md text-[8px] font-bold uppercase">Sem Galeria</span>'}
                     ${hasVideo ? '<span class="bg-red-600 text-white p-1 rounded-md text-[8px] font-bold uppercase">Video OK</span>' : ''}

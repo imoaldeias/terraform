@@ -1,60 +1,164 @@
-/* ESTILOS TERRAPRIMUS - VINTAGE & MODERN MIX */
+/* =====================================================
+   TERRAPRIMA — TYPOGRAPHIC SYSTEM
+   Vintage Editorial + Modern Minimal
+===================================================== */
 
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'Instrument Sans', sans-serif; /* Atualizado */
-    background-color: #FBFBF9; 
-    color: #3D4532; /* Garante que o texto usa o tom de verde escuro da marca */
+
+    font-family: 'Instrument Sans', sans-serif;
+    background-color: #FBFBF9;
+    color: #3D4532;
+
+    line-height: 1.65;
+    letter-spacing: -0.01em;
     overflow-x: hidden;
-    line-height: 1.6; /* Melhora a legibilidade */
 }
 
-/* Toque Vintage Extra: Kerning (espaçamento entre letras) */
+
+/* =====================================================
+   HEADINGS
+===================================================== */
+
 h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-    letter-spacing: -0.02em; /* Títulos mais elegantes */
+    font-family: serif;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
 }
+
+/* Evita títulos agressivos */
+h1 {
+    font-size: 1.75rem;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+
+/* =====================================================
+   TEXT ELEMENTS
+===================================================== */
+
+p {
+    font-weight: 300;
+    line-height: 1.75;
+    color: #4B5563; /* gray-700 equivalente */
+}
+
+/* Pequenos labels técnicos (ex: Nome, Localização, etc.) */
+.label-soft {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    color: #9CA3AF;
+}
+
+
+/* =====================================================
+   NAVIGATION / UPPERCASE ELEMENTS
+===================================================== */
 
 .tracking-widest {
-    letter-spacing: 0.2em !important; /* Para aqueles labels pequenos em maiúsculas */
+    letter-spacing: 0.2em !important;
 }
 
-/* Transição de Fade Suave entre Páginas */
+
+/* =====================================================
+   PAGE TRANSITION
+===================================================== */
+
 #app {
     animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Scrollbar Personalizada */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f4f7f5; }
-::-webkit-scrollbar-thumb { background: #3D4532; border-radius: 10px; }
 
-/* Efeito de Zoom em Imagens (Recuperado do original) */
-.img-hover-zoom { overflow: hidden; }
-.img-hover-zoom img { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
-.img-hover-zoom:hover img { transform: scale(1.1); }
+/* =====================================================
+   SCROLLBAR
+===================================================== */
 
-/* Estilização de Inputs e Selects */
-input, select, textarea {
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f4f7f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3D4532;
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   IMAGE HOVER
+===================================================== */
+
+.img-hover-zoom {
+    overflow: hidden;
+}
+
+.img-hover-zoom img {
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-hover-zoom:hover img {
+    transform: scale(1.05);
+}
+
+
+/* =====================================================
+   FORMS
+===================================================== */
+
+input,
+select,
+textarea {
     transition: all 0.4s ease;
     background-color: transparent !important;
+    font-weight: 300;
 }
-input:focus, select:focus, textarea:focus {
+
+input:focus,
+select:focus,
+textarea:focus {
     border-color: #3D4532 !important;
     outline: none;
 }
 
-/* Ajuste na Barra de Navegação ao fazer Scroll (Recuperado) */
+
+/* =====================================================
+   NAVBAR SCROLL EFFECT
+===================================================== */
+
 #navbar.scrolled {
-    background-color: rgba(212, 217, 193, 0.98); /* oliveLight com opacidade */
+    background-color: rgba(212, 217, 193, 0.98);
     height: 5rem !important;
-    box-shadow: 0 4px 20px -10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}

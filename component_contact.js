@@ -7,13 +7,9 @@ export function renderContact() {
                     <!-- LEFT COLUMN -->
                     <div>
 
-                        <!-- Label (L3) -->
-                        <span class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500 mb-10 block">
-                            Consultoria Privada
-                        </span>
-
+                      
                         <!-- Título (L1) -->
-                        <h1 class="text-5xl font-serif font-light mb-20">
+                        <h1 class="text-3xl md:text-4xl font-medium tracking-tight">
                             Fale connosco
                         </h1>
                         
@@ -21,9 +17,7 @@ export function renderContact() {
 
                             <!-- Morada -->
                             <div>
-                                <h2 class="text-2xl font-serif font-light mb-6">
-                                    Sede Alentejo
-                                </h2>
+                                
                                 <p class="text-base font-light leading-relaxed text-gray-700">
                                     Aldeia dos Macacos, 1<br>
                                     7200-259 Reguengos de Monsaraz
