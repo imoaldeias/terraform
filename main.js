@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
 
         document.getElementById('app').innerHTML =
-            '<div class="py-40 text-center text-gray-400 font-light">A carregar ativos...</div>';
+            '<div class="py-40 text-center text-gray-400">A carregar ativos...</div>';
 
         await loadSiteData();
 
@@ -273,7 +273,7 @@ FavManager.updateUI();
         console.error('Erro ao carregar dados:', error);
 
         document.getElementById('app').innerHTML =
-            '<div class="py-40 text-center text-red-500 font-light">Erro ao carregar propriedades.</div>';
+            '<div class="py-40 text-center text-red-500">Erro ao carregar propriedades.</div>';
     }
 
 });

@@ -54,7 +54,7 @@ export function renderPropertyDetail(id) {
 
     if (!prop) {
         return `
-            <div class="py-40 text-center text-base font-light leading-relaxed text-gray-500">
+            <div class="py-40 text-center text-base opacity-60">
                 Propriedade não encontrada.
             </div>
         `;
@@ -84,18 +84,14 @@ export function renderPropertyDetail(id) {
     currentImages = galleryImages.length > 0 ? galleryImages : [prop.image];
     currentImageIndex = 0; // Para a galeria não começar no meio quando mudas de casa
     
-    // --- CORREÇÃO: Reset do índice sempre que mudamos de página ---
-    currentImageIndex = 0;
-
     return `
-        <article class="bg-white min-h-screen pb-32">
-            <div class="max-w-7xl mx-auto px-6 pt-12 pb-6">
-                <h1 class="text-2xl md:text-3xl font-serif font-light tracking-tight text-gray-800">
+        <section class="pt-24 pb-32 bg-white min-h-screen">
+            <div class="max-w-7xl mx-auto px-6">
+                <h1>
                     ${prop.location} — ${prop.title}
                 </h1>
             </div>
-
-            <div class="max-w-7xl mx-auto px-6">
+            
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-20">
 
                     <div class="lg:col-span-2 space-y-16">
@@ -120,18 +116,17 @@ export function renderPropertyDetail(id) {
                             ` : ''}
 
                             <button onclick="openFullscreen()"
-                                class="absolute top-4 right-4 bg-white/80 hover:bg-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow transition">
+                                class="absolute top-4 right-4 bg-white/80 hover:bg-white px-3 py-2 rounded-lg shadow transition">
                                 Fullscreen
                             </button>
 
                             <button id="close-fullscreen-btn"
                                 onclick="closeFullscreen()"
-                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 text-xs uppercase tracking-[0.25em] font-semibold rounded-lg shadow opacity-0 transition">
+                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 rounded-lg shadow opacity-0 transition">
                                 Fechar
                             </button>
-                        </div>
 
-                        <div class="text-base font-light leading-relaxed text-gray-700 whitespace-pre-line">
+                        <div class="whitespace-pre-line">
                             ${escapeHTML(prop.description) || 'Informação sob consulta.'}
                         </div>
                     </div>
@@ -140,41 +135,41 @@ export function renderPropertyDetail(id) {
                         <div class="border border-gray-200 p-10 rounded-3xl sticky top-32 space-y-8">
                             
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Nome</div>
-                                <div class="text-base font-light leading-relaxed">${prop.title}</div>
+                                <div class="label">Nome</div>
+                                <div>${prop.title}</div>
                             </div>
 
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Localização</div>
-                                <div class="text-base font-light leading-relaxed">${prop.location}</div>
+                                <div class="label">Localização</div>
+                                <div>${prop.location}</div>
                             </div>
 
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Tipologia</div>
-                                <div class="text-base font-light leading-relaxed">${prop.tipologia || 'N/A'}</div>
+                                <div class="label">Tipologia</div>
+                                <div>${prop.tipologia || 'N/A'}</div>
                             </div>
 
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Preço</div>
-                                <div class="text-base font-light leading-relaxed font-serif text-brand-oliveDark">${prop.price}</div>
+                                <div class="label">Preço</div>
+                                <div>${prop.price}</div>
                             </div>
 
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Terreno</div>
-                                <div class="text-base font-light leading-relaxed">${prop.areaTerreno} ha</div>
+                                <div class="label">Terreno</div>
+                                <div>${prop.areaTerreno} ha</div>
                             </div>
 
                             ${prop.areaConstruida > 0 ? `
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Área Construída</div>
-                                <div class="text-base font-light leading-relaxed">${prop.areaConstruida} m²</div>
+                                <div class="label">Área Construída</div>
+                                <div>${prop.areaConstruida} m²</div>
                             </div>
                             ` : ''}
 
                             ${prop.quartos > 0 ? `
                             <div>
-                                <div class="text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400">Quartos</div>
-                                <div class="text-base font-light leading-relaxed">
+                                <div class="label">Quartos</div>
+                                <div>
                                     ${prop.quartos === 1 ? '1 quarto' : `${prop.quartos} quartos`}
                                 </div>
                             </div>
@@ -183,7 +178,7 @@ export function renderPropertyDetail(id) {
                             <div class="pt-6 border-t border-gray-100">
                                 <button 
                                     data-route="contact"
-                                    class="w-full border border-black py-5 uppercase tracking-[0.25em] text-xs font-semibold hover:bg-black hover:text-white transition"
+                                    class="w-full border border-black py-4 hover:bg-black hover:text-white transition"
                                 >
                                     Solicitar Informações
                                 </button>
@@ -192,6 +187,7 @@ export function renderPropertyDetail(id) {
                     </div>
                 </div>
             </div>
-        </article>
+            </div>
+        </section>
     `;
 }

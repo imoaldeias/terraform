@@ -5,18 +5,18 @@ export function renderHero() {
 
     return `
         <section class="pt-24 pb-32 bg-white">
-            <div class="max-w-4xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6">
                 
                 <!-- HEADER -->
                 <div class="text-center mb-20">
 
                     <!-- Label (L3) -->
-                    <span class="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500 mb-10 block">
+                    <span class="label mb-10 block">
                         A Nossa Visão
                     </span>
 
                     <!-- Título (L1) -->
-                    <h1 class="text-3xl md:text-4xl font-medium tracking-tight">
+                    <h1>
                         Especialistas em ativos rurais
                     </h1>
 
@@ -33,15 +33,15 @@ export function renderHero() {
                 </div>
 
                 <!-- TEXT CONTENT -->
-                <div class="max-w-3xl mx-auto space-y-12 text-gray-600">
+                <div class="max-w-3xl mx-auto space-y-12">
 
                     <!-- Parágrafos principais (L4) -->
-                    <p class="text-base font-light leading-relaxed">
+                    <p>
                         A TerraPrimus nasce de uma premissa simples: a terra não é apenas um ativo, é um legado. 
                         Mais do que um recurso económico, é património, identidade e futuro.
                     </p>
 
-                    <p class="text-base font-light leading-relaxed">
+                    <p>
                         Somos uma estrutura dedicada à representação estratégica de ativos territoriais, onde o conhecimento, 
                         a técnica e a visão de longo prazo se cruzam. Atuamos de forma integrada nos setores da agricultura, 
                         turismo e outras indústrias da região.
@@ -51,40 +51,40 @@ export function renderHero() {
                     <div class="pt-6 space-y-10">
 
                         <div>
-                            <h2 class="text-2xl font-serif font-light mb-4">
+                            <h2 class="mb-4">
                                 Mediação de imóveis exclusivos
                             </h2>
-                            <p class="text-base font-light leading-relaxed">
+                            <p>
                                 Representação discreta na aquisição e alienação de propriedades singulares através 
                                 de uma rede de contactos exclusiva.
                             </p>
                         </div>
 
                         <div>
-                            <h2 class="text-2xl font-serif font-light mb-4">
+                            <h2 class="mb-4">
                                 Gestão e serviços agrícolas
                             </h2>
-                            <p class="text-base font-light leading-relaxed">
+                            <p>
                                 Acompanhamento técnico e operacional de ativos agrícolas, focando na eficiência 
                                 e rentabilidade produtiva.
                             </p>
                         </div>
 
                         <div>
-                            <h2 class="text-2xl font-serif font-light mb-4">
+                            <h2 class="mb-4">
                                 Desenvolvimento de projetos turísticos
                             </h2>
-                            <p class="text-base font-light leading-relaxed">
+                            <p>
                                 Estruturação de investimentos turísticos integrados que respeitam a sustentabilidade 
                                 e a herança do território.
                             </p>
                         </div>
 
                         <div>
-                            <h2 class="text-2xl font-serif font-light mb-4">
+                            <h2 class="mb-4">
                                 Consultoria em investimento e Vistos Gold
                             </h2>
-                            <p class="text-base font-light leading-relaxed">
+                            <p>
                                 Aconselhamento estratégico em investimento e processos de residência, garantindo 
                                 segurança jurídica e financeira.
                             </p>

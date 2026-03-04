@@ -2,7 +2,6 @@
 
 import { renderHero } from './component_hero.js';
 import { renderProperties } from './component_properties.js';
-import { renderContact } from './component_contact.js';
 import { renderSell } from './component_sell.js';
 import { renderPropertyDetail } from './component_property_detail.js';
 
@@ -36,10 +35,6 @@ export function renderRoute() {
 
         case 'sell':
             content = renderSell();
-            break;
-
-        case 'contact':
-            content = renderContact();
             break;
 
         default:

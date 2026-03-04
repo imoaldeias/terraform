@@ -9,7 +9,7 @@ export function renderPropertyCards(properties) {
 
     if (!properties || properties.length === 0) {
         return `
-            <div class="text-center py-24 text-gray-400 text-base font-light leading-relaxed">
+            <div class="text-center py-24 opacity-60">
                 Nenhuma propriedade encontrada com os filtros selecionados.
             </div>
         `;
@@ -41,33 +41,34 @@ export function renderPropertyCards(properties) {
                         </button>
                     </div>
 
-<!-- CONTEÚDO -->
-<div class="pt-4 space-y-2 text-[15px] font-light text-gray-700">
+                    <!-- CONTEÚDO -->
+                    <div class="pt-4 space-y-3">
 
-    <!-- LINHA 1 -->
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
-        <span>${p.title}</span>
-        <span>${p.location}</span>
-    </div>
+                        <!-- LINHA 1 -->
+                        <div class="flex justify-between pt-1 border-t border-gray-100">
+                            <span>${p.title}</span>
+                            <span>${p.location}</span>
+                        </div>
 
-    <!-- LINHA 2 -->
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
-        <span>${p.price}</span>
-        <span>${p.tipologia}</span>
-    </div>
+                        <!-- LINHA 2 -->
+                        <div class="flex justify-between pt-1 border-t border-gray-100">
+                            <span>${p.price}</span>
+                            <span>${p.tipologia}</span>
+                        </div>
 
-    ${p.quartos > 0 ? `
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
-        <span>${p.areaTerreno} ha</span>
-        <span>${p.quartos === 1 ? '1 quarto' : `${p.quartos} quartos`}</span>
-    </div>
-    ` : `
-    <div class="flex justify-between pt-1 border-t border-gray-100 text-gray-600">
-        <span>${p.areaTerreno} ha</span>
-    </div>
-    `}
+                        ${p.quartos > 0 ? `
+                        <div class="flex justify-between pt-1 border-t border-gray-100">
+                            <span>${p.areaTerreno} ha</span>
+                            <span>${p.quartos === 1 ? '1 quarto' : `${p.quartos} quartos`}</span>
+                        </div>
+                        ` : `
+                        <div class="flex justify-between pt-1 border-t border-gray-100">
+                            <span>${p.areaTerreno} ha</span>
+                        </div>
+                        `}
 
-</div>
+                    </div>
+
                 </div>
 
             `).join('')}
@@ -85,18 +86,19 @@ export function renderPropertyCards(properties) {
 export function renderProperties() {
 
     return `
-        <section class="pt-12 pb-24 px-6 sm:px-8 max-w-7xl mx-auto">
+        <section class="pt-24 pb-32">
+            <div class="max-w-7xl mx-auto px-6">
 
             <div class="flex justify-end mb-6 lg:hidden">
                 <button 
                     id="btn-toggle-filters"
-                    class="border border-gray-300 rounded-sm px-5 py-2 text-xs uppercase tracking-widest text-gray-600 hover:border-black hover:text-black transition"
+                    class="border border-gray-300 rounded-sm px-5 py-2 transition hover:border-black"
                 >
                     Filtros ▾
                 </button>
             </div>
 
-                        <div id="filters-bar"
+            <div id="filters-bar"
                 class="hidden lg:grid mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
 
                 ${renderSelect('filter-location', 'Localização',
@@ -149,21 +151,21 @@ export function renderProperties() {
 
                     <button 
                         id="btn-apply-filters"
-                        class="border border-black px-5 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-black hover:text-white transition duration-300"
+                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
                     >
                         Aplicar
                     </button>
 
                     <button 
                         id="btn-clear-filters"
-                        class="border border-gray-300 px-5 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-gray-100 transition duration-300"
+                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
                     >
                         Limpar
                     </button>
 
                     <button 
                         id="btn-sort"
-                        class="border border-gray-300 rounded-sm px-5 py-1 text-[10px] uppercase tracking-[0.2em] font-medium text-gray-600 hover:border-black hover:text-black transition duration-300"
+                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
                     >
                         Ordenar: —
                     </button>
@@ -172,9 +174,10 @@ export function renderProperties() {
 
             </div>
 
-        <div id="properties-list"></div>    
+            <div id="properties-list"></div>
 
-        </section>
+                </div>
+            </section>
     `;
 }
 
@@ -198,14 +201,14 @@ function renderSelect(id, label, options) {
 
             <label 
                 for="${id}" 
-                class="text-[11px] uppercase tracking-[0.18em] font-medium text-gray-400"
+                class="label mb-2"
             >
                 ${label}
             </label>
 
             <select 
                 id="${id}"
-                class="border-b border-gray-200 bg-transparent py-2 px-1 text-sm font-light"
+                class="border-b border-gray-300 bg-transparent py-2 px-1 focus:outline-none focus:border-black transition"
             >
                 <option value="all">Todos</option>
 

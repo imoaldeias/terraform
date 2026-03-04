@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TerraPrima — Alentejo Heritage Estate</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Cormorant Garamond + Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,600;1,400&family=Instrument+Serif:italic@0;1&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <script type="text/javascript">
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -30,7 +29,6 @@
     </script>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -50,35 +48,27 @@ HEADER
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full flex items-center justify-between">
 
-        <!-- BLOCO ESQUERDO -->
+        <!-- LEFT BLOCK -->
         <div class="flex items-center gap-6 sm:gap-8 lg:gap-10 cursor-pointer"
              data-route="properties">
 
-            <!-- LOGO -->
             <img 
-     src="./logo.webp"
-     alt="TerraPrima"
-     width="220"
-     height="120"
-     loading="eager"
-     fetchpriority="high"
-     decoding="async"
-     class="h-10 sm:h-20 lg:h-28 w-auto object-contain">
+                src="./logo.webp"
+                alt="TerraPrima"
+                width="220"
+                height="120"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="h-10 sm:h-20 lg:h-28 w-auto object-contain">
 
-            <!-- NOME + SUBTÍTULO -->
             <div class="flex flex-col leading-none">
 
-                <!-- Nome -->
-                <span class="font-serif text-2xl sm:text-4xl lg:text-5xl tracking-tight text-brand-oliveDark">
+                <span class="text-brand-oliveDark">
                     TerraPrima
                 </span>
 
-                <!-- Subtítulo -->
-                <span class="text-[9px] sm:text-[10px] lg:text-[11px]
-                      uppercase
-                      tracking-[0.25em] sm:tracking-[0.35em] lg:tracking-[0.4em]
-                      font-semibold
-                      mt-2 sm:mt-3 lg:mt-4"
+                <span class="uppercase mt-2 sm:mt-3 lg:mt-4"
                       style="color:#9C7A3C;">
                     Alentejo Heritage Estate
                 </span>
@@ -87,47 +77,40 @@ HEADER
 
         </div>
 
-        <!-- BLOCO DIREITO -->
+        <!-- RIGHT BLOCK -->
         <div class="flex items-center gap-4 sm:gap-5">
 
-            <!-- MENU DESKTOP -->
-            <div class="hidden lg:flex items-center gap-14">
+            <!-- DESKTOP MENU -->
+            <a href="#properties" data-route="properties"
+                class="font-serif text-xl italic tracking-tight text-brand-oliveDark hover:opacity-60 transition-opacity">
+                Portfólio
+            </a>
 
-                <a href="#properties" data-route="properties"
-                    class="text-xs uppercase tracking-[0.3em] font-semibold text-brand-oliveDark hover:opacity-60 transition-opacity">
-                    Portfólio
-                </a>
+            <a href="#sell" data-route="sell"
+                class="font-serif text-xl italic tracking-tight text-brand-oliveDark hover:opacity-60 transition-opacity">
+                Venda
+            </a>
 
-                <a href="#sell" data-route="sell"
-                    class="text-xs uppercase tracking-[0.3em] font-semibold text-brand-oliveDark hover:opacity-60 transition-opacity">
-                    Venda
-                </a>
-
-                <a href="#home" data-route="home"
-                    class="text-xs uppercase tracking-[0.3em] font-semibold text-brand-oliveDark hover:opacity-60 transition-opacity">
-                    Visão
-                </a>
-
-                <a href="#contact" data-route="contact"
-                    class="text-xs uppercase tracking-[0.3em] font-semibold text-brand-oliveDark hover:opacity-60 transition-opacity">
-                    Contacto
-                </a>
+            <a href="#home" data-route="home"
+                class="font-serif text-xl italic tracking-tight text-brand-oliveDark hover:opacity-60 transition-opacity">
+                Visão
+            </a>
 
             </div>
 
-            <!-- FAVORITOS -->
+            <!-- FAVORITES -->
             <button id="fav-nav-btn"
                 class="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white/40 text-brand-oliveDark border border-brand-oliveDark/10 transition-colors">
                 
                 <i data-lucide="heart" class="w-4 h-4"></i>
                 
-                <span id="fav-count" class="text-xs uppercase tracking-[0.25em] font-semibold">
+                <span id="fav-count" class="uppercase">
                     0
                 </span>
 
             </button>
 
-            <!-- MOBILE MENU -->
+            <!-- MOBILE MENU BUTTON -->
             <button id="mobile-menu-btn"
                 class="lg:hidden flex items-center justify-center w-10 h-10 text-brand-oliveDark">
                 <i id="mobile-menu-icon" data-lucide="menu" class="w-6 h-6"></i>
@@ -151,22 +134,22 @@ MOBILE MENU
     <div class="flex flex-col px-6 py-12 space-y-10">
 
         <a href="#properties" data-route="properties"
-            class="text-xs uppercase tracking-[0.25em] font-semibold text-brand-oliveDark">
+            class="text-brand-oliveDark uppercase">
             Comprar
         </a>
 
         <a href="#sell" data-route="sell"
-            class="text-xs uppercase tracking-[0.25em] font-semibold text-brand-oliveDark">
+            class="text-brand-oliveDark uppercase">
             Vender
         </a>
 
         <a href="#home" data-route="home"
-            class="text-xs uppercase tracking-[0.25em] font-semibold text-brand-oliveDark">
+            class="text-brand-oliveDark uppercase">
             Sobre
         </a>
 
         <a href="#contact" data-route="contact"
-            class="text-xs uppercase tracking-[0.25em] font-semibold text-brand-oliveDark">
+            class="text-brand-oliveDark uppercase">
             Contacto
         </a>
 
@@ -188,34 +171,30 @@ FOOTER
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center md:text-left">
 
-            <!-- COLUMN 1 (span 2) -->
             <div class="space-y-4 md:col-span-2">
-                <p class="text-base font-light leading-relaxed">
+                <p>
                     TerraPrima
                 </p>
 
-                <p class="text-base font-light leading-relaxed max-w-md">
+                <p class="max-w-md">
                     Curadoria e mediação de propriedades rurais com valor patrimonial e visão de longo prazo no Alentejo.
                 </p>
             </div>
 
-            <!-- COLUMN 2 -->
             <div class="space-y-4 md:col-span-1">
-                <p class="text-base font-light leading-relaxed">
+                <p>
                     Navegação
                 </p>
 
-                <div class="flex flex-col space-y-2 text-base font-light leading-relaxed">
+                <div class="flex flex-col space-y-2">
                     <a href="#properties" data-route="properties">Portfólio</a>
                     <a href="#sell" data-route="sell">Venda</a>
                     <a href="#home" data-route="home">Visão</a>
-                    <a href="#contact" data-route="contact">Contacto</a>
                 </div>
             </div>
 
-            <!-- COLUMN 3 -->
             <div class="md:col-span-1 pt-[1.75rem]">
-                <div class="flex flex-col space-y-2 text-base font-light leading-relaxed">
+                <div class="flex flex-col space-y-2">
                     <p>+351 9XX XXX XXX</p>
                     <p>+351 9XX XXX XXX</p>
                     <p>geral@terraprima.pt</p>
@@ -225,7 +204,7 @@ FOOTER
 
         </div>
 
-        <div class="mt-20 pt-8 border-t border-[#FBF8EF]/20 text-base font-light leading-relaxed text-center">
+        <div class="mt-20 pt-8 border-t border-[#FBF8EF]/20 text-center">
             © 2026 TerraPrima Heritage Estate
         </div>
 

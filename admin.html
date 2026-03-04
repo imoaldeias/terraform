@@ -12,8 +12,8 @@
     <nav class="bg-slate-900 text-white p-6 shadow-xl">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-serif tracking-[0.2em] uppercase">TerraPrima</h1>
-                <p class="text-[10px] text-amber-400 uppercase tracking-widest opacity-80">Painel</p>
+                <h1>TerraPrima</h1>
+                <p>Painel</p>
             </div>
            <a href="https://docs.google.com/spreadsheets/d/1vC3z76S8e9N9_HkS7UoM-p0pL0H7L6D0_k7_k7_k7/edit" target="_blank" ...>
     ✎ Abrir Google Sheets
@@ -24,7 +24,7 @@
     <main class="max-w-7xl mx-auto p-8">
         <div id="status-container" class="mb-8 p-4 rounded-lg bg-white border border-slate-200 flex items-center gap-4">
             <div id="status-dot" class="w-3 h-3 rounded-full bg-gray-400 animate-pulse"></div>
-            <span id="status-text" class="text-sm font-medium text-slate-500">A verificar ligação ao Google Sheets...</span>
+            <span id="status-text" class="text-sm text-slate-500">A verificar ligação ao Google Sheets...</span>
         </div>
 
         <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-0 transition-opacity duration-500">
@@ -76,27 +76,31 @@ function renderGrid(data) {
             <div class="relative h-48 overflow-hidden">
                 <img src="${p.image_capa || p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400?text=Sem+Foto+Capa'">
                 <div class="absolute top-3 right-3 flex gap-2">
-                    ${hasGallery ? '<span class="bg-green-500 text-white p-1 rounded-md text-[8px] font-bold uppercase">Galeria OK</span>' : '<span class="bg-amber-500 text-white p-1 rounded-md text-[8px] font-bold uppercase">Sem Galeria</span>'}
-                    ${hasVideo ? '<span class="bg-red-600 text-white p-1 rounded-md text-[8px] font-bold uppercase">Video OK</span>' : ''}
+                    ${hasGallery ? '<span class="bg-green-500 text-white p-1 rounded-md text-[8px] uppercase">Galeria OK</span>' : '<span class="bg-amber-500 text-white p-1 rounded-md text-[8px] uppercase">Sem Galeria</span>'}
+                    ${hasVideo ? '<span class="bg-red-600 text-white p-1 rounded-md text-[8px] uppercase">Video OK</span>' : ''}
                 </div>
             </div>
             <div class="p-5">
-                <h2 class="text-lg font-bold text-slate-800 truncate">${p.title || 'Sem Título'}</h2>
+                <h2 class="text-lg text-slate-800 truncate">${p.title || 'Sem Título'}</h2>
                 <p class="text-slate-400 text-xs mb-3">📍 ${p.location}</p>
                 
                 <div class="space-y-2 border-t pt-3">
-                    <div class="flex justify-between text-[10px]">
-                        <span class="text-slate-400 uppercase font-bold tracking-widest">Preço</span>
-                        <span class="font-bold text-slate-900">${p.price}</span>
-                    </div>
-                    <div class="flex justify-between text-[10px]">
-                        <span class="text-slate-400 uppercase font-bold tracking-widest">ID Interno</span>
-                        <span class="font-mono text-slate-500">${p.id}</span>
-                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400 uppercase">Preço</span>
+                        <span class="text-slate-900">${p.price}</span>
                 </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400 uppercase">ID Interno</span>
+                    <span class="text-slate-500">${p.id}</span>
+                </div>
+            </div>
 
                 <div class="mt-4 flex gap-2">
-                    <a href="https://imoaldeias.github.io/imoaldeias/#property-${p.id}" target="_blank" class="flex-1 text-center bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition">Ver no Site</a>
+                    <a <a href="https://imoaldeias.github.io/imoaldeias/#property-${p.id}" 
+            target="_blank" 
+            class="flex-1 text-center bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl uppercase transition">
+            Ver no Site
+        </a>
                 </div>
             </div>
         </div>
