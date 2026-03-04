@@ -1,25 +1,25 @@
 // router.js
 
-import { renderHero } from './component_hero.js';
-import { renderProperties } from './component_properties.js';
-import { renderSell } from './component_sell.js';
+import { renderHero }           from './component_hero.js';
+import { renderProperties }     from './component_properties.js';
+import { renderSell }           from './component_sell.js';
 import { renderPropertyDetail } from './component_property_detail.js';
+import { applyFilters }         from './filters.js';      // ← from filters.js, NOT main.js
+import { FavManager }           from './main.js';         // ← only FavManager, no filter logic
 
 const app = document.getElementById('app');
 
-/**
- * Atualiza o hash da URL.
- * Não renderiza diretamente.
- */
+/* ─────────────────────────────────────────────
+   Navigate: just update the URL hash.
+   The hashchange listener below does the render.
+───────────────────────────────────────────── */
 export function navigateTo(route) {
     window.location.hash = route;
 }
 
-/**
- * Renderiza com base no hash atual.
- * Esta função será chamada pelo main.js
- * depois de os dados estarem carregados.
- */
+/* ─────────────────────────────────────────────
+   Render whatever the current hash says.
+───────────────────────────────────────────── */
 export function renderRoute() {
     const hash = window.location.hash.replace('#', '') || 'properties';
     let content = '';
@@ -37,6 +37,11 @@ export function renderRoute() {
             content = renderSell();
             break;
 
+        case 'contact':
+            // TODO: replace with your real contact component when ready
+            content = renderSell();
+            break;
+
         default:
             if (hash.startsWith('property-')) {
                 const id = hash.replace('property-', '');
@@ -46,39 +51,32 @@ export function renderRoute() {
             }
     }
 
+    // Fade out → swap content → fade in
     app.style.opacity = '0';
 
     setTimeout(() => {
         app.innerHTML = content;
         app.style.opacity = '1';
 
+        // After rendering the properties page, wire up filters and load cards
         if (hash === 'properties') {
-            setTimeout(() => {
-
-                import('./main.js').then(m => {
-
-                    // Attach change listeners
-                    document.querySelectorAll('#filters-bar select')
-                        .forEach(sel =>
-                            sel.addEventListener('change', () => {
-                                m.applyFilters();
-                            })
-                        );
-
-                // 🔥 Render properties ONCE on route load
-                m.applyFilters();
+            // Attach change listeners to filter selects (only once per render)
+            document.querySelectorAll('#filters-bar select').forEach(sel => {
+                sel.addEventListener('change', applyFilters);
             });
 
-            }, 0);
+            // Render the initial unfiltered list
+            applyFilters();
         }
 
         if (window.lucide) lucide.createIcons();
 
-        import('./main.js').then(m => m.FavManager.updateUI());
+        FavManager.updateUI();
+
     }, 150);
 }
 
-/**
- * Escuta mudanças no hash.
- */
+/* ─────────────────────────────────────────────
+   Listen for URL hash changes
+───────────────────────────────────────────── */
 window.addEventListener('hashchange', renderRoute);

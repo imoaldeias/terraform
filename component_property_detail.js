@@ -15,7 +15,6 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
-// --- CORREÇÃO: Funções expostas ao objeto 'window' para o HTML as encontrar ---
 window.nextImage = function() {
     if (!currentImages.length) return;
     currentImageIndex = (currentImageIndex + 1) % currentImages.length;
@@ -49,7 +48,6 @@ function updateImage() {
 }
 
 export function renderPropertyDetail(id) {
-    // Converter ID para número para garantir a comparação
     const prop = appData.properties.find(p => p.id === parseInt(id));
 
     if (!prop) {
@@ -60,7 +58,6 @@ export function renderPropertyDetail(id) {
         `;
     }
 
-    // Configuração do Listener de Fullscreen (apenas uma vez)
     if (!fullscreenListenerAdded) {
         document.addEventListener('fullscreenchange', () => {
             const btn = document.getElementById('close-fullscreen-btn');
@@ -70,7 +67,6 @@ export function renderPropertyDetail(id) {
         fullscreenListenerAdded = true;
     }
 
-    // Processamento das imagens da galeria
     const galleryImages = prop.gallery_ids
         ? prop.gallery_ids
             .replace(/\r/g, '')
@@ -80,24 +76,26 @@ export function renderPropertyDetail(id) {
             .filter(img => img.length > 5)
         : [];
 
-    // Definir as imagens que vão ser usadas
     currentImages = galleryImages.length > 0 ? galleryImages : [prop.image];
-    currentImageIndex = 0; // Para a galeria não começar no meio quando mudas de casa
-    
+    currentImageIndex = 0;
+
     return `
         <section class="pt-24 pb-32 bg-white min-h-screen">
             <div class="max-w-7xl mx-auto px-6">
-                <h1>
+
+                <h1 class="mb-12">
                     ${prop.location} — ${prop.title}
                 </h1>
-            </div>
-            
+
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-20">
 
+                    <!-- ── LEFT COLUMN ── -->
                     <div class="lg:col-span-2 space-y-16">
-                        
+
+                        <!-- GALLERY -->
                         <div id="gallery-container" class="relative aspect-[3/2] w-full overflow-hidden bg-gray-100 rounded-2xl">
-                            <img 
+
+                            <img
                                 id="main-gallery-image"
                                 src="${currentImages[0]}"
                                 alt="${prop.title}"
@@ -105,11 +103,11 @@ export function renderPropertyDetail(id) {
                             >
 
                             ${currentImages.length > 1 ? `
-                                <button onclick="prevImage()" 
+                                <button onclick="prevImage()"
                                     class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow transition text-xl">
                                     ‹
                                 </button>
-                                <button onclick="nextImage()" 
+                                <button onclick="nextImage()"
                                     class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow transition text-xl">
                                     ›
                                 </button>
@@ -126,14 +124,21 @@ export function renderPropertyDetail(id) {
                                 Fechar
                             </button>
 
-                        <div class="whitespace-pre-line">
-                            ${escapeHTML(prop.description) || 'Informação sob consulta.'}
                         </div>
-                    </div>
+                        <!-- /GALLERY -->
 
+                        <!-- DESCRIPTION -->
+                        <div class="whitespace-pre-line">
+                            ${prop.description || 'Informação sob consulta.'}
+                        </div>
+
+                    </div>
+                    <!-- /LEFT COLUMN -->
+
+                    <!-- ── RIGHT COLUMN (SIDEBAR) ── -->
                     <div class="lg:col-span-1">
                         <div class="border border-gray-200 p-10 rounded-3xl sticky top-32 space-y-8">
-                            
+
                             <div>
                                 <div class="label">Nome</div>
                                 <div>${prop.title}</div>
@@ -176,18 +181,24 @@ export function renderPropertyDetail(id) {
                             ` : ''}
 
                             <div class="pt-6 border-t border-gray-100">
-                                <button 
+                                <button
                                     data-route="contact"
                                     class="w-full border border-black py-4 hover:bg-black hover:text-white transition"
                                 >
                                     Solicitar Informações
                                 </button>
                             </div>
+
                         </div>
                     </div>
+                    <!-- /RIGHT COLUMN -->
+
                 </div>
+                <!-- /GRID -->
+
             </div>
-            </div>
+            <!-- /WRAPPER -->
+
         </section>
     `;
 }

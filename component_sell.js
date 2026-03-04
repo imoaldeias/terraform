@@ -11,11 +11,11 @@ export function renderSell() {
                     <div class="space-y-10">
 
                         <h1>
-                            Valorize o seu património.
+                            Valorize o seu património
                         </h1>
 
                         <p>
-                            Na TerraPrimus, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. 
+                            Na TerraPrima, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. 
                             Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
                         </p>
 

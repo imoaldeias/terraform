@@ -37,7 +37,7 @@ export function renderHero() {
 
                     <!-- Parágrafos principais (L4) -->
                     <p>
-                        A TerraPrimus nasce de uma premissa simples: a terra não é apenas um ativo, é um legado. 
+                        A TerraPrima nasce de uma premissa simples: a terra não é apenas um ativo, é um legado. 
                         Mais do que um recurso económico, é património, identidade e futuro.
                     </p>
 

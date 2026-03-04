@@ -1,6 +1,6 @@
 /* =====================================================
    TERRAPRIMUS — TYPOGRAPHIC SYSTEM
-   Cormorant Garamond + Inter
+   Instrument Serif + Instrument Sans
 ===================================================== */
 
 :root {
@@ -9,8 +9,8 @@
     --tp-text-secondary: #5C6453;
     --tp-accent: #3D4532;
 
-    --tp-serif: 'Cormorant Garamond', serif;
-    --tp-sans: 'Inter', sans-serif;
+    --tp-serif: 'Instrument Serif', serif;
+    --tp-sans: 'Instrument Sans', sans-serif;
 }
 
 /* =====================================================
@@ -18,7 +18,7 @@
 ===================================================== */
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     line-height: 1.65;
     background-color: #FBFBF9;
     color: #3D4532;
@@ -31,17 +31,16 @@ body {
 ===================================================== */
 
 h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6vw, 5rem); /* Aumentando o tamanho */
-    font-weight: 600; /* Mais pesado */
-    line-height: 1.1; /* Ajustando para mais destaque */
+    font-family: 'Instrument Serif', serif;
+    font-weight: 700;
+    line-height: 1.1;
     color: #2F3526;
-    margin-bottom: 20px; /* Um pequeno espaçamento embaixo para destaque */
+    margin-bottom: 20px;
 }
 
 h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.75rem; /* Aumentei um pouco para dar mais presença */
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
     font-weight: 400;
     line-height: 1.3;
     color: #2F3526;
