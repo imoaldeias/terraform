@@ -8,35 +8,51 @@ export function renderSell() {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-28">
 
                     <!-- LEFT: Texto -->
-                    <div class="space-y-10">
+                    <div>
 
-                        <h1>
+                        <h1 class="mb-10">
                             Valorize o seu património
                         </h1>
 
-                        <p>
+                        <p style="margin-bottom:3rem; line-height:1.8; color:#2F3526;">
                             Na TerraPrima, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. 
                             Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
                         </p>
 
-                        <p>
-                            Confidencialidade absoluta, com proteção de informação e gestão reservada de todo o processo.
-                        </p>
+                        <div style="display:flex; flex-direction:column;">
 
-                        <p>
-                            Avaliação e posicionamento assentes numa análise técnica, estratégica e no enquadramento real de mercado.
-                        </p>
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">01</span>
+                                <div>
+                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Confidencialidade</p>
+                                    <p style="line-height:1.7; color:#2F3526;">Proteção de informação e gestão reservada de todo o processo, com discrição absoluta em cada etapa.</p>
+                                </div>
+                            </div>
 
-                        <p>
-                            Acompanhamento integral, com representação estratégica, negociação e orientação até à conclusão da operação.
-                        </p>
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">02</span>
+                                <div>
+                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Avaliação & Posicionamento</p>
+                                    <p style="line-height:1.7; color:#2F3526;">Análise técnica e estratégica assente no enquadramento real de mercado, para um posicionamento fundamentado.</p>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
+                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">03</span>
+                                <div>
+                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Acompanhamento Integral</p>
+                                    <p style="line-height:1.7; color:#2F3526;">Representação estratégica, negociação e orientação especializada até à conclusão da operação.</p>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </div>
 
                     <!-- RIGHT: Formulário -->
                     <div class="bg-white p-12 rounded-[40px] border border-brand-100 shadow-2xl shadow-brand-900/5">
 
-                        <h2 class="mb-12 text-center text-2xl font-serif font-light">
+                        <h2 class="mb-12 text-center">
                             Solicitar Avaliação
                         </h2>
 
@@ -119,7 +135,7 @@ export function renderSell() {
                                 type="submit" 
                                 class="w-full mt-12 border border-brand-900 text-brand-900 py-4 hover:bg-brand-900 hover:text-white transition"
                             >
-                                Iniciar Processo
+                                Enviar
                             </button>
 
                         </form>

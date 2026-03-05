@@ -46,16 +46,12 @@ export function renderPropertyCards(properties) {
                     <!-- ESTATE TAG -->
                     <div style="background:#F0EEEA; padding:14px 16px 12px;">
                         <div style="display:flex; justify-content:space-between; align-items:baseline; margin:0 0 10px 0;">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.95rem; color:#2F3526;">${p.title}</span>
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:#6b7a5e;">${p.location}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.title}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.location}</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid rgba(62,74,63,0.12); padding-top:8px;">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">
-                                ${p.price}
-                            </span>
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:#6b7a5e;">
-                                ${p.areaTerreno > 0 ? p.areaTerreno + ' ha' : p.areaConstruida + ' m²'}
-                            </span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.price}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.areaTerreno > 0 ? p.areaTerreno + ' ha' : p.areaConstruida + ' m²'}</span>
                         </div>
                     </div>
 
