@@ -38,7 +38,7 @@ export function renderHero() {
                     <div style="display:flex; flex-direction:column;">
 
                         <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">01</span>
+                            <i data-lucide="handshake" style="width:18px; height:18px; color:#9C7A3C;"></i>
                             <div>
                                 <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Mediação de Imóveis Exclusivos</p>
                                 <p style="line-height:1.7; color:#2F3526;">Representação discreta na aquisição e alienação de propriedades singulares através de uma rede de contactos exclusiva.</p>
@@ -46,7 +46,7 @@ export function renderHero() {
                         </div>
 
                         <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">02</span>
+                            <i data-lucide="leaf" style="width:18px; height:18px; color:#9C7A3C;"></i>
                             <div>
                                 <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Gestão e Serviços Agrícolas</p>
                                 <p style="line-height:1.7; color:#2F3526;">Acompanhamento técnico e operacional de ativos agrícolas, focando na eficiência e rentabilidade produtiva.</p>
@@ -54,7 +54,7 @@ export function renderHero() {
                         </div>
 
                         <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">03</span>
+                            <i data-lucide="hotel" style="width:18px; height:18px; color:#9C7A3C; margin-top:3px;"></i>
                             <div>
                                 <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Desenvolvimento de Projetos Turísticos</p>
                                 <p style="line-height:1.7; color:#2F3526;">Estruturação de investimentos turísticos integrados que respeitam a sustentabilidade e a herança do território.</p>
@@ -62,7 +62,7 @@ export function renderHero() {
                         </div>
 
                         <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">04</span>
+                            <i data-lucide="coins" style="width:18px; height:18px; color:#9C7A3C;"></i>
                             <div>
                                 <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Consultoria em Investimento e Vistos Gold</p>
                                 <p style="line-height:1.7; color:#2F3526;">Aconselhamento estratégico em investimento e processos de residência, garantindo segurança jurídica e financeira.</p>

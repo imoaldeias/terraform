@@ -120,7 +120,17 @@ document.body.addEventListener('click', e => {
     // ── MOBILE FILTER TOGGLE ───────────────────────
     if (e.target.closest('#btn-toggle-filters')) {
         const bar = document.getElementById('filters-bar');
+        const closeBtn = document.getElementById('btn-close-filters');
         if (bar) bar.classList.toggle('hidden');
+        if (closeBtn) closeBtn.classList.toggle('hidden');
+        return;
+    }
+
+    if (e.target.closest('#btn-close-filters')) {
+        const bar = document.getElementById('filters-bar');
+        const closeBtn = document.getElementById('btn-close-filters');
+        if (bar) bar.classList.add('hidden');
+        if (closeBtn) closeBtn.classList.add('hidden');
         return;
     }
 

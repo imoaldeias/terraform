@@ -21,10 +21,10 @@ export function renderPropertyCards(properties) {
             ${properties.map(p => `
 
                 <div class="group cursor-pointer transition-all duration-300 hover:-translate-y-1"
-                     data-route="property-${p.id}">
+                     data-route="property-${p.id}" style="border-radius:4px; overflow:hidden;">
 
                     <!-- IMAGEM -->
-                    <div class="relative aspect-square overflow-hidden bg-gray-100">
+                    <div class="relative overflow-hidden bg-gray-100" style="aspect-ratio:4/3;">
                         <img
                             src="${p.image}"
                             alt="${p.title}"
@@ -44,7 +44,7 @@ export function renderPropertyCards(properties) {
                     </div>
 
                     <!-- ESTATE TAG -->
-                    <div style="background:#F0EEEA; padding:14px 16px 12px;">
+                    <div style="background:#EDE8E0; padding:14px 16px 12px; border-radius:0 0 4px 4px;">
                         <div style="display:flex; justify-content:space-between; align-items:baseline; margin:0 0 10px 0;">
                             <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.title}</span>
                             <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.location}</span>
@@ -72,16 +72,23 @@ export function renderPropertyCards(properties) {
 export function renderProperties() {
 
     return `
-        <section class="pt-24 pb-32">
+        <section class="pt-12 pb-32">
             <div class="max-w-7xl mx-auto px-6">
 
-            <div class="flex justify-end mb-6 lg:hidden">
+            <div class="flex justify-between mb-6 items-center">
                 <button
                     id="btn-toggle-filters"
-                    class="border border-gray-300 rounded-sm px-3 py-1 transition hover:border-black"
+                    class="border border-gray-300 rounded-sm px-3 py-1 transition hover:border-black lg:hidden"
                     style="font-size:0.75rem; letter-spacing:0.08em;"
                 >
                     Filtros ▾
+                </button>
+                <button
+                    id="btn-close-filters"
+                    class="hidden border border-gray-300 rounded-sm px-3 py-1 transition hover:border-black"
+                    style="font-size:0.75rem; letter-spacing:0.08em;"
+                >
+                    Fechar Filtros ✕
                 </button>
             </div>
 
@@ -138,21 +145,24 @@ export function renderProperties() {
 
                     <button
                         id="btn-apply-filters"
-                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
+                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
+                        style="font-size:0.78rem;"
                     >
                         Aplicar
                     </button>
 
                     <button
                         id="btn-clear-filters"
-                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
+                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
+                        style="font-size:0.78rem;"
                     >
                         Limpar
                     </button>
 
                     <button
                         id="btn-sort"
-                        class="border border-black px-6 py-2 hover:bg-black hover:text-white transition duration-300"
+                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
+                        style="font-size:0.78rem;"
                     >
                         Ordenar: —
                     </button>
@@ -188,14 +198,15 @@ function renderSelect(id, label, options) {
 
             <label
                 for="${id}"
-                class="label mb-2"
+                class="label mb-1"
             >
                 ${label}
             </label>
 
             <select
                 id="${id}"
-                class="border-b border-gray-300 bg-transparent py-2 px-1 focus:outline-none focus:border-black transition"
+                class="border-b border-gray-300 bg-transparent py-1 px-1 focus:outline-none focus:border-black transition"
+                style="font-size:0.78rem;"
             >
                 <option value="all">Todos</option>
 

@@ -35,7 +35,7 @@
         /* NAV LINKS */
         .nav-link {
             font-family: 'Instrument Sans', sans-serif;
-            font-size: 0.72rem;
+            font-size: 0.85rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: #3E4A3F;
@@ -106,8 +106,8 @@ NAVBAR
      style="background: rgba(201,210,194,0.97); border-bottom: 1px solid rgba(62,74,63,0.10);">
 
     <!-- MAIN NAV ROW -->
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full flex items-center justify-between"
-         style="height: 116px;">
+    <div class="mx-auto px-6 lg:px-10 lg:max-w-7xl w-full flex items-center justify-between"
+         style="height: 136px;">
 
         <!-- LOGO + WORDMARK -->
         <div class="flex items-center gap-5 cursor-pointer" data-route="properties">
@@ -189,7 +189,7 @@ MOBILE MENU
 APP ROOT
 ===================================================== -->
 
-<main id="app" style="padding-top: 120px;"></main>
+<main id="app" style="padding-top: 140px;"></main>
 
 <!-- =====================================================
 FOOTER
@@ -291,19 +291,21 @@ FOOTER
         });
     });
 
-    // Scroll shrink: hide micro bar, add shadow
+    lucide.createIcons();
+
     window.addEventListener("scroll", () => {
         const navbar = document.getElementById("navbar");
+        const inner = navbar.querySelector('.max-w-7xl');
         if (window.scrollY > 40) {
-            navbar.classList.add("scrolled");
             navbar.style.boxShadow = "0 4px 24px -8px rgba(0,0,0,0.12)";
+            inner.style.height = "72px";
+            inner.style.transition = "height 0.4s ease";
         } else {
-            navbar.classList.remove("scrolled");
             navbar.style.boxShadow = "none";
+            inner.style.height = "136px";
+            inner.style.transition = "height 0.4s ease";
         }
     });
-
-    lucide.createIcons();
 </script>
 
 <script>

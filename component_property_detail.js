@@ -27,24 +27,26 @@ window.prevImage = function() {
     updateImage();
 };
 
-window.openFullscreen = function () {
-    const container = document.getElementById('gallery-container');
-    if (container && container.requestFullscreen) {
-        container.requestFullscreen();
+window.openLightbox = function () {
+    const lightbox = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-image');
+    if (lightbox && img) {
+        img.src = currentImages[currentImageIndex];
+        lightbox.style.display = 'flex';
     }
 };
 
-window.closeFullscreen = function () {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    }
+window.closeLightbox = function () {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) lightbox.style.display = 'none';
 };
 
 function updateImage() {
     const img = document.getElementById('main-gallery-image');
-    if (img) {
-        img.src = currentImages[currentImageIndex];
-    }
+    if (img) img.src = currentImages[currentImageIndex];
+
+    const lightboxImg = document.getElementById('lightbox-image');
+    if (lightboxImg) lightboxImg.src = currentImages[currentImageIndex];
 }
 
 export function renderPropertyDetail(id) {
@@ -93,37 +95,58 @@ export function renderPropertyDetail(id) {
                     <div class="lg:col-span-2 space-y-16">
 
                         <!-- GALLERY -->
-                        <div id="gallery-container" class="relative aspect-[3/2] w-full overflow-hidden bg-gray-100 rounded-2xl">
+                        <div id="gallery-container" class="relative aspect-[3/2] w-full overflow-hidden bg-gray-100" style="border-radius:4px;">
 
                             <img
                                 id="main-gallery-image"
                                 src="${currentImages[0]}"
                                 alt="${prop.title}"
                                 class="w-full h-full object-cover transition-all duration-500"
+                                style="cursor:zoom-in;"
+                                onclick="openLightbox()"
                             >
 
                             ${currentImages.length > 1 ? `
-                                <button onclick="prevImage()"
-                                    class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow transition text-xl">
-                                    ‹
-                                </button>
-                                <button onclick="nextImage()"
-                                    class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow transition text-xl">
-                                    ›
-                                </button>
-                            ` : ''}
+    <button onclick="prevImage()"
+        style="position:absolute; left:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
+        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+        ‹
+    </button>
+    <button onclick="nextImage()"
+        style="position:absolute; right:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
+        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+        ›
+    </button>
+` : ''}
 
-                            <button onclick="openFullscreen()"
-                                class="absolute top-4 right-4 bg-white/80 hover:bg-white px-3 py-2 rounded-lg shadow transition">
-                                Fullscreen
-                            </button>
+                        </div>
 
-                            <button id="close-fullscreen-btn"
-                                onclick="closeFullscreen()"
-                                class="absolute top-4 left-4 bg-black text-white px-3 py-2 rounded-lg shadow opacity-0 transition">
-                                Fechar
-                            </button>
+                        <!-- LIGHTBOX -->
+                        <div id="lightbox"
+                            onclick="closeLightbox()"
+                            style="display:none; position:fixed; inset:0; z-index:1000;
+                                   background:rgba(20,20,18,0.92);
+                                   align-items:center; justify-content:center;">
+                            
+                                   <div style="width:calc(100% - 8rem); height:calc(100% - 8rem); max-width:1200px; position:relative;"
+                                 onclick="event.stopPropagation()">
+                                <img id="lightbox-image"
+                                    src="${currentImages[0]}"
+                                    style="width:100%; height:100%; object-fit:contain; border-radius:4px;">
 
+                                ${currentImages.length > 1 ? `
+                                    <button onclick="prevImage(); document.getElementById('lightbox-image').src = currentImages[currentImageIndex];"
+                                        style="position:absolute; left:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
+                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                                        ‹
+                                    </button>
+                                    <button onclick="nextImage(); document.getElementById('lightbox-image').src = currentImages[currentImageIndex];"
+                                        style="position:absolute; right:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
+                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                                        ›
+                                    </button>
+                                ` : ''}
+                            </div>
                         </div>
                         <!-- /GALLERY -->
 
