@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TerraPrimus — Alentejo Heritage Estate</title>
 
-    <!-- Google Fonts: Instrument Serif + Instrument Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,600;1,400&family=Instrument+Serif:italic@0;1&display=swap" rel="stylesheet">
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
         tailwind.config = {
             corePlugins: { preflight: false },
@@ -28,12 +25,10 @@
             }
         }
     </script>
-
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* NAV LINKS */
         .nav-link {
             font-family: 'Instrument Sans', sans-serif;
             font-size: 0.85rem;
@@ -56,7 +51,6 @@
         .nav-link:hover::after { width: 100%; }
         .nav-link:hover { opacity: 0.7; }
 
-        /* MOBILE NAV LINKS */
         .mobile-nav-link {
             font-family: 'Instrument Sans', sans-serif;
             font-size: 0.78rem;
@@ -71,7 +65,6 @@
         }
         .mobile-nav-link:hover { opacity: 0.6; }
 
-        /* FOOTER LINKS */
         .footer-link {
             font-family: 'Instrument Sans', sans-serif;
             font-size: 0.85rem;
@@ -81,65 +74,53 @@
         }
         .footer-link:hover { color: #FBF8EF; }
 
-        /* FOOTER TEXT */
         .footer-text {
             font-family: 'Instrument Sans', sans-serif;
             font-size: 0.85rem;
             color: rgba(251,248,239,0.6);
         }
 
-        /* NAVBAR SCROLL SHRINK */
         #navbar.scrolled .micro-bar { display: none !important; }
+
+        #footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 640px) {
+            #footer-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 
 <body class="bg-[#FBF8EF] text-black antialiased">
 
-<!-- =====================================================
-HEADER
-===================================================== -->
-
-<!-- =====================================================
-NAVBAR
-===================================================== -->
-
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
      style="background: rgb(201,210,194); border-bottom: 1px solid rgba(62,74,63,0.10);">
 
-    <!-- MAIN NAV ROW -->
-    <div class="mx-auto px-6 lg:px-10 lg:max-w-7xl w-full flex items-center justify-between"
-         style="height: 136px;">
+    <div id="nav-inner" class="mx-auto px-6 lg:px-10 lg:max-w-7xl w-full flex items-center justify-between"
+         style="height: 72px;">
 
-        <!-- LOGO + WORDMARK -->
-        <div class="flex items-center gap-5 cursor-pointer" data-route="properties">
-
+        <div class="flex items-center gap-3 cursor-pointer" data-route="properties">
             <img src="./logo.webp" alt="TerraPrimus"
                  loading="eager" fetchpriority="high" decoding="async"
-                 style="height:80px; width:auto; object-fit:contain;">
-
-            <div style="display:flex; flex-direction:column; line-height:1; gap:7px;">
-                <span id="brand-name" style="font-family:'Instrument Serif',serif; font-size:2.6rem; color:#2F3526; letter-spacing:0.02em; white-space:nowrap;">
+                 style="height:44px; width:auto; object-fit:contain;">
+            <div style="display:flex; flex-direction:column; line-height:1; gap:5px;">
+                <span id="brand-name" style="font-family:'Instrument Serif',serif; font-size:1.6rem; color:#2F3526; letter-spacing:0.02em; white-space:nowrap;">
                     TerraPrimus
                 </span>
-                <span id="brand-sub" style="font-family:'Instrument Sans',sans-serif; font-size:0.6rem; text-transform:uppercase; color:#9C7A3C; display:block; white-space:nowrap;">
-                    Alentejo Heritage Estate
+                <span id="brand-sub" style="font-family:'Instrument Sans',sans-serif; font-size:0.6rem; text-transform:uppercase; color:#9C7A3C; display:none; white-space:nowrap;">
+                    Alentejo Heritage Estates
                 </span>
             </div>
-
         </div>
 
-        <!-- DESKTOP NAV LINKS -->
         <div class="hidden lg:flex items-center" style="gap: 2.5rem;">
-
             <a href="#properties" data-route="properties" class="nav-link">Portfólio</a>
-            <a href="#invest" data-route="invest" class="nav-link">Investir</a>
-            <a href="#sell" data-route="sell" class="nav-link">Vender</a>
-            <a href="#home" data-route="home" class="nav-link">Visão</a>
-            
-            <!-- DIVIDER -->
+            <a href="#invest"     data-route="invest"     class="nav-link">Investir</a>
+            <a href="#sell"       data-route="sell"       class="nav-link">Vender</a>
+            <a href="#home"       data-route="home"       class="nav-link">Visão</a>
             <div style="width:1px; height:18px; background:rgba(62,74,63,0.2);"></div>
-
-            <!-- FAVOURITES -->
             <button id="fav-nav-btn"
                 style="display:flex; align-items:center; gap:7px; font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:#3E4A3F; border:1px solid rgba(62,74,63,0.25); padding:7px 16px; background:transparent; cursor:pointer; transition: all 0.3s ease;"
                 onmouseover="this.style.background='rgba(62,74,63,0.08)'"
@@ -147,130 +128,81 @@ NAVBAR
                 <i data-lucide="heart" style="width:13px; height:13px;"></i>
                 <span id="fav-count">0</span>
             </button>
-
         </div>
 
-        <!-- MOBILE MENU BUTTON -->
         <button id="mobile-menu-btn"
             class="lg:hidden"
-            style="color:#3E4A3F; background:none; border:none; cursor:pointer; padding:4px;">
+            style="color:#3E4A3F; background:none; border:none; cursor:pointer; padding:8px;">
             <i id="mobile-menu-icon" data-lucide="menu" style="width:24px; height:24px;"></i>
         </button>
 
     </div>
 </nav>
 
-<!-- =====================================================
-MOBILE MENU
-===================================================== -->
-
 <div id="mobile-menu"
      class="hidden"
-     style="position:fixed; top:136px; left:0; width:100%; z-index:40;
+     style="position:fixed; top:72px; left:0; width:100%; z-index:40;
             background:rgba(201,210,194,0.99);
             border-bottom: 1px solid rgba(62,74,63,0.12);
             backdrop-filter: blur(8px);">
-
     <div style="display:flex; flex-direction:column; padding: 2rem 1.5rem 2.5rem; gap:0;">
-
         <a href="#properties" data-route="properties" class="mobile-nav-link">Portfólio</a>
-        <a href="#invest"     data-route="invest"       class="mobile-nav-link">Investimento</a>
-        <a href="#sell"       data-route="sell"         class="mobile-nav-link">Vender</a>
-        <a href="#home"       data-route="home"         class="mobile-nav-link">Visão</a>
-        
-        <!-- CONTACT INFO -->
+        <a href="#invest"     data-route="invest"     class="mobile-nav-link">Investimento</a>
+        <a href="#sell"       data-route="sell"       class="mobile-nav-link">Vender</a>
+        <a href="#home"       data-route="home"       class="mobile-nav-link">Visão</a>
         <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(62,74,63,0.15);">
             <p style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.75rem;">Contacto</p>
             <p style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#3E4A3F; margin-bottom:0.25rem;">+351 9XX XXX XXX</p>
-            <p style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#3E4A3F;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1c6c4d3c0cde1d5c4d3d3c0d1d3c8ccc08fd1d5">[email&#160;protected]</a></p>
+            <p style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#3E4A3F;">geral@terraprimus.pt</p>
         </div>
-
     </div>
 </div>
 
-<!-- =====================================================
-APP ROOT
-===================================================== -->
-
-<main id="app" style="padding-top: 140px;"></main>
-
-<!-- =====================================================
-FOOTER
-===================================================== -->
-
-<!-- =====================================================
-FOOTER
-===================================================== -->
+<main id="app" style="padding-top: 72px;"></main>
 
 <footer style="background:#3D3632; color:#FBF8EF;">
-
-    <!-- MAIN FOOTER BODY -->
     <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top:5rem; padding-bottom:4rem;">
+        <div id="footer-grid">
 
-        <div style="display:grid; grid-template-columns:1fr; gap:3rem;">
-
-            <!-- BOTTOM GRID: NAV + CONTACT -->
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2rem;">
-
-                <!-- COL 1: PORTFÓLIO -->
-                <div>
-                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">
-                        Navegação
-                    </p>
-                    <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                        <a href="#properties" data-route="properties" class="footer-link">Portfólio</a>
-                        <a href="#invest"     data-route="invest"      class="footer-link">Calcular Investimento</a>
-                        <a href="#sell"       data-route="sell"        class="footer-link">Vender</a>
-                        <a href="#home"       data-route="home"        class="footer-link">Visão</a>
-                        
-                    </div>
+            <div>
+                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">Navegação</p>
+                <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                    <a href="#properties" data-route="properties" class="footer-link">Portfólio</a>
+                    <a href="#invest"     data-route="invest"     class="footer-link">Calcular Investimento</a>
+                    <a href="#sell"       data-route="sell"       class="footer-link">Vender</a>
+                    <a href="#home"       data-route="home"       class="footer-link">Visão</a>
                 </div>
+            </div>
 
-                <!-- COL 2: CONTACTO -->
-                <div>
-                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">
-                        Contacto
-                    </p>
-                    <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                        <span class="footer-text">+351 9XX XXX XXX</span>
-                        <span class="footer-text">+351 9XX XXX XXX</span>
-                        <span class="footer-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="10777562717c5064756262716062797d713e6064">[email&#160;protected]</a></span>
-                    </div>
+            <div>
+                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">Contacto</p>
+                <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                    <span class="footer-text">+351 9XX XXX XXX</span>
+                    <span class="footer-text">+351 9XX XXX XXX</span>
+                    <span class="footer-text">geral@terraprimus.pt</span>
                 </div>
+            </div>
 
-                <!-- COL 3: LOCALIZAÇÃO -->
-                <div>
-                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">
-                        Localização
-                    </p>
-                    <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                        <span class="footer-text">Alentejo</span>
-                        <span class="footer-text">Portugal</span>
-                    </div>
+            <div>
+                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">Localização</p>
+                <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                    <span class="footer-text">Alentejo</span>
+                    <span class="footer-text">Portugal</span>
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
-    <!-- BOTTOM BAR -->
     <div style="border-top:1px solid rgba(251,248,239,0.08); padding:1.25rem 0;">
         <div class="max-w-7xl mx-auto px-6 lg:px-10"
              style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; color:rgba(251,248,239,0.3);">
-                © 2026 TerraPrimus Heritage Estate
-            </span>
-            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; color:rgba(251,248,239,0.3);">
-                AMI · Mediação Imobiliária
-            </span>
+            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; color:rgba(251,248,239,0.3);">© 2026 TerraPrimus Heritage Estate</span>
+            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; color:rgba(251,248,239,0.3);">AMI · Mediação Imobiliária</span>
         </div>
     </div>
-
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script type="module" src="main.js"></script>
 
 <script>
@@ -280,10 +212,7 @@ FOOTER
 
     mobileBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
-        mobileIcon.setAttribute(
-            "data-lucide",
-            mobileMenu.classList.contains("hidden") ? "menu" : "x"
-        );
+        mobileIcon.setAttribute("data-lucide", mobileMenu.classList.contains("hidden") ? "menu" : "x");
         lucide.createIcons();
     });
 
@@ -297,46 +226,45 @@ FOOTER
 
     lucide.createIcons();
 
-    window.addEventListener("scroll", () => {
-        const navbar = document.getElementById("navbar");
-        const inner  = navbar.querySelector('.max-w-7xl, .mx-auto');
-        const logo   = navbar.querySelector('img');
+    function updateNavbar() {
+        const navbar    = document.getElementById("navbar");
+        const inner     = document.getElementById("nav-inner");
+        const logo      = navbar.querySelector('img');
         const brandName = document.getElementById('brand-name');
         const brandSub  = document.getElementById('brand-sub');
+        const isMobile  = window.innerWidth < 1024;
+        const scrolled  = window.scrollY > 40;
 
-        if (window.scrollY > 40) {
-            navbar.style.boxShadow = "0 4px 24px -8px rgba(0,0,0,0.12)";
-            if (inner) inner.style.height = '64px';
-            if (logo)  logo.style.height  = '40px';
-            if (brandName) brandName.style.fontSize = '1.3rem';
+        if (isMobile) {
+            if (inner)     inner.style.height       = '72px';
+            if (logo)      logo.style.height        = '44px';
+            if (brandName) brandName.style.fontSize = '1.6rem';
             if (brandSub)  brandSub.style.display   = 'none';
-            mobileMenu.style.top = '64px';
+            mobileMenu.style.top = '72px';
+            navbar.style.boxShadow = scrolled ? "0 4px 24px -8px rgba(0,0,0,0.12)" : "none";
         } else {
-            navbar.style.boxShadow = "none";
-            if (inner) inner.style.height = '136px';
-            if (logo)  logo.style.height  = '80px';
-            if (brandName) brandName.style.fontSize = '2.6rem';
-            if (brandSub)  brandSub.style.display   = 'flex';
-            mobileMenu.style.top = '136px';
+            if (scrolled) {
+                navbar.style.boxShadow = "0 4px 24px -8px rgba(0,0,0,0.12)";
+                if (inner)     inner.style.height       = '72px';
+                if (logo)      logo.style.height        = '44px';
+                if (brandName) brandName.style.fontSize = '1.6rem';
+                if (brandSub)  brandSub.style.display   = 'none';
+                mobileMenu.style.top = '72px';
+            } else {
+                navbar.style.boxShadow = "none";
+                if (inner)     inner.style.height       = '136px';
+                if (logo)      logo.style.height        = '80px';
+                if (brandName) brandName.style.fontSize = '2.6rem';
+                if (brandSub)  brandSub.style.display   = 'flex';
+                mobileMenu.style.top = '136px';
+            }
         }
-    });
-    
-</script>
-
-<script>
-    function matchBrandWidth() {
-        const name = document.getElementById('brand-name');
-        const sub  = document.getElementById('brand-sub');
-        if (!name || !sub) return;
-        const targetWidth = name.getBoundingClientRect().width;
-        sub.style.width = targetWidth + 'px';
-        sub.style.display = 'flex';
-        sub.style.justifyContent = 'space-between';
     }
-    document.fonts.ready.then(matchBrandWidth);
-    window.addEventListener('resize', matchBrandWidth);
+
+    window.addEventListener("scroll", updateNavbar);
+    window.addEventListener("resize", updateNavbar);
+    updateNavbar();
 </script>
 
-<script>
-    function highlightNav() {
-        const hash = window.location.
+</body>
+</html>

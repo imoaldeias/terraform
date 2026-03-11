@@ -72,28 +72,12 @@ export function renderPropertyCards(properties) {
 export function renderProperties() {
 
     return `
-        <section class="pt-12 pb-32">
+        <section class="pt-20 pb-32">
             <div class="max-w-7xl mx-auto px-6">
 
-            <div class="flex justify-between mb-6 items-center">
-                <button
-                    id="btn-toggle-filters"
-                    class="border border-gray-300 rounded-sm px-3 py-1 transition hover:border-black lg:hidden"
-                    style="font-size:0.75rem; letter-spacing:0.08em;"
-                >
-                    Filtros ▾
-                </button>
-                <button
-                    id="btn-close-filters"
-                    class="hidden border border-gray-300 rounded-sm px-3 py-1 transition hover:border-black"
-                    style="font-size:0.75rem; letter-spacing:0.08em;"
-                >
-                    Fechar Filtros ✕
-                </button>
-            </div>
-
+                        <!-- FILTERS: start visible, JS will hide/show -->
             <div id="filters-bar"
-                class="hidden lg:grid mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                style="display:grid; margin-bottom:3rem; grid-template-columns:repeat(3, 1fr); gap:1.5rem;">
 
                 ${renderSelect('filter-location', 'Localização',
                     [...new Set(appData.properties.map(p => p.locationNormalized))]
@@ -140,6 +124,24 @@ export function renderProperties() {
                         { value: '5', label: '5+' }
                     ])}
 
+                <!-- ORDENAR -->
+                <div class="flex flex-col">
+                    <label for="filter-sort" class="label mb-1">Ordenar</label>
+                    <select
+                        id="filter-sort"
+                        class="border-b border-gray-300 bg-transparent py-1 px-1 focus:outline-none focus:border-black transition"
+                        style="font-size:0.78rem;"
+                    >
+                        <option value="default">—</option>
+                        <option value="price-asc">Preço ↑</option>
+                        <option value="price-desc">Preço ↓</option>
+                        <option value="area-asc">Área ↑</option>
+                        <option value="area-desc">Área ↓</option>
+                        <option value="rooms-asc">Quartos ↑</option>
+                        <option value="rooms-desc">Quartos ↓</option>
+                    </select>
+                </div>
+
                 <!-- BOTÕES -->
                 <div class="col-span-full flex flex-col sm:flex-row gap-4 mt-2">
 
@@ -160,11 +162,17 @@ export function renderProperties() {
                     </button>
 
                     <button
-                        id="btn-sort"
-                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
-                        style="font-size:0.78rem;"
+                        id="btn-close-filters"
+                        style="font-size:0.78rem; border:1px solid black; padding:4px 16px; background:transparent; cursor:pointer;"
                     >
-                        Ordenar: —
+                        Fechar Filtros ✕
+                    </button>
+
+                    <button
+                        id="btn-toggle-filters"
+                        style="display:none; font-size:0.78rem; border:1px solid black; padding:4px 16px; background:transparent; cursor:pointer;"
+                    >
+                        Filtros ▾
                     </button>
 
                 </div>

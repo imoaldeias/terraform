@@ -3,8 +3,8 @@ export function renderInvest() {
         <style>
             /* ── INVEST RESPONSIVE ── */
             #invest-type-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                display: flex;
+                flex-wrap: wrap;
                 gap: 0.5rem;
             }
             #invest-main-grid {
@@ -58,9 +58,16 @@ export function renderInvest() {
                     </p>
                 </div>
 
+                <!-- INTRO TEXT -->
+                <div style="margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:1px solid rgba(62,74,63,0.1);">
+                    <p style="line-height:1.9; color:#6b7a5e; font-size:0.82rem; font-style:italic;">
+                        Os resultados são indicativos e baseados nos pressupostos introduzidos. Para uma análise de viabilidade detalhada, contacte-nos através do formulário abaixo.
+                    </p>
+                </div>
+
                 <!-- TYPE SELECTOR -->
                 <div style="margin-bottom:1.25rem;">
-                    <div id="invest-type-grid">
+                    <div id="invest-type-grid" style="display:flex; flex-wrap:wrap; gap:0.5rem;">
                         <button class="type-btn active" data-type="tourism"
                             style="display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;border:1px solid #2F3526;background:#2F3526;color:#FAF7F2;border-radius:4px;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">
                             <i data-lucide="hotel" style="width:13px;height:13px;flex-shrink:0;"></i>
@@ -85,13 +92,16 @@ export function renderInvest() {
                 </div>
 
                 <!-- MAIN GRID: inputs + results -->
-                <div id="invest-main-grid">
+                <div id="invest-main-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:stretch;">
 
                     <!-- LEFT: INPUTS -->
                     <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.5rem;">
                         <div id="form-fields" style="display:flex;flex-direction:column;gap:0;"></div>
                         <p id="calc-error" style="display:none;font-family:'Instrument Sans',sans-serif;font-size:0.75rem;color:#c0392b;margin-top:0.75rem;text-align:center;"></p>
-                    </div>
+        <button id="btn-calculate" style="width:100%;margin-top:1.25rem;padding:0.75rem;border:1px solid #2F3526;background:#2F3526;color:#FAF7F2;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:4px;transition:all 0.3s;">
+            Calcular
+        </button>
+    </div>
 
                     <!-- RIGHT: RESULTS -->
                     <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.5rem;">
@@ -118,20 +128,18 @@ export function renderInvest() {
                             </div>
                         </div>
 
-                        <!-- DISCLAIMER -->
-                        <p style="font-family:'Instrument Sans',sans-serif;font-size:0.68rem;color:#9b9b8a;line-height:1.6;margin-bottom:1.25rem;">
-                            Estimativas indicativas baseadas nos dados introduzidos. Não constituem garantia de rendimento.
-                        </p>
-
                         <!-- LEAD FORM -->
                         <div style="border-top:1px solid rgba(62,74,63,0.1);padding-top:1.25rem;">
                             <p style="font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.3rem;">Análise Personalizada</p>
                             <p style="font-family:'Instrument Sans',sans-serif;font-size:0.8rem;color:#6b7a5e;margin-bottom:1rem;line-height:1.5;">Quer um estudo de viabilidade detalhado, sem compromisso?</p>
                             <div style="display:flex;flex-direction:column;gap:0.6rem;">
-                                <input type="text" id="lead-name" placeholder="Nome"
+                                <input type="text" id="lead-name" placeholder="Nome *"
                                     style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
-                                <input type="email" id="lead-email" placeholder="Email"
+                                <input type="email" id="lead-email" placeholder="Email *"
                                     style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
+                                <input type="tel" id="lead-phone" placeholder="Telefone (opcional)"
+                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
+                                <div id="lead-feedback" style="display:none;padding:0.6rem;text-align:center;font-size:0.8rem;border-radius:4px;"></div>
                                 <button id="btn-lead"
                                     style="width:100%;margin-top:0.25rem;padding:0.7rem;border:1px solid #9C7A3C;background:transparent;color:#9C7A3C;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:4px;transition:all 0.3s;">
                                     Solicitar Análise
@@ -450,15 +458,68 @@ export function initInvest() {
     });
 
     // ─── LEAD BUTTON ─────────────────────────────────────────────────────────
-    document.getElementById('btn-lead')?.addEventListener('click', () => {
-        const name  = document.getElementById('lead-name')?.value?.trim();
-        const email = document.getElementById('lead-email')?.value?.trim();
-        if (!name || !email) return;
-        const btn = document.getElementById('btn-lead');
-        btn.textContent = '✓ Pedido enviado';
-        btn.style.color = '#2F3526';
-        btn.style.borderColor = '#2F3526';
-        btn.disabled = true;
+    document.getElementById('btn-lead')?.addEventListener('click', async () => {
+        const name     = document.getElementById('lead-name')?.value?.trim();
+        const email    = document.getElementById('lead-email')?.value?.trim();
+        const phone    = document.getElementById('lead-phone')?.value?.trim();
+        const feedback = document.getElementById('lead-feedback');
+        const btn      = document.getElementById('btn-lead');
+
+        if (!name || !email) {
+            feedback.style.display     = 'block';
+            feedback.style.background  = '#FEF2F2';
+            feedback.style.color       = '#DC2626';
+            feedback.innerText         = 'Por favor preencha o nome e o email.';
+            return;
+        }
+
+        btn.disabled    = true;
+        btn.innerText   = 'A enviar...';
+
+        try {
+            await new Promise((resolve) => {
+                if (window.emailjs) return resolve();
+                const interval = setInterval(() => {
+                    if (window.emailjs) { clearInterval(interval); resolve(); }
+                }, 100);
+            });
+            const tipo     = document.querySelector('.type-btn[style*="background: rgb(47"]') || document.querySelector('.type-btn.active');
+            const tipoName = tipo ? tipo.querySelector('span')?.innerText : currentType;
+
+            const inputs = [...document.querySelectorAll('#form-fields .invest-field-row')].map(row => {
+                const label = row.querySelector('label')?.innerText?.trim().split('\n')[0];
+                const value = row.querySelector('input')?.value;
+                return `${label}: ${value}`;
+            }).join('\n');
+
+            const kpis = [1,2,3,4].map(i => {
+                const label = document.getElementById(`kpi${i}-label`)?.innerText;
+                const value = document.getElementById(`kpi${i}-value`)?.innerText;
+                return `${label}: ${value}`;
+            }).join('\n');
+
+            await emailjs.send('service_ad9oepj', 'template_vswa3qc', {
+                from_name:  name,
+                from_email: email,
+                phone:      phone || '—',
+                message:    `Tipo de projeto: ${tipoName}\n\n--- INPUTS ---\n${inputs}\n\n--- RESULTADOS ---\n${kpis}`
+            });
+
+            feedback.style.display    = 'block';
+            feedback.style.background = '#F0FDF4';
+            feedback.style.color      = '#16A34A';
+            feedback.innerText        = 'Pedido enviado. Entraremos em contacto brevemente.';
+            btn.innerText             = '✓ Enviado';
+
+        } catch (err) {
+            feedback.style.display    = 'block';
+            feedback.style.background = '#FEF2F2';
+            feedback.style.color      = '#DC2626';
+            feedback.innerText        = 'Erro ao enviar. Tente novamente.';
+            btn.disabled              = false;
+            btn.innerText             = 'Solicitar Análise';
+            console.error(err);
+        }
     });
 
     document.getElementById('btn-lead')?.addEventListener('mouseover', e => {
@@ -467,6 +528,17 @@ export function initInvest() {
     document.getElementById('btn-lead')?.addEventListener('mouseout', e => {
         if (!e.target.disabled) { e.target.style.background = 'transparent'; e.target.style.color = '#9C7A3C'; }
     });
+
+    // ─── EMAILJS ──────────────────────────────────────────────────────────────
+    if (!document.getElementById('emailjs-sdk')) {
+        const script    = document.createElement('script');
+        script.id       = 'emailjs-sdk';
+        script.src      = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.onload   = () => emailjs.init('wMlwvV8YGbVR5i6cO');
+        document.head.appendChild(script);
+    } else if (window.emailjs) {
+        emailjs.init('wMlwvV8YGbVR5i6cO');
+    }
 
     // ─── INIT ─────────────────────────────────────────────────────────────────
     renderForm('tourism');

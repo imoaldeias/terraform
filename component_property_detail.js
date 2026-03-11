@@ -67,20 +67,20 @@ export function renderPropertyDetail(id) {
                                    background:rgba(20,20,18,0.92);
                                    align-items:center; justify-content:center;">
 
-                            <div style="width:calc(100% - 8rem); height:calc(100% - 8rem); max-width:1200px; position:relative;">
+                            <div style="width:calc(100% - 2rem); height:calc(100% - 4rem); max-width:1200px; position:relative; margin:auto;">
                                 <img id="lightbox-image"
                                     src="${images[0]}"
                                     style="width:100%; height:100%; object-fit:contain; border-radius:4px;">
 
                                 ${images.length > 1 ? `
                                     <button id="lightbox-prev"
-                                        style="position:absolute; left:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
-                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                                        style="position:absolute; left:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
+                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
                                         ‹
                                     </button>
                                     <button id="lightbox-next"
-                                        style="position:absolute; right:-3rem; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s;"
-                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                                        style="position:absolute; right:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
+                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
                                         ›
                                     </button>
                                 ` : ''}

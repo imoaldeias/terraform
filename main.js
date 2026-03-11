@@ -4,9 +4,6 @@ import { navigateTo, renderRoute } from './router.js';
 import { loadSiteData } from './content_data.js';
 import { applyFilters, clearFilters, cycleSort, handlePageClick } from './filters.js';
 
-// Re-export applyFilters so router.js can import it directly from here
-// if you prefer — but router.js now imports from filters.js directly.
-
 
 /* =====================================================
    FAVORITOS
@@ -117,20 +114,25 @@ document.body.addEventListener('click', e => {
         return;
     }
 
-    // ── MOBILE FILTER TOGGLE ───────────────────────
+    // ── OPEN FILTERS ───────────────────────────────
     if (e.target.closest('#btn-toggle-filters')) {
-        const bar = document.getElementById('filters-bar');
+        const bar      = document.getElementById('filters-bar');
         const closeBtn = document.getElementById('btn-close-filters');
-        if (bar) bar.classList.toggle('hidden');
-        if (closeBtn) closeBtn.classList.toggle('hidden');
+        const openBtn  = document.getElementById('btn-toggle-filters');
+        if (bar)      bar.style.display      = 'grid';
+        if (closeBtn) closeBtn.style.display = 'inline-block';
+        if (openBtn)  openBtn.style.display  = 'none';
         return;
     }
 
+    // ── CLOSE FILTERS ──────────────────────────────
     if (e.target.closest('#btn-close-filters')) {
-        const bar = document.getElementById('filters-bar');
+        const bar      = document.getElementById('filters-bar');
         const closeBtn = document.getElementById('btn-close-filters');
-        if (bar) bar.classList.add('hidden');
-        if (closeBtn) closeBtn.classList.add('hidden');
+        const openBtn  = document.getElementById('btn-toggle-filters');
+        if (bar)      bar.style.display      = 'none';
+        if (closeBtn) closeBtn.style.display = 'none';
+        if (openBtn)  openBtn.style.display  = 'inline-block';
         return;
     }
 

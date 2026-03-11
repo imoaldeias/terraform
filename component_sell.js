@@ -1,11 +1,11 @@
 export function renderSell() {
     return `
-        <section class="pt-32 pb-32" style="background:#FAF7F2;">
+        <section class="pt-16 pb-16 lg:pt-32 lg:pb-32" style="background:#FAF7F2;">
 
             <div class="max-w-7xl mx-auto px-6">
 
                 <!-- HERO SECTION -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-28">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mb-12 lg:mb-28">
 
                     <!-- LEFT: Texto -->
                     <div>
@@ -50,7 +50,7 @@ export function renderSell() {
                     </div>
 
                     <!-- RIGHT: Formulário -->
-                    <div class="bg-white p-12 rounded-[40px] border border-brand-100 shadow-2xl shadow-brand-900/5">
+                    <div class="bg-white p-6 lg:p-12 rounded-2xl lg:rounded-[40px] border border-brand-100 shadow-2xl shadow-brand-900/5">
 
                         <h2 class="mb-12 text-center">
                             Solicitar Avaliação
@@ -82,7 +82,7 @@ export function renderSell() {
                                 >
                             </div>
 
-                            <div class="grid grid-cols-2 gap-8">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <select id="sell-tipologia" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
                                     <option value="" disabled selected>Tipologia</option>
                                     <option value="herdade">Herdade</option>
@@ -101,7 +101,7 @@ export function renderSell() {
                                 </select>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-8">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <select id="sell-build" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
                                     <option value="" disabled selected>Área Construída</option>
                                     <option value="all">Todas as áreas</option>
