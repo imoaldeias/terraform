@@ -116,21 +116,21 @@ export function renderInvest() {
 
                         <!-- 4 KPI CARDS -->
                         <div id="invest-kpi-grid">
-                            <div style="background:#EDE8E0;padding:1rem;border-radius:4px;">
-                                <p id="kpi1-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Receita Anual</p>
-                                <p id="kpi1-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#2F3526;margin:0;line-height:1;">—</p>
+                            <div style="background:#EDE8E0;padding:1.25rem;border-radius:4px;">
+                                <p id="kpi1-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Receita Anual</p>
+                                <p id="kpi1-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#2F3526;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#EDE8E0;padding:1rem;border-radius:4px;">
-                                <p id="kpi2-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Cash Flow /ano</p>
-                                <p id="kpi2-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#2F3526;margin:0;line-height:1;">—</p>
+                            <div style="background:#EDE8E0;padding:1.25rem;border-radius:4px;">
+                                <p id="kpi2-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Cash Flow Líquido /ano</p>
+                                <p id="kpi2-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#2F3526;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#2F3526;padding:1rem;border-radius:4px;">
-                                <p id="kpi3-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Rentabilidade</p>
-                                <p id="kpi3-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
+                            <div style="background:#2F3526;padding:1.25rem;border-radius:4px;">
+                                <p id="kpi3-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Rentabilidade do Capital</p>
+                                <p id="kpi3-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#2F3526;padding:1rem;border-radius:4px;">
-                                <p id="kpi4-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Payback</p>
-                                <p id="kpi4-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
+                            <div style="background:#2F3526;padding:1.25rem;border-radius:4px;">
+                                <p id="kpi4-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Payback</p>
+                                <p id="kpi4-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
                             </div>
                         </div>
 
@@ -454,8 +454,8 @@ export function initInvest() {
 
         if (currentType !== 'realestate') {
             document.getElementById('kpi1-label').textContent = 'Receita Anual';
-            document.getElementById('kpi2-label').textContent = 'Cash Flow /ano';
-            document.getElementById('kpi3-label').textContent = 'Rentabilidade';
+            document.getElementById('kpi2-label').textContent = 'Cash Flow Líquido /ano';
+            document.getElementById('kpi3-label').textContent = 'Rentabilidade do Capital';
             document.getElementById('kpi4-label').textContent = 'Payback';
         }
 
