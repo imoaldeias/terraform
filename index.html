@@ -268,4 +268,17 @@
 </script>
 
 </body>
+
+<script>
+    const entered = sessionStorage.getItem('tp_auth');
+    if (!entered) {
+        const pw = prompt('Palavra-passe:');
+        if (pw !== 'passe') {
+            document.body.innerHTML = '<div style="height:100vh;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#999;">Acesso negado.</div>';
+        } else {
+            sessionStorage.setItem('tp_auth', '1');
+        }
+    }
+</script>
+    
 </html>
