@@ -93,20 +93,21 @@
     </style>
 </head>
 
-<body class="bg-[#FBF8EF] text-black antialiased" style="overflow-x:hidden; max-width:100vw;">
+<body class="bg-[#FBF8EF] text-black antialiased">
 
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
-     style="background: rgb(201,210,194); border-bottom: 1px solid rgba(62,74,63,0.10); max-width:100vw; overflow:hidden;">
+     style="background: rgb(201,210,194); border-bottom: 1px solid rgba(62,74,63,0.10);">
 
     <div id="nav-inner" class="mx-auto px-4 lg:px-10 lg:max-w-7xl w-full flex items-center justify-between"
-         style="height: 72px; box-sizing:border-box;">
+         style="height: 64px;">
 
-        <div class="flex items-center gap-3 cursor-pointer" data-route="properties">
+        <div class="flex items-center gap-2 cursor-pointer" data-route="properties" style="min-width:0; overflow:hidden;">
             <img src="./logo.webp" alt="TerraPrimus"
+                 id="nav-logo"
                  loading="eager" fetchpriority="high" decoding="async"
-                 style="height:36px; width:auto; object-fit:contain;">
-            <div style="display:flex; flex-direction:column; line-height:1; gap:5px;">
-                <span id="brand-name" style="font-family:'Instrument Serif',serif; font-size:1.3rem; color:#2F3526; letter-spacing:0.02em; white-space:nowrap;">
+                 style="height:34px; width:auto; object-fit:contain; flex-shrink:0;">
+            <div style="display:flex; flex-direction:column; line-height:1; gap:4px; min-width:0;">
+                <span id="brand-name" style="font-family:'Instrument Serif',serif; font-size:1.25rem; color:#2F3526; letter-spacing:0.02em; white-space:nowrap;">
                     TerraPrimus
                 </span>
                 <span id="brand-sub" style="font-family:'Instrument Sans',sans-serif; font-size:0.6rem; text-transform:uppercase; color:#9C7A3C; display:none; white-space:nowrap;">
@@ -132,8 +133,8 @@
 
         <button id="mobile-menu-btn"
             class="lg:hidden"
-            style="color:#3E4A3F; background:none; border:none; cursor:pointer; padding:8px; flex-shrink:0;">
-            <i id="mobile-menu-icon" data-lucide="menu" style="width:24px; height:24px;"></i>
+            style="color:#3E4A3F; background:none; border:none; cursor:pointer; padding:8px; flex-shrink:0; margin-left:8px;">
+            <i id="mobile-menu-icon" data-lucide="menu" style="width:24px; height:24px; display:block;"></i>
         </button>
 
     </div>
@@ -141,16 +142,16 @@
 
 <div id="mobile-menu"
      class="hidden"
-     style="position:fixed; top:72px; left:0; width:100%; z-index:40;
+     style="position:fixed; top:64px; left:0; width:100%; z-index:40;
             background:rgba(201,210,194,0.99);
             border-bottom: 1px solid rgba(62,74,63,0.12);
             backdrop-filter: blur(8px);">
-    <div style="display:flex; flex-direction:column; padding: 2rem 1.5rem 2.5rem; gap:0;">
+    <div style="display:flex; flex-direction:column; padding: 1.5rem 1.5rem 2rem; gap:0;">
         <a href="#properties" data-route="properties" class="mobile-nav-link">Portfólio</a>
         <a href="#invest"     data-route="invest"     class="mobile-nav-link">Investimento</a>
         <a href="#sell"       data-route="sell"       class="mobile-nav-link">Vender</a>
         <a href="#home"       data-route="home"       class="mobile-nav-link">Visão</a>
-        <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(62,74,63,0.15);">
+        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid rgba(62,74,63,0.15);">
             <p style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.75rem;">Contacto</p>
             <p style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#3E4A3F; margin-bottom:0.25rem;">+351 9XX XXX XXX</p>
             <p style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#3E4A3F;">geral@terraprimus.pt</p>
@@ -158,10 +159,10 @@
     </div>
 </div>
 
-<main id="app" style="padding-top: 72px;"></main>
+<main id="app" style="padding-top: 64px;"></main>
 
 <footer style="background:#3D3632; color:#FBF8EF;">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top:5rem; padding-bottom:4rem;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top:4rem; padding-bottom:3rem;">
         <div id="footer-grid">
 
             <div>
@@ -229,18 +230,18 @@
     function updateNavbar() {
         const navbar    = document.getElementById("navbar");
         const inner     = document.getElementById("nav-inner");
-        const logo      = navbar.querySelector('img');
+        const logo      = document.getElementById('nav-logo');
         const brandName = document.getElementById('brand-name');
         const brandSub  = document.getElementById('brand-sub');
         const isMobile  = window.innerWidth < 1024;
         const scrolled  = window.scrollY > 40;
 
         if (isMobile) {
-            if (inner)     inner.style.height       = '72px';
-            if (logo)      logo.style.height        = '44px';
-            if (brandName) brandName.style.fontSize = '1.6rem';
+            if (inner)     inner.style.height       = '64px';
+            if (logo)      logo.style.height        = '34px';
+            if (brandName) brandName.style.fontSize = '1.25rem';
             if (brandSub)  brandSub.style.display   = 'none';
-            mobileMenu.style.top = '72px';
+            mobileMenu.style.top = '64px';
             navbar.style.boxShadow = scrolled ? "0 4px 24px -8px rgba(0,0,0,0.12)" : "none";
         } else {
             if (scrolled) {

@@ -16,7 +16,7 @@ export function renderPropertyCards(properties) {
     }
 
     return `
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-12">
 
             ${properties.map(p => `
 
@@ -45,9 +45,9 @@ export function renderPropertyCards(properties) {
 
                     <!-- ESTATE TAG -->
                     <div style="background:#EDE8E0; padding:14px 16px 12px; border-radius:0 0 4px 4px;">
-                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin:0 0 10px 0;">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.title}</span>
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.location}</span>
+                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin:0 0 10px 0; gap:8px;">
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.title}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526; flex-shrink:0;">${p.location}</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid rgba(62,74,63,0.12); padding-top:8px;">
                             <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.price}</span>
@@ -72,117 +72,123 @@ export function renderPropertyCards(properties) {
 export function renderProperties() {
 
     return `
-        <section class="pt-20 pb-32">
-            <div class="max-w-7xl mx-auto px-6">
+        <section class="pt-6 pb-16 lg:pt-20 lg:pb-32">
+            <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                        <!-- FILTERS: start visible, JS will hide/show -->
-            <div id="filters-bar"
-                style="display:grid; margin-bottom:3rem; grid-template-columns:repeat(3, 1fr); gap:1.5rem;">
+                <!-- FILTERS BAR -->
+                <div id="filters-bar"
+                    style="display:grid; margin-bottom:2rem; grid-template-columns:repeat(2, 1fr); gap:1rem;">
 
-                ${renderSelect('filter-location', 'Localização',
-                    [...new Set(appData.properties.map(p => p.locationNormalized))]
-                        .map(loc => ({
-                            value: loc,
-                            label: loc.charAt(0).toUpperCase() + loc.slice(1)
-                        }))
-                )}
+                    <style>
+                        @media (min-width: 768px) {
+                            #filters-bar { grid-template-columns: repeat(3, 1fr) !important; gap: 1.5rem !important; }
+                        }
+                    </style>
 
-                ${renderSelect('filter-price', 'Preço',
-                    [
-                        { value: '500000', label: 'Até 500 000 €' },
-                        { value: '1000000', label: 'Até 1 000 000 €' },
-                        { value: '2500000', label: 'Até 2 500 000 €' },
-                        { value: '5000000', label: 'Até 5 000 000 €' },
-                        { value: '5000000+', label: 'Mais de 5 000 000 €' }
-                    ])}
+                    ${renderSelect('filter-location', 'Localização',
+                        [...new Set(appData.properties.map(p => p.locationNormalized))]
+                            .map(loc => ({
+                                value: loc,
+                                label: loc.charAt(0).toUpperCase() + loc.slice(1)
+                            }))
+                    )}
 
-                ${renderSelect('filter-type', 'Tipologia',
-                    [...new Set(appData.properties.map(p => p.tipologia))])}
+                    ${renderSelect('filter-price', 'Preço',
+                        [
+                            { value: '500000', label: 'Até 500 000 €' },
+                            { value: '1000000', label: 'Até 1 000 000 €' },
+                            { value: '2500000', label: 'Até 2 500 000 €' },
+                            { value: '5000000', label: 'Até 5 000 000 €' },
+                            { value: '5000000+', label: 'Mais de 5 000 000 €' }
+                        ])}
 
-                ${renderSelect('filter-land', 'Área Terreno (ha)',
-                    [
-                        { value: '1', label: 'Até 1 ha' },
-                        { value: '10', label: 'Até 10 ha' },
-                        { value: '50', label: 'Até 50 ha' },
-                        { value: '100', label: 'Até 100 ha' },
-                        { value: '500', label: 'Até 500 ha' },
-                        { value: 'max', label: 'Mais de 500 ha' }
-                    ])}
+                    ${renderSelect('filter-type', 'Tipologia',
+                        [...new Set(appData.properties.map(p => p.tipologia))])}
 
-                ${renderSelect('filter-build', 'Área Construída',
-                    [
-                        { value: '100', label: 'Até 100 m²' },
-                        { value: '200', label: 'Até 200 m²' },
-                        { value: '300', label: 'Até 300 m²' },
-                        { value: 'max', label: 'Mais de 300 m²' }
-                    ])}
+                    ${renderSelect('filter-land', 'Área Terreno (ha)',
+                        [
+                            { value: '1', label: 'Até 1 ha' },
+                            { value: '10', label: 'Até 10 ha' },
+                            { value: '50', label: 'Até 50 ha' },
+                            { value: '100', label: 'Até 100 ha' },
+                            { value: '500', label: 'Até 500 ha' },
+                            { value: 'max', label: 'Mais de 500 ha' }
+                        ])}
 
-                ${renderSelect('filter-rooms', 'Quartos',
-                    [
-                        { value: '1', label: '1+' },
-                        { value: '3', label: '3+' },
-                        { value: '5', label: '5+' }
-                    ])}
+                    ${renderSelect('filter-build', 'Área Construída',
+                        [
+                            { value: '100', label: 'Até 100 m²' },
+                            { value: '200', label: 'Até 200 m²' },
+                            { value: '300', label: 'Até 300 m²' },
+                            { value: 'max', label: 'Mais de 300 m²' }
+                        ])}
 
-                <!-- ORDENAR -->
-                <div class="flex flex-col">
-                    <label for="filter-sort" class="label mb-1">Ordenar</label>
-                    <select
-                        id="filter-sort"
-                        class="border-b border-gray-300 bg-transparent py-1 px-1 focus:outline-none focus:border-black transition"
-                        style="font-size:0.78rem;"
-                    >
-                        <option value="default">—</option>
-                        <option value="price-asc">Preço ↑</option>
-                        <option value="price-desc">Preço ↓</option>
-                        <option value="area-asc">Área ↑</option>
-                        <option value="area-desc">Área ↓</option>
-                        <option value="rooms-asc">Quartos ↑</option>
-                        <option value="rooms-desc">Quartos ↓</option>
-                    </select>
+                    ${renderSelect('filter-rooms', 'Quartos',
+                        [
+                            { value: '1', label: '1+' },
+                            { value: '3', label: '3+' },
+                            { value: '5', label: '5+' }
+                        ])}
+
+                    <!-- ORDENAR -->
+                    <div class="flex flex-col">
+                        <label for="filter-sort" class="label mb-1">Ordenar</label>
+                        <select
+                            id="filter-sort"
+                            class="border-b border-gray-300 bg-transparent py-1 px-1 focus:outline-none focus:border-black transition"
+                            style="font-size:0.78rem;"
+                        >
+                            <option value="default">—</option>
+                            <option value="price-asc">Preço ↑</option>
+                            <option value="price-desc">Preço ↓</option>
+                            <option value="area-asc">Área ↑</option>
+                            <option value="area-desc">Área ↓</option>
+                            <option value="rooms-asc">Quartos ↑</option>
+                            <option value="rooms-desc">Quartos ↓</option>
+                        </select>
+                    </div>
+
+                    <!-- BOTÕES -->
+                    <div style="grid-column: 1 / -1; display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.5rem;">
+
+                        <button
+                            id="btn-apply-filters"
+                            class="border border-black px-4 py-2 hover:bg-black hover:text-white transition duration-300"
+                            style="font-size:0.78rem;"
+                        >
+                            Aplicar
+                        </button>
+
+                        <button
+                            id="btn-clear-filters"
+                            class="border border-black px-4 py-2 hover:bg-black hover:text-white transition duration-300"
+                            style="font-size:0.78rem;"
+                        >
+                            Limpar
+                        </button>
+
+                        <button
+                            id="btn-close-filters"
+                            style="font-size:0.78rem; border:1px solid black; padding:8px 16px; background:transparent; cursor:pointer;"
+                        >
+                            Fechar Filtros ✕
+                        </button>
+
+                        <button
+                            id="btn-toggle-filters"
+                            style="display:none; font-size:0.78rem; border:1px solid black; padding:8px 16px; background:transparent; cursor:pointer;"
+                        >
+                            Filtros ▾
+                        </button>
+
+                    </div>
+
                 </div>
 
-                <!-- BOTÕES -->
-                <div class="col-span-full flex flex-col sm:flex-row gap-4 mt-2">
-
-                    <button
-                        id="btn-apply-filters"
-                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
-                        style="font-size:0.78rem;"
-                    >
-                        Aplicar
-                    </button>
-
-                    <button
-                        id="btn-clear-filters"
-                        class="border border-black px-4 py-1 hover:bg-black hover:text-white transition duration-300"
-                        style="font-size:0.78rem;"
-                    >
-                        Limpar
-                    </button>
-
-                    <button
-                        id="btn-close-filters"
-                        style="font-size:0.78rem; border:1px solid black; padding:4px 16px; background:transparent; cursor:pointer;"
-                    >
-                        Fechar Filtros ✕
-                    </button>
-
-                    <button
-                        id="btn-toggle-filters"
-                        style="display:none; font-size:0.78rem; border:1px solid black; padding:4px 16px; background:transparent; cursor:pointer;"
-                    >
-                        Filtros ▾
-                    </button>
-
-                </div>
+                <div id="properties-list"></div>
 
             </div>
-
-            <div id="properties-list"></div>
-
-                </div>
-            </section>
+        </section>
     `;
 }
 
@@ -241,6 +247,16 @@ export function initProperties() {
     document.querySelectorAll('#filters-bar select').forEach(sel => {
         sel.addEventListener('change', applyFilters);
     });
+
+    // On mobile, start with filters hidden
+    if (window.innerWidth < 768) {
+        const bar      = document.getElementById('filters-bar');
+        const closeBtn = document.getElementById('btn-close-filters');
+        const openBtn  = document.getElementById('btn-toggle-filters');
+        if (bar)      bar.style.display      = 'none';
+        if (closeBtn) closeBtn.style.display = 'none';
+        if (openBtn)  openBtn.style.display  = 'inline-block';
+    }
 
     // Render the initial unfiltered list
     applyFilters();

@@ -1,7 +1,6 @@
 export function renderInvest() {
     return `
         <style>
-            /* ── INVEST RESPONSIVE ── */
             #invest-type-grid {
                 display: flex;
                 flex-wrap: wrap;
@@ -21,37 +20,44 @@ export function renderInvest() {
             }
             .invest-field-row {
                 display: grid;
-                grid-template-columns: 1fr 110px;
+                grid-template-columns: 1fr 100px;
                 align-items: center;
-                gap: 1rem;
+                gap: 0.75rem;
                 padding: 0.45rem 0;
                 border-bottom: 1px solid rgba(62,74,63,0.06);
             }
             @media (max-width: 768px) {
-                #invest-type-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
                 #invest-main-grid {
                     grid-template-columns: 1fr;
                 }
                 .invest-field-row {
-                    grid-template-columns: 1fr 90px;
+                    grid-template-columns: 1fr 85px;
                     gap: 0.5rem;
+                }
+                #invest-kpi-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .type-btn span {
+                    display: none;
+                }
+                .type-btn {
+                    padding: 0.6rem 0.75rem !important;
+                    justify-content: center;
                 }
             }
             @media (max-width: 400px) {
-                #invest-type-grid {
-                    grid-template-columns: 1fr 1fr;
+                .invest-field-row {
+                    grid-template-columns: 1fr 75px;
                 }
             }
         </style>
 
-        <section class="pt-12 pb-24" style="background:#FAF7F2;">
-            <div class="max-w-6xl mx-auto px-6">
+        <section class="pt-6 pb-16 lg:pt-12 lg:pb-24" style="background:#FAF7F2;">
+            <div class="max-w-6xl mx-auto px-4 lg:px-6">
 
                 <!-- HEADER -->
-                <div style="margin-bottom:2rem;">
-                    <span class="label mb-3 block">Ferramenta de Análise</span>
+                <div style="margin-bottom:1.5rem;">
+                    <span class="label mb-2 block">Ferramenta de Análise</span>
                     <h1 style="line-height:1.1;">Simulador de Investimento</h1>
                     <p style="margin-top:0.5rem; color:#6b7a5e; font-size:0.88rem; line-height:1.5;">
                         Introduza os dados do seu projeto e obtenha os indicadores financeiros essenciais.
@@ -59,7 +65,7 @@ export function renderInvest() {
                 </div>
 
                 <!-- INTRO TEXT -->
-                <div style="margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:1px solid rgba(62,74,63,0.1);">
+                <div style="margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(62,74,63,0.1);">
                     <p style="line-height:1.9; color:#6b7a5e; font-size:0.82rem; font-style:italic;">
                         Os resultados são indicativos e baseados nos pressupostos introduzidos. Para uma análise de viabilidade detalhada, contacte-nos através do formulário abaixo.
                     </p>
@@ -67,64 +73,64 @@ export function renderInvest() {
 
                 <!-- TYPE SELECTOR -->
                 <div style="margin-bottom:1.25rem;">
-                    <div id="invest-type-grid" style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                    <div id="invest-type-grid">
                         <button class="type-btn active" data-type="tourism"
                             style="display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;border:1px solid #2F3526;background:#2F3526;color:#FAF7F2;border-radius:4px;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">
-                            <i data-lucide="hotel" style="width:13px;height:13px;flex-shrink:0;"></i>
+                            <i data-lucide="hotel" style="width:14px;height:14px;flex-shrink:0;"></i>
                             <span>Hotelaria e Turismo</span>
                         </button>
                         <button class="type-btn" data-type="agriculture"
                             style="display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;border:1px solid rgba(62,74,63,0.2);background:transparent;color:#2F3526;border-radius:4px;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">
-                            <i data-lucide="leaf" style="width:13px;height:13px;flex-shrink:0;"></i>
+                            <i data-lucide="leaf" style="width:14px;height:14px;flex-shrink:0;"></i>
                             <span>Agricultura</span>
                         </button>
                         <button class="type-btn" data-type="energy"
                             style="display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;border:1px solid rgba(62,74,63,0.2);background:transparent;color:#2F3526;border-radius:4px;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">
-                            <i data-lucide="zap" style="width:13px;height:13px;flex-shrink:0;"></i>
+                            <i data-lucide="zap" style="width:14px;height:14px;flex-shrink:0;"></i>
                             <span>Energia</span>
                         </button>
                         <button class="type-btn" data-type="realestate"
                             style="display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;border:1px solid rgba(62,74,63,0.2);background:transparent;color:#2F3526;border-radius:4px;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">
-                            <i data-lucide="building-2" style="width:13px;height:13px;flex-shrink:0;"></i>
+                            <i data-lucide="building-2" style="width:14px;height:14px;flex-shrink:0;"></i>
                             <span>Promoção Imobiliária</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- MAIN GRID: inputs + results -->
-                <div id="invest-main-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:stretch;">
+                <div id="invest-main-grid">
 
                     <!-- LEFT: INPUTS -->
-                    <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.5rem;">
+                    <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.25rem;">
                         <div id="form-fields" style="display:flex;flex-direction:column;gap:0;"></div>
                         <p id="calc-error" style="display:none;font-family:'Instrument Sans',sans-serif;font-size:0.75rem;color:#c0392b;margin-top:0.75rem;text-align:center;"></p>
-        <button id="btn-calculate" style="width:100%;margin-top:1.25rem;padding:0.75rem;border:1px solid #2F3526;background:#2F3526;color:#FAF7F2;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:4px;transition:all 0.3s;">
-            Calcular
-        </button>
-    </div>
+                        <button id="btn-calculate" style="width:100%;margin-top:1.25rem;padding:0.75rem;border:1px solid #2F3526;background:#2F3526;color:#FAF7F2;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:4px;transition:all 0.3s;">
+                            Calcular
+                        </button>
+                    </div>
 
                     <!-- RIGHT: RESULTS -->
-                    <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.5rem;">
+                    <div style="background:#fff;border:1px solid rgba(62,74,63,0.12);border-radius:4px;padding:1.25rem;">
 
                         <p style="font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:#9C7A3C;margin-bottom:1rem;">Resultados</p>
 
                         <!-- 4 KPI CARDS -->
                         <div id="invest-kpi-grid">
-                            <div style="background:#EDE8E0;padding:1.25rem;border-radius:4px;">
-                                <p id="kpi1-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Receita Anual</p>
-                                <p id="kpi1-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#2F3526;margin:0;line-height:1;">—</p>
+                            <div style="background:#EDE8E0;padding:1rem;border-radius:4px;">
+                                <p id="kpi1-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Receita Anual</p>
+                                <p id="kpi1-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#2F3526;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#EDE8E0;padding:1.25rem;border-radius:4px;">
-                                <p id="kpi2-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Cash Flow Líquido /ano</p>
-                                <p id="kpi2-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#2F3526;margin:0;line-height:1;">—</p>
+                            <div style="background:#EDE8E0;padding:1rem;border-radius:4px;">
+                                <p id="kpi2-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Cash Flow /ano</p>
+                                <p id="kpi2-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#2F3526;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#2F3526;padding:1.25rem;border-radius:4px;">
-                                <p id="kpi3-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Rentabilidade do Capital</p>
-                                <p id="kpi3-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
+                            <div style="background:#2F3526;padding:1rem;border-radius:4px;">
+                                <p id="kpi3-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Rentabilidade</p>
+                                <p id="kpi3-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
                             </div>
-                            <div style="background:#2F3526;padding:1.25rem;border-radius:4px;">
-                                <p id="kpi4-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Payback</p>
-                                <p id="kpi4-value" style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
+                            <div style="background:#2F3526;padding:1rem;border-radius:4px;">
+                                <p id="kpi4-label" style="font-family:'Instrument Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#9C7A3C;margin-bottom:0.4rem;">Payback</p>
+                                <p id="kpi4-value" style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:#FAF7F2;margin:0;line-height:1;">—</p>
                             </div>
                         </div>
 
@@ -134,11 +140,11 @@ export function renderInvest() {
                             <p style="font-family:'Instrument Sans',sans-serif;font-size:0.8rem;color:#6b7a5e;margin-bottom:1rem;line-height:1.5;">Quer um estudo de viabilidade detalhado, sem compromisso?</p>
                             <div style="display:flex;flex-direction:column;gap:0.6rem;">
                                 <input type="text" id="lead-name" placeholder="Nome *"
-                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
+                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;width:100%;">
                                 <input type="email" id="lead-email" placeholder="Email *"
-                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
+                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;width:100%;">
                                 <input type="tel" id="lead-phone" placeholder="Telefone (opcional)"
-                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;">
+                                    style="border:none;border-bottom:1px solid rgba(62,74,63,0.2);background:transparent;padding:0.4rem 0;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;color:#2F3526;outline:none;width:100%;">
                                 <div id="lead-feedback" style="display:none;padding:0.6rem;text-align:center;font-size:0.8rem;border-radius:4px;"></div>
                                 <button id="btn-lead"
                                     style="width:100%;margin-top:0.25rem;padding:0.7rem;border:1px solid #9C7A3C;background:transparent;color:#9C7A3C;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:4px;transition:all 0.3s;">
@@ -234,7 +240,7 @@ export function initInvest() {
                 ${fieldHTML('inp-rooms',  'Número de Quartos',                       { ...v('inp-rooms') })}
                 ${fieldHTML('inp-night',  'Preço Médio / Noite (€)',                 { ...v('inp-night') })}
                 ${fieldHTML('inp-occ',    'Taxa de Ocupação (%)',   { max:100,        ...v('inp-occ') })}
-                ${fieldHTML('inp-opex',   'Custos Operacionais (% da receita)', { max:100, live:'opex-live', ...v('inp-opex') })}
+                ${fieldHTML('inp-opex',   'Custos Operacionais (%)', { max:100, live:'opex-live', ...v('inp-opex') })}
                 ${sectionHTML('Financiamento')}
                 ${fieldHTML('inp-loan',   'Financiamento Bancário (%)', { max:95,     ...v('inp-loan') })}
                 ${fieldHTML('inp-rate',   'Taxa de Juro (%)',       { step:'0.1',     ...v('inp-rate') })}
@@ -448,8 +454,8 @@ export function initInvest() {
 
         if (currentType !== 'realestate') {
             document.getElementById('kpi1-label').textContent = 'Receita Anual';
-            document.getElementById('kpi2-label').textContent = 'Cash Flow Líquido /ano';
-            document.getElementById('kpi3-label').textContent = 'Rentabilidade do Capital';
+            document.getElementById('kpi2-label').textContent = 'Cash Flow /ano';
+            document.getElementById('kpi3-label').textContent = 'Rentabilidade';
             document.getElementById('kpi4-label').textContent = 'Payback';
         }
 

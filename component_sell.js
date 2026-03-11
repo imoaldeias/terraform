@@ -1,27 +1,27 @@
 export function renderSell() {
     return `
-        <section class="pt-16 pb-16 lg:pt-32 lg:pb-32" style="background:#FAF7F2;">
+        <section class="pt-6 pb-12 lg:pt-32 lg:pb-32" style="background:#FAF7F2;">
 
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
                 <!-- HERO SECTION -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mb-12 lg:mb-28">
+                <div class="grid grid-cols-1 lg:grid-cols-2" style="gap:2rem; margin-bottom:2rem;">
 
                     <!-- LEFT: Texto -->
                     <div>
 
-                        <h1 class="mb-10">
+                        <h1 style="margin-bottom:1.25rem;">
                             Valorize o seu património
                         </h1>
 
-                        <p style="margin-bottom:3rem; line-height:1.8; color:#2F3526;">
+                        <p style="margin-bottom:2rem; line-height:1.8; color:#2F3526;">
                             Na TerraPrimus, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. 
                             Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
                         </p>
 
                         <div style="display:flex; flex-direction:column;">
 
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
                                 <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">01</span>
                                 <div>
                                     <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Confidencialidade</p>
@@ -29,7 +29,7 @@ export function renderSell() {
                                 </div>
                             </div>
 
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
                                 <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">02</span>
                                 <div>
                                     <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Avaliação & Posicionamento</p>
@@ -37,7 +37,7 @@ export function renderSell() {
                                 </div>
                             </div>
 
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.75rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
+                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
                                 <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">03</span>
                                 <div>
                                     <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Acompanhamento Integral</p>
@@ -50,26 +50,28 @@ export function renderSell() {
                     </div>
 
                     <!-- RIGHT: Formulário -->
-                    <div class="bg-white p-6 lg:p-12 rounded-2xl lg:rounded-[40px] border border-brand-100 shadow-2xl shadow-brand-900/5">
+                    <div class="bg-white border border-brand-100 shadow-2xl shadow-brand-900/5" style="padding:1.5rem; border-radius:16px;">
 
-                        <h2 class="mb-12 text-center">
+                        <h2 style="margin-bottom:1.5rem; text-align:center;">
                             Solicitar Avaliação
                         </h2>
 
-                        <div class="space-y-10">
+                        <div style="display:flex; flex-direction:column; gap:1.5rem;">
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
                                 <input 
                                     id="sell-name"
                                     type="text" 
                                     placeholder="Nome completo" 
-                                    class="w-full pb-4 border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    style="padding-bottom:0.75rem;"
                                 >
                                 <input 
                                     id="sell-phone"
                                     type="tel" 
                                     placeholder="Telefone" 
-                                    class="w-full pb-4 border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    style="padding-bottom:0.75rem;"
                                 >
                             </div>
 
@@ -78,12 +80,13 @@ export function renderSell() {
                                     id="sell-email"
                                     type="email" 
                                     placeholder="E-mail de contato" 
-                                    class="w-full pb-4 border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    style="padding-bottom:0.75rem;"
                                 >
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                <select id="sell-tipologia" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
+                            <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
+                                <select id="sell-tipologia" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Tipologia</option>
                                     <option value="herdade">Herdade</option>
                                     <option value="quinta">Quinta</option>
@@ -91,7 +94,7 @@ export function renderSell() {
                                     <option value="moradia">Moradia</option>
                                 </select>
 
-                                <select id="sell-rooms" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
+                                <select id="sell-rooms" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Nº Quartos</option>
                                     <option value="all">Todos</option>
                                     <option value="1">1 Quarto</option>
@@ -101,8 +104,8 @@ export function renderSell() {
                                 </select>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                <select id="sell-build" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
+                            <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
+                                <select id="sell-build" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Área Construída</option>
                                     <option value="all">Todas as áreas</option>
                                     <option value="100">Até 100 m²</option>
@@ -111,7 +114,7 @@ export function renderSell() {
                                     <option value="max">Mais de 300 m²</option>
                                 </select>
 
-                                <select id="sell-land" class="pb-4 border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors">
+                                <select id="sell-land" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Área do Terreno</option>
                                     <option value="all">Todas as áreas</option>
                                     <option value="1">Até 1 ha</option>
@@ -128,7 +131,8 @@ export function renderSell() {
                                     id="sell-message"
                                     placeholder="Localização e breves detalhes..." 
                                     rows="3"
-                                    class="w-full pb-4 border-b border-gray-200 outline-none bg-transparent resize-none focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent resize-none focus:border-brand-900 transition-colors"
+                                    style="padding-bottom:0.75rem;"
                                 ></textarea>
                             </div>
 
@@ -139,7 +143,8 @@ export function renderSell() {
                             <button 
                                 id="sell-submit"
                                 type="button"
-                                class="w-full mt-12 border border-brand-900 text-brand-900 py-4 hover:bg-brand-900 hover:text-white transition"
+                                class="w-full border border-brand-900 text-brand-900 hover:bg-brand-900 hover:text-white transition"
+                                style="padding:1rem 0; margin-top:0.5rem;"
                             >
                                 Enviar
                             </button>
@@ -183,7 +188,6 @@ export function initSell() {
 
         const feedback = document.getElementById('sell-feedback');
 
-        // Basic validation
         if (!name || !email) {
             feedback.style.display = 'block';
             feedback.style.background = '#FEF2F2';
@@ -192,7 +196,6 @@ export function initSell() {
             return;
         }
 
-        // Loading state
         btn.disabled = true;
         btn.innerText = 'A enviar...';
 

@@ -23,20 +23,20 @@ export function renderPropertyDetail(id) {
     const images = galleryImages.length > 0 ? galleryImages : [prop.image];
 
     return `
-        <section class="pt-24 pb-32 min-h-screen" style="background:#FAF7F2;">
-            <div class="max-w-7xl mx-auto px-6">
+        <section class="pt-6 pb-16 lg:pt-24 lg:pb-32 min-h-screen" style="background:#FAF7F2;">
+            <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                <h1 class="mb-12">
+                <h1 style="margin-bottom:1.5rem;">
                     ${prop.location} — ${prop.title}
                 </h1>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-20">
+                <div class="grid grid-cols-1 lg:grid-cols-3" style="gap:2rem;">
 
                     <!-- ── LEFT COLUMN ── -->
-                    <div class="lg:col-span-2 space-y-16">
+                    <div class="lg:col-span-2" style="display:flex; flex-direction:column; gap:2rem;">
 
                         <!-- GALLERY -->
-                        <div id="gallery-container" class="relative aspect-[3/2] w-full overflow-hidden bg-gray-100" style="border-radius:4px;">
+                        <div id="gallery-container" class="relative w-full overflow-hidden bg-gray-100" style="aspect-ratio:4/3; border-radius:4px;">
 
                             <img
                                 id="main-gallery-image"
@@ -48,13 +48,11 @@ export function renderPropertyDetail(id) {
 
                             ${images.length > 1 ? `
                                 <button id="btn-prev"
-                                    style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.3); border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
-                                    onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                    style="position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.3); border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;">
                                     ‹
                                 </button>
                                 <button id="btn-next"
-                                    style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.3); border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
-                                    onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                    style="position:absolute; right:0.75rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.3); border:none; color:#FAF7F2; font-size:2rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;">
                                     ›
                                 </button>
                             ` : ''}
@@ -74,13 +72,11 @@ export function renderPropertyDetail(id) {
 
                                 ${images.length > 1 ? `
                                     <button id="lightbox-prev"
-                                        style="position:absolute; left:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
-                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                        style="position:absolute; left:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;">
                                         ‹
                                     </button>
                                     <button id="lightbox-next"
-                                        style="position:absolute; right:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;"
-                                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                        style="position:absolute; right:0.5rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none; color:#FAF7F2; font-size:1.5rem; cursor:pointer; opacity:0.8; transition:opacity 0.2s; width:2.5rem; height:2.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;">
                                         ›
                                     </button>
                                 ` : ''}
@@ -89,7 +85,7 @@ export function renderPropertyDetail(id) {
                         <!-- /GALLERY -->
 
                         <!-- DESCRIPTION -->
-                        <div class="whitespace-pre-line">
+                        <div class="whitespace-pre-line" style="padding-bottom:1rem;">
                             ${prop.description || 'Informação sob consulta.'}
                         </div>
 
@@ -98,7 +94,7 @@ export function renderPropertyDetail(id) {
 
                     <!-- ── RIGHT COLUMN (SIDEBAR) ── -->
                     <div class="lg:col-span-1">
-                        <div class="border border-gray-200 p-10 rounded-3xl sticky top-32 space-y-8">
+                        <div class="border border-gray-200 rounded-3xl sticky top-20" style="padding:1.5rem; display:flex; flex-direction:column; gap:1.25rem;">
 
                             <div>
                                 <div class="label">Nome</div>
@@ -139,7 +135,7 @@ export function renderPropertyDetail(id) {
                             </div>
                             ` : ''}
 
-                            <div class="pt-6 border-t border-gray-100">
+                            <div style="padding-top:1rem; border-top:1px solid rgba(0,0,0,0.08);">
                                 <button
                                     data-route="sell"
                                     class="w-full border border-black py-4 hover:bg-black hover:text-white transition"
@@ -176,7 +172,6 @@ export function initPropertyDetail(id) {
     const images = galleryImages.length > 0 ? galleryImages : [prop.image];
     let currentIndex = 0;
 
-    // ── helpers ──────────────────────────────────────
     function updateImage() {
         const main     = document.getElementById('main-gallery-image');
         const lightbox = document.getElementById('lightbox-image');
@@ -194,15 +189,12 @@ export function initPropertyDetail(id) {
         if (lb) lb.style.display = 'none';
     }
 
-    // ── main image click → open lightbox ─────────────
     const mainImg = document.getElementById('main-gallery-image');
     if (mainImg) mainImg.addEventListener('click', openLightbox);
 
-    // ── lightbox close on backdrop click ─────────────
     const lightbox = document.getElementById('lightbox');
     if (lightbox) lightbox.addEventListener('click', closeLightbox);
 
-    // ── gallery nav buttons ───────────────────────────
     const btnPrev = document.getElementById('btn-prev');
     const btnNext = document.getElementById('btn-next');
 
@@ -216,7 +208,6 @@ export function initPropertyDetail(id) {
         updateImage();
     });
 
-    // ── lightbox nav buttons ──────────────────────────
     const lbPrev = document.getElementById('lightbox-prev');
     const lbNext = document.getElementById('lightbox-next');
 

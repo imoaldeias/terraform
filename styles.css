@@ -17,6 +17,15 @@
    BASE FOUNDATION
 ===================================================== */
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Instrument Sans', sans-serif;
     line-height: 1.65;
@@ -45,6 +54,11 @@ h2 {
     font-weight: 350;
     line-height: 1.3;
     color: #2F3526;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 1.9rem; }
+    h2 { font-size: 1.45rem; }
 }
 
 /* =====================================================
@@ -130,6 +144,7 @@ textarea {
     border: none;
     border-bottom: 1px solid #D9DDCF;
     padding: 0.5rem 0;
+    max-width: 100%;
 }
 
 input:focus,
