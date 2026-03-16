@@ -3,121 +3,1099 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TerraPrimus Admin | Gestão Directa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-</head>
-<body class="bg-slate-50 font-sans text-slate-900">
-
-    <nav class="bg-slate-900 text-white p-6 shadow-xl">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div>
-                <h1>TerraPrimus</h1>
-                <p>Painel</p>
-            </div>
-           <a href="https://docs.google.com/spreadsheets/d/1vC3z76S8e9N9_HkS7UoM-p0pL0H7L6D0_k7_k7_k7/edit" target="_blank" class="text-white underline hover:opacity-70 transition">
-    ✎ Abrir Google Sheets
-</a>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto p-8">
-        <div id="status-container" class="mb-8 p-4 rounded-lg bg-white border border-slate-200 flex items-center gap-4">
-            <div id="status-dot" class="w-3 h-3 rounded-full bg-gray-400 animate-pulse"></div>
-            <span id="status-text" class="text-sm text-slate-500">A verificar ligação ao Google Sheets...</span>
-        </div>
-
-        <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-0 transition-opacity duration-500">
-            </div>
-    </main>
-
-    <script>
-        // 1. COLOQUE O SEU LINK CSV AQUI
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSMJLh55N7yiksusMxcYd7XpWTo1GE6y0FpSPiqLLBrzodkh2AGLen7aHl8D2RmEj239c7mjvvNS6UW/pub?output=csv';
-
-        function initAdmin() {
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-
-            if (!SHEET_CSV_URL.includes('output=csv')) {
-                showError("O link configurado não parece ser um link CSV válido.");
-                return;
-            }
-
-            Papa.parse(SHEET_CSV_URL, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    if (results.data.length > 0) {
-                        statusDot.classList.replace('bg-gray-400', 'bg-green-500');
-                        statusDot.classList.remove('animate-pulse');
-                        statusText.innerText = `Sincronizado: ${results.data.length} propriedades encontradas.`;
-                        renderGrid(results.data);
-                    } else {
-                        showError("A folha de cálculo parece estar vazia.");
-                    }
-                },
-                error: function(err) {
-                    showError("Erro na ligação: Verifique se publicou a folha na Web.");
-                    console.error(err);
-                }
-            });
+    <title>TerraPrimus · Admin CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:        #F5F2EC;
+            --surface:   #FDFBF7;
+            --border:    rgba(62,74,63,0.12);
+            --olive:     #3E4A3F;
+            --olive-lt:  #C9D2C2;
+            --gold:      #9C7A3C;
+            --text:      #2F3526;
+            --muted:     #7A8270;
+            --danger:    #C0392B;
+            --success:   #2E7D32;
+            --radius:    10px;
         }
 
-function renderGrid(data) {
-    const grid = document.getElementById('propertyGrid');
-    grid.innerHTML = data.map(p => {
-        const hasGallery = p.gallery_ids && p.gallery_ids.length > 10;
-        const hasVideo = p.youtube_id && p.youtube_id.length > 5;
-        
-        return `
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-2xl transition-all group">
-            <div class="relative h-48 overflow-hidden">
-                <img src="${p.image_capa || p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400?text=Sem+Foto+Capa'">
-                <div class="absolute top-3 right-3 flex gap-2">
-                    ${hasGallery ? '<span class="bg-green-500 text-white p-1 rounded-md text-[8px] uppercase">Galeria OK</span>' : '<span class="bg-amber-500 text-white p-1 rounded-md text-[8px] uppercase">Sem Galeria</span>'}
-                    ${hasVideo ? '<span class="bg-red-600 text-white p-1 rounded-md text-[8px] uppercase">Video OK</span>' : ''}
-                </div>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 0.9rem;
+        }
+
+        /* ── LAYOUT ── */
+        .layout { display: flex; min-height: 100vh; }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            background: var(--olive);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 1.75rem 1.5rem 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .sidebar-logo span {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            display: block;
+        }
+        .sidebar-logo small {
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.7rem 1.5rem;
+            color: rgba(255,255,255,0.55);
+            cursor: pointer;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            border-left: 2px solid transparent;
+        }
+        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
+        .nav-item.active { color: #fff; border-left-color: var(--gold); background: rgba(255,255,255,0.08); }
+        .nav-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .sync-status {
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.35);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .sync-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #4CAF50;
+            flex-shrink: 0;
+        }
+        .sync-dot.loading { background: var(--gold); animation: pulse 1s infinite; }
+        .sync-dot.error   { background: var(--danger); }
+
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* ── MAIN ── */
+        .main {
+            margin-left: 220px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .topbar-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.15rem;
+            color: var(--text);
+        }
+        .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn svg { width: 14px; height: 14px; }
+        .btn-primary   { background: var(--olive); color: #fff; }
+        .btn-primary:hover { background: #2c3630; }
+        .btn-ghost     { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-ghost:hover { border-color: var(--olive); color: var(--olive); }
+        .btn-danger    { background: transparent; color: var(--danger); border: 1px solid rgba(192,57,43,0.3); }
+        .btn-danger:hover { background: var(--danger); color: #fff; }
+        .btn-gold      { background: var(--gold); color: #fff; }
+        .btn-gold:hover { background: #7d6230; }
+        .btn:disabled  { opacity: 0.45; cursor: not-allowed; }
+
+        /* ── CONTENT AREA ── */
+        .content { padding: 2rem; flex: 1; }
+
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+        }
+        .stat-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .stat-value {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            color: var(--text);
+            line-height: 1;
+        }
+        .stat-sub {
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ── TABLE ── */
+        .table-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .table-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .table-header h2 {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .search-input {
+            padding: 0.45rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text);
+            outline: none;
+            width: 220px;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus { border-color: var(--olive); }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: rgba(62,74,63,0.03); }
+        td {
+            padding: 0.85rem 1rem;
+            font-size: 0.83rem;
+            vertical-align: middle;
+        }
+        .td-img img {
+            width: 52px; height: 38px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: var(--bg);
+        }
+        .td-title { font-weight: 500; max-width: 200px; }
+        .td-title span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .td-muted { color: var(--muted); }
+        .td-actions { display: flex; gap: 0.4rem; white-space: nowrap; }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            font-weight: 500;
+        }
+        .badge-ok      { background: rgba(46,125,50,0.1);  color: var(--success); }
+        .badge-warn    { background: rgba(156,122,60,0.12); color: var(--gold); }
+        .badge-missing { background: rgba(192,57,43,0.1);  color: var(--danger); }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(30,35,28,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+            transform: translateY(12px);
+            transition: transform 0.2s;
+        }
+        .modal-overlay.open .modal { transform: translateY(0); }
+
+        .modal-head {
+            padding: 1.5rem 1.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-head h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.3rem;
+            color: var(--text);
+        }
+        .modal-close {
+            background: none; border: none; cursor: pointer;
+            color: var(--muted); font-size: 1.3rem; line-height: 1;
+            transition: color 0.15s;
+        }
+        .modal-close:hover { color: var(--text); }
+
+        .modal-body { padding: 1.5rem 1.75rem; }
+        .modal-foot {
+            padding: 1rem 1.75rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* ── FORM ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem 1.5rem;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .form-input, .form-select, .form-textarea {
+            padding: 0.6rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--olive);
+        }
+        .form-textarea { resize: vertical; min-height: 90px; }
+
+        /* IMAGE UPLOAD AREA */
+        .img-upload-area {
+            border: 1.5px dashed var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg);
+            position: relative;
+        }
+        .img-upload-area:hover { border-color: var(--olive); }
+        .img-upload-area input[type=file] {
+            position: absolute; inset: 0;
+            opacity: 0; cursor: pointer; width: 100%; height: 100%;
+        }
+        .img-preview {
+            width: 100%; max-height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+        .img-upload-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* ── TOAST ── */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem; right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 999;
+        }
+        .toast {
+            background: var(--olive);
+            color: #fff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            animation: slideIn 0.25s ease, fadeOut 0.4s ease 2.6s forwards;
+            max-width: 320px;
+        }
+        .toast.error { background: var(--danger); }
+        @keyframes slideIn  { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut  { to   { opacity: 0; transform: translateX(10px); } }
+
+        /* ── EMPTY ── */
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* ── LOADING SKELETON ── */
+        .skeleton {
+            background: linear-gradient(90deg, var(--border) 25%, rgba(62,74,63,0.06) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 4px;
+        }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        /* ── CONFIRM MODAL ── */
+        .confirm-modal {
+            max-width: 400px;
+        }
+        .confirm-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── TABS (views) ── */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<script>
+    const _auth = sessionStorage.getItem('tp_admin_auth');
+    if (!_auth) {
+        const pw = prompt('Admin · Palavra-passe:');
+        if (pw !== 'passe') {
+            document.body.innerHTML = '<div style="height:100vh;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#999;font-size:0.9rem;">Acesso negado.</div>';
+            throw new Error('Access denied');
+        }
+        sessionStorage.setItem('tp_admin_auth', '1');
+    }
+</script>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>TerraPrimus</span>
+            <small>Admin CMS</small>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-view="properties">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Propriedades
+            </button>
+            <button class="nav-item" data-view="add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                Adicionar
+            </button>
+            <button class="nav-item" data-view="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M19.07 19.07A10 10 0 0 0 4.93 4.93"/></svg>
+                Configurações
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sync-status">
+                <div class="sync-dot loading" id="sync-dot"></div>
+                <span id="sync-label">A sincronizar...</span>
             </div>
-            <div class="p-5">
-                <h2 class="text-lg text-slate-800 truncate">${p.title || 'Sem Título'}</h2>
-                <p class="text-slate-400 text-xs mb-3">📍 ${p.location}</p>
-                
-                <div class="space-y-2 border-t pt-3">
-                    <div class="flex justify-between">
-                        <span class="text-slate-400 uppercase">Preço</span>
-                        <span class="text-slate-900">${p.price}</span>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <span class="topbar-title" id="topbar-title">Propriedades</span>
+            <div class="topbar-actions">
+                <button class="btn btn-ghost" id="btn-refresh">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Atualizar
+                </button>
+                <button class="btn btn-primary" id="btn-add-top">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Nova Propriedade
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- VIEW: PROPERTIES -->
+            <div class="view active" id="view-properties">
+
+                <!-- STATS -->
+                <div class="stats-row" id="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Total</div>
+                        <div class="stat-value" id="stat-total">—</div>
+                        <div class="stat-sub">propriedades</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Com Galeria</div>
+                        <div class="stat-value" id="stat-gallery">—</div>
+                        <div class="stat-sub">imagens carregadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Com Vídeo</div>
+                        <div class="stat-value" id="stat-video">—</div>
+                        <div class="stat-sub">youtube ID</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Sem Capa</div>
+                        <div class="stat-value" id="stat-noimg" style="color:var(--danger)">—</div>
+                        <div class="stat-sub">precisam de imagem</div>
+                    </div>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-400 uppercase">ID Interno</span>
-                    <span class="text-slate-500">${p.id}</span>
+
+                <!-- TABLE -->
+                <div class="table-wrap">
+                    <div class="table-header">
+                        <h2>Listagem</h2>
+                        <input class="search-input" type="text" id="search-input" placeholder="Pesquisar título, localização...">
+                    </div>
+                    <div id="table-container">
+                        <div class="empty-state">A carregar dados...</div>
+                    </div>
                 </div>
             </div>
 
-                <div class="mt-4 flex gap-2">
-                    <a href="https://imoaldeias.github.io/imoaldeias/#property-${p.id}" 
-            target="_blank" 
-            class="flex-1 text-center bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl uppercase transition">
-            Ver no Site
-        </a>
+            <!-- VIEW: ADD (reuses modal form inline) -->
+            <div class="view" id="view-add">
+                <div class="table-wrap" style="padding:2rem;">
+                    <h2 style="font-family:'Instrument Serif',serif; font-size:1.4rem; margin-bottom:1.5rem;">Nova Propriedade</h2>
+                    <div id="add-form-container"></div>
+                    <div style="margin-top:1.5rem; display:flex; gap:0.75rem; justify-content:flex-end;">
+                        <button class="btn btn-ghost" id="btn-add-cancel">Cancelar</button>
+                        <button class="btn btn-primary" id="btn-add-save">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polyline points="20 6 9 17 4 12"/></svg>
+                            Guardar
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div class="view" id="view-settings">
+                <div class="table-wrap" style="padding:2rem; max-width:560px;">
+                    <h2 style="font-family:'Instrument Serif',serif; font-size:1.4rem; margin-bottom:0.5rem;">Configurações</h2>
+                    <p style="color:var(--muted); font-size:0.83rem; margin-bottom:1.5rem;">Variáveis de configuração do CMS.</p>
+
+                    <div style="display:flex; flex-direction:column; gap:1.25rem;">
+                        <div class="form-group">
+                            <label class="form-label">Apps Script URL</label>
+                            <input class="form-input" id="cfg-url" value="https://script.google.com/macros/s/AKfycbzZV481OqP8jbj7OlwAnz7oli6ebMxrViWx3fz2vcj0JQLFk46EoPnR-kuZF5UyQIpD/exec" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pasta de Imagens (local dev)</label>
+                            <input class="form-input" id="cfg-assets" value="./assets/" >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Palavra-passe Admin</label>
+                            <input class="form-input" type="password" value="passe" id="cfg-pw">
+                        </div>
+                        <div>
+                            <button class="btn btn-ghost" onclick="toast('Configurações guardadas localmente.')">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    `}).join('');
-    grid.classList.remove('opacity-0');
+    </main>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <div class="modal-head">
+            <h3 id="modal-title">Editar Propriedade</h3>
+            <button class="modal-close" id="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" id="modal-cancel">Cancelar</button>
+            <button class="btn btn-primary" id="modal-save">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polyline points="20 6 9 17 4 12"/></svg>
+                Guardar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+    <div class="modal confirm-modal">
+        <div class="modal-head">
+            <h3>Confirmar Eliminação</h3>
+            <button class="modal-close" onclick="closeConfirm()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="confirm-text">Tem a certeza que pretende eliminar esta propriedade? Esta ação não pode ser desfeita.</p>
+            <p style="font-weight:500; font-size:0.9rem;" id="confirm-prop-name"></p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+            <button class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ─────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────
+const API_URL = 'https://script.google.com/macros/s/AKfycbzZV481OqP8jbj7OlwAnz7oli6ebMxrViWx3fz2vcj0JQLFk46EoPnR-kuZF5UyQIpD/exec';
+
+const FIELDS = [
+    { key: 'id',            label: 'ID',               type: 'text',     readonly: true },
+    { key: 'title',         label: 'Título',            type: 'text',     required: true },
+    { key: 'location',      label: 'Localização',       type: 'text',     required: true },
+    { key: 'tipologia',     label: 'Tipologia',         type: 'select',   options: ['Herdade','Quinta','Terreno','Moradia','Apartamento'] },
+    { key: 'price',         label: 'Preço (display)',   type: 'text',     placeholder: 'ex: 1 250 000 €' },
+    { key: 'priceValue',    label: 'Preço (número)',    type: 'number',   placeholder: 'ex: 1250000' },
+    { key: 'areaConstruida',label: 'Área Construída m²',type: 'number' },
+    { key: 'areaTerreno',   label: 'Área Terreno ha',   type: 'number' },
+    { key: 'quartos',       label: 'Quartos',           type: 'number' },
+    { key: 'image_capa',    label: 'Imagem Capa (URL)', type: 'image',    placeholder: './assets/foto.jpg' },
+   { key: 'gallery_ids',   label: 'Galeria de Imagens', type: 'gallery', full: true },
+    { key: 'youtube_id',    label: 'YouTube ID',        type: 'text',     placeholder: 'ex: dQw4w9WgXcQ' },
+    { key: 'description',   label: 'Descrição',         type: 'textarea', full: true },
+];
+
+// ─────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────
+let allProperties = [];
+let editingId = null;
+let deleteId  = null;
+
+// ─────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────
+function toast(msg, isError = false) {
+    const el = document.createElement('div');
+    el.className = 'toast' + (isError ? ' error' : '');
+    el.textContent = msg;
+    document.getElementById('toast-container').appendChild(el);
+    setTimeout(() => el.remove(), 3200);
 }
 
-        function showError(msg) {
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-            statusDot.classList.replace('bg-gray-400', 'bg-red-500');
-            statusDot.classList.remove('animate-pulse');
-            statusText.innerText = msg;
-            statusText.classList.add('text-red-600');
-        }
+// ─────────────────────────────────────────────────────
+// SYNC STATUS
+// ─────────────────────────────────────────────────────
+function setSyncStatus(state, label) {
+    const dot = document.getElementById('sync-dot');
+    dot.className = 'sync-dot' + (state === 'loading' ? ' loading' : state === 'error' ? ' error' : '');
+    document.getElementById('sync-label').textContent = label;
+}
 
-        window.onload = initAdmin;
-    </script>
+// ─────────────────────────────────────────────────────
+// API
+// ─────────────────────────────────────────────────────
+async function apiGet() {
+    setSyncStatus('loading', 'A carregar...');
+    const res  = await fetch(API_URL);
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+    setSyncStatus('ok', 'Sincronizado');
+    return json.data;
+}
+
+async function apiPost(payload) {
+    setSyncStatus('loading', 'A guardar...');
+    const res  = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+    setSyncStatus('ok', 'Guardado ✓');
+    return json;
+}
+
+// ─────────────────────────────────────────────────────
+// LOAD & RENDER TABLE
+// ─────────────────────────────────────────────────────
+async function loadProperties() {
+    try {
+        allProperties = await apiGet();
+        renderStats();
+        renderTable(allProperties);
+    } catch(e) {
+        setSyncStatus('error', 'Erro de ligação');
+        toast('Erro ao carregar: ' + e.message, true);
+        document.getElementById('table-container').innerHTML =
+            `<div class="empty-state">Erro ao carregar dados. Verifique o Apps Script.<br><small style="color:var(--danger)">${e.message}</small></div>`;
+    }
+}
+
+function renderStats() {
+    const total    = allProperties.length;
+    const gallery  = allProperties.filter(p => p.gallery_ids && p.gallery_ids.length > 5).length;
+    const video    = allProperties.filter(p => p.youtube_id  && p.youtube_id.length  > 3).length;
+    const noimg    = allProperties.filter(p => !p.image_capa || p.image_capa.trim() === '').length;
+    document.getElementById('stat-total').textContent   = total;
+    document.getElementById('stat-gallery').textContent = gallery;
+    document.getElementById('stat-video').textContent   = video;
+    document.getElementById('stat-noimg').textContent   = noimg;
+}
+
+function renderTable(data) {
+    const container = document.getElementById('table-container');
+    if (!data.length) {
+        container.innerHTML = '<div class="empty-state">Nenhuma propriedade encontrada.</div>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Capa</th>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Localização</th>
+                    <th>Tipologia</th>
+                    <th>Preço</th>
+                    <th>Área</th>
+                    <th>Media</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(p => `
+                    <tr>
+                        <td class="td-img">
+                            <img src="${p.image_capa || 'https://placehold.co/80x60?text=—'}"
+                                 onerror="this.src='https://placehold.co/80x60?text=—'"
+                                 alt="">
+                        </td>
+                        <td class="td-muted">${p.id}</td>
+                        <td class="td-title"><span title="${p.title}">${p.title || '—'}</span></td>
+                        <td class="td-muted">${p.location || '—'}</td>
+                        <td class="td-muted">${p.tipologia || '—'}</td>
+                        <td>${p.price || '—'}</td>
+                        <td class="td-muted">${p.areaTerreno ? p.areaTerreno + ' ha' : p.areaConstruida ? p.areaConstruida + ' m²' : '—'}</td>
+                        <td>
+                            ${p.gallery_ids && p.gallery_ids.length > 5
+                                ? '<span class="badge badge-ok">Galeria</span>'
+                                : '<span class="badge badge-warn">Sem Galeria</span>'}
+                            ${p.youtube_id && p.youtube_id.length > 3
+                                ? '<span class="badge badge-ok" style="margin-left:3px;">Vídeo</span>'
+                                : ''}
+                        </td>
+                        <td class="td-actions">
+                            <button class="btn btn-ghost" onclick="openEdit(${p.id})" style="padding:0.35rem 0.7rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                Editar
+                            </button>
+                            <button class="btn btn-danger" onclick="openConfirmDelete(${p.id})" style="padding:0.35rem 0.7rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+// ─────────────────────────────────────────────────────
+// SEARCH
+// ─────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    const filtered = q
+        ? allProperties.filter(p =>
+            (p.title    || '').toLowerCase().includes(q) ||
+            (p.location || '').toLowerCase().includes(q) ||
+            (p.tipologia|| '').toLowerCase().includes(q))
+        : allProperties;
+    renderTable(filtered);
+});
+
+// ─────────────────────────────────────────────────────
+// FORM BUILDER
+// ─────────────────────────────────────────────────────
+function buildForm(data = {}) {
+    return `
+        <div class="form-grid">
+            ${FIELDS.map(f => {
+                const val = data[f.key] !== undefined ? data[f.key] : '';
+                const fullClass = f.full ? 'full' : '';
+
+                if (f.type === 'textarea') return `
+                    <div class="form-group ${fullClass}">
+                        <label class="form-label">${f.label}</label>
+                        <textarea class="form-textarea" name="${f.key}" placeholder="${f.placeholder||''}">${val}</textarea>
+                    </div>`;
+
+                if (f.type === 'select') return `
+                    <div class="form-group ${fullClass}">
+                        <label class="form-label">${f.label}</label>
+                        <select class="form-select" name="${f.key}">
+                            <option value="">—</option>
+                            ${f.options.map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}
+                        </select>
+                    </div>`;
+
+                if (f.type === 'gallery') return `
+                    <div class="form-group full">
+                        <label class="form-label">${f.label}</label>
+                        <input type="hidden" name="${f.key}" id="gallery-hidden" value="${val}">
+                        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                            <div id="gallery-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:0.6rem; min-height:40px;">
+                                ${val && val.trim() ? val.split(',').map((path,i) => path.trim()).filter(Boolean).map((path,i) => `
+                                    <div style="position:relative; aspect-ratio:4/3; border-radius:6px; overflow:hidden; border:1px solid rgba(62,74,63,0.12);">
+                                        <img src="${path}" onerror="this.src='https://placehold.co/100x75?text=?'" style="width:100%;height:100%;object-fit:cover;" alt="">
+                                        <button onclick="removeGalleryItem(${i})" style="position:absolute;top:4px;right:4px;background:rgba(192,57,43,0.85);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;cursor:pointer;">✕</button>
+                                        <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);color:#fff;font-size:0.55rem;padding:2px 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${path.split('/').pop()}</div>
+                                    </div>`).join('') : '<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:0.78rem;border:1.5px dashed rgba(62,74,63,0.12);border-radius:8px;grid-column:1/-1;">Sem imagens na galeria.</div>'}
+                            </div>
+                            <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                                <label style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border:1.5px dashed rgba(62,74,63,0.12);border-radius:6px;background:var(--bg);color:var(--muted);font-size:0.75rem;cursor:pointer;position:relative;font-family:'Instrument Sans',sans-serif;">
+                                    <input type="file" accept="image/*" multiple onchange="addGalleryFiles(this)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+                                    + Adicionar imagens
+                                </label>
+                                <input type="text" id="gallery-manual-input" placeholder="./assets/foto.jpg" style="padding:0.5rem 0.75rem;border:1px solid rgba(62,74,63,0.12);border-radius:6px;background:var(--bg);font-family:'Instrument Sans',sans-serif;font-size:0.82rem;width:200px;outline:none;" onkeydown="if(event.key==='Enter'){event.preventDefault();addGalleryManual();}">
+                                <button type="button" class="btn btn-ghost" onclick="addGalleryManual()" style="padding:0.4rem 0.75rem;">Adicionar</button>
+                            </div>
+                            <small style="color:var(--muted);font-size:0.68rem;">Clique no ✕ vermelho para remover uma imagem.</small>
+                        </div>
+                    </div>`;
+
+                if (f.type === 'image') return `
+                    <div class="form-group full">
+                        <label class="form-label">${f.label}</label>
+                        <input class="form-input" name="${f.key}" type="text" value="${val}" placeholder="${f.placeholder||''}">
+                        <div class="img-upload-area" style="margin-top:0.5rem;">
+                            <input type="file" accept="image/*" onchange="previewImage(this, '${f.key}')">
+                            <img class="img-preview" id="preview-${f.key}" src="${val||''}" style="${val?'display:block':''}" alt="">
+                            <div class="img-upload-label">
+                                ${val ? 'Alterar imagem' : 'Clique ou arraste uma imagem'}
+                                <br><small>Ficheiro local — o caminho será copiado para o campo URL</small>
+                            </div>
+                        </div>
+                    </div>`;
+
+                return `
+                    <div class="form-group ${fullClass}">
+                        <label class="form-label">${f.label}</label>
+                        <input class="form-input" name="${f.key}" type="${f.type}" value="${val}"
+                               placeholder="${f.placeholder||''}"
+                               ${f.readonly ? 'readonly style="opacity:0.45;cursor:default"' : ''}>
+                    </div>`;
+            }).join('')}
+        </div>
+    `;
+}
+
+function previewImage(input, key) {
+    const file = input.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const preview = document.getElementById('preview-' + key);
+    if (preview) { preview.src = url; preview.style.display = 'block'; }
+    // Also set the URL input to the local filename (user replaces with real path)
+    const urlInput = input.closest('.form-group').querySelector(`input[name="${key}"]`);
+    if (urlInput) urlInput.value = './assets/' + file.name;
+}
+
+function collectForm(container) {
+    const row = {};
+    container.querySelectorAll('[name]').forEach(el => {
+        row[el.name] = el.value;
+    });
+    return row;
+}
+
+// ─────────────────────────────────────────────────────
+// EDIT MODAL
+// ─────────────────────────────────────────────────────
+function openEdit(id) {
+    const prop = allProperties.find(p => String(p.id) === String(id));
+    if (!prop) return;
+    editingId = id;
+    document.getElementById('modal-title').textContent = 'Editar — ' + (prop.title || 'Propriedade');
+    document.getElementById('modal-body').innerHTML = buildForm(prop);
+    document.getElementById('edit-modal').classList.add('open');
+}
+
+document.getElementById('modal-close-btn').onclick = closeModal;
+document.getElementById('modal-cancel').onclick    = closeModal;
+document.getElementById('edit-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+});
+
+function closeModal() {
+    document.getElementById('edit-modal').classList.remove('open');
+    editingId = null;
+}
+
+document.getElementById('modal-save').onclick = async () => {
+    const row = collectForm(document.getElementById('modal-body'));
+    row.id = editingId;
+    try {
+        document.getElementById('modal-save').disabled = true;
+        await apiPost({ action: 'update', row });
+        toast('Propriedade atualizada com sucesso.');
+        closeModal();
+        await loadProperties();
+    } catch(e) {
+        toast('Erro ao guardar: ' + e.message, true);
+    } finally {
+        document.getElementById('modal-save').disabled = false;
+    }
+};
+
+// ─────────────────────────────────────────────────────
+// ADD
+// ─────────────────────────────────────────────────────
+function renderAddForm() {
+    document.getElementById('add-form-container').innerHTML = buildForm({});
+}
+
+document.getElementById('btn-add-save').onclick = async () => {
+    const row = collectForm(document.getElementById('add-form-container'));
+    if (!row.title || !row.location) {
+        toast('Título e Localização são obrigatórios.', true);
+        return;
+    }
+    try {
+        document.getElementById('btn-add-save').disabled = true;
+        await apiPost({ action: 'add', row });
+        toast('Propriedade adicionada com sucesso!');
+        switchView('properties');
+        await loadProperties();
+    } catch(e) {
+        toast('Erro ao adicionar: ' + e.message, true);
+    } finally {
+        document.getElementById('btn-add-save').disabled = false;
+    }
+};
+
+document.getElementById('btn-add-cancel').onclick = () => switchView('properties');
+
+// ─────────────────────────────────────────────────────
+// DELETE
+// ─────────────────────────────────────────────────────
+function openConfirmDelete(id) {
+    deleteId = id;
+    const prop = allProperties.find(p => String(p.id) === String(id));
+    document.getElementById('confirm-prop-name').textContent = prop ? `"${prop.title}" · ID ${id}` : `ID ${id}`;
+    document.getElementById('confirm-modal').classList.add('open');
+}
+
+function closeConfirm() {
+    document.getElementById('confirm-modal').classList.remove('open');
+    deleteId = null;
+}
+
+document.getElementById('confirm-delete-btn').onclick = async () => {
+    if (!deleteId) return;
+    try {
+        document.getElementById('confirm-delete-btn').disabled = true;
+        await apiPost({ action: 'delete', id: deleteId });
+        toast('Propriedade eliminada.');
+        closeConfirm();
+        await loadProperties();
+    } catch(e) {
+        toast('Erro ao eliminar: ' + e.message, true);
+    } finally {
+        document.getElementById('confirm-delete-btn').disabled = false;
+    }
+};
+
+document.getElementById('confirm-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeConfirm();
+});
+
+// ─────────────────────────────────────────────────────
+// NAV / VIEWS
+// ─────────────────────────────────────────────────────
+const viewTitles = {
+    properties: 'Propriedades',
+    add:        'Nova Propriedade',
+    settings:   'Configurações'
+};
+
+function switchView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelector(`[data-view="${name}"]`).classList.add('active');
+    document.getElementById('topbar-title').textContent = viewTitles[name] || name;
+    if (name === 'add') renderAddForm();
+}
+
+document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+document.getElementById('btn-add-top').onclick = () => switchView('add');
+document.getElementById('btn-refresh').onclick = loadProperties;
+
+function buildGalleryGrid() {
+    const hidden = document.getElementById('gallery-hidden');
+    const grid   = document.getElementById('gallery-grid');
+    if (!hidden || !grid) return;
+    const paths = hidden.value.split(',').map(p => p.trim()).filter(Boolean);
+    grid.innerHTML = paths.length ? paths.map((path, i) => `
+        <div style="position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;border:1px solid rgba(62,74,63,0.12);">
+            <img src="${path}" onerror="this.src='https://placehold.co/100x75?text=?'" style="width:100%;height:100%;object-fit:cover;" alt="">
+            <button onclick="removeGalleryItem(${i})" style="position:absolute;top:4px;right:4px;background:rgba(192,57,43,0.85);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;cursor:pointer;">✕</button>
+            <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);color:#fff;font-size:0.55rem;padding:2px 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${path.split('/').pop()}</div>
+        </div>`).join('')
+    : '<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:0.78rem;border:1.5px dashed rgba(62,74,63,0.12);border-radius:8px;grid-column:1/-1;">Sem imagens na galeria.</div>';
+}
+function removeGalleryItem(i) {
+    const hidden = document.getElementById('gallery-hidden');
+    if (!hidden) return;
+    const paths = hidden.value.split(',').map(p => p.trim()).filter(Boolean);
+    paths.splice(i, 1);
+    hidden.value = paths.join(',');
+    buildGalleryGrid();
+}
+function addGalleryFiles(input) {
+    const hidden = document.getElementById('gallery-hidden');
+    if (!hidden) return;
+    const paths = hidden.value.split(',').map(p => p.trim()).filter(Boolean);
+    Array.from(input.files).forEach(f => { const p = './assets/' + f.name; if (!paths.includes(p)) paths.push(p); });
+    hidden.value = paths.join(',');
+    buildGalleryGrid();
+    input.value = '';
+}
+function addGalleryManual() {
+    const input  = document.getElementById('gallery-manual-input');
+    const hidden = document.getElementById('gallery-hidden');
+    if (!input || !hidden || !input.value.trim()) return;
+    const paths = hidden.value.split(',').map(p => p.trim()).filter(Boolean);
+    if (!paths.includes(input.value.trim())) { paths.push(input.value.trim()); hidden.value = paths.join(','); buildGalleryGrid(); }
+    input.value = '';
+}
+
+// ─────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────
+loadProperties();
+</script>
 </body>
 </html>
