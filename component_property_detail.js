@@ -24,72 +24,75 @@ export function renderPropertyDetail(id) {
 
 
     return `
-        <section style="background:#FAF7F2; min-height:100vh; padding-top:2rem; padding-bottom:4rem;">
-            <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <section style="background:#FAF7F2;">
 
-                <!-- TITLE -->
-                <h1 style="margin-bottom:0.5rem;">${prop.location} — ${prop.title}</h1>
-                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:#9C7A3C; margin-bottom:2rem;">${prop.tipologia || ''}</p>
+            <!-- ══ SCREEN 1: GALLERY ══ -->
+            <div style="position:relative; height:calc(100vh - 64px); display:flex; flex-direction:column;">
+
+                <!-- TITLE BLOCK -->
+                <div style="padding:2.5rem 2rem 1.5rem;">
+                    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+                        <p style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">${prop.tipologia || ''}</p>
+                        <h1 style="font-size:1.75rem; margin-bottom:0;">${prop.location} — ${prop.title}</h1>
+                    </div>
+                </div>
+
+                <!-- MAIN IMAGE + ARROWS -->
+                <div style="flex:1; position:relative; overflow:hidden; display:flex; align-items:center;">
 
                 <!-- ══ MAIN GALLERY WRAPPER (arrows outside image) ══ -->
                 ${images.length > 1 ? `
-                <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.75rem;">
-
                     <button id="btn-prev"
-                        style="flex-shrink:0; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(62,74,63,0.25); background:transparent; color:#2F3526; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
-                        onmouseover="this.style.background='#2F3526';this.style.color='#FAF7F2';"
-                        onmouseout="this.style.background='transparent';this.style.color='#2F3526';">
+                        style="position:absolute; left:1rem; z-index:10; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(250,247,242,0.4); background:rgba(20,20,18,0.35); color:#FAF7F2; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
+                        onmouseover="this.style.background='rgba(20,20,18,0.7)'"
+                        onmouseout="this.style.background='rgba(20,20,18,0.35)'">
                         ‹
                     </button>
+                    ` : ''}
 
-                    <div id="gallery-container" style="flex:1; border-radius:4px; overflow:hidden; background:#EDE8E0; cursor:zoom-in;">
+                    <div id="gallery-container" style="width:100%; height:100%; background:#EDE8E0; cursor:zoom-in;">
                         <img
                             id="main-gallery-image"
                             src="${images[0]}"
                             alt="${prop.title}"
-                            style="width:100%; display:block; transition:opacity 0.4s ease;"
+                            style="width:100%; height:100%; object-fit:contain; display:block; transition:opacity 0.4s ease;"
                         >
                     </div>
 
+                    ${images.length > 1 ? `
                     <button id="btn-next"
-                        style="flex-shrink:0; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(62,74,63,0.25); background:transparent; color:#2F3526; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
-                        onmouseover="this.style.background='#2F3526';this.style.color='#FAF7F2';"
-                        onmouseout="this.style.background='transparent';this.style.color='#2F3526';">
+                        style="position:absolute; right:1rem; z-index:10; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(250,247,242,0.4); background:rgba(20,20,18,0.35); color:#FAF7F2; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
+                        onmouseover="this.style.background='rgba(20,20,18,0.7)'"
+                        onmouseout="this.style.background='rgba(20,20,18,0.35)'">
                         ›
                     </button>
+                    ` : ''}
 
                 </div>
-                ` : `
-                <div id="gallery-container" style="border-radius:4px; overflow:hidden; background:#EDE8E0; margin-bottom:0.75rem; cursor:zoom-in;">
-                    <img
-                        id="main-gallery-image"
-                        src="${images[0]}"
-                        alt="${prop.title}"
-                        style="width:100%; display:block;"
-                    >
-                </div>
-                `}
 
-                <!-- IMAGE COUNTER -->
+                <!-- THUMBNAIL STRIP + COUNTER overlaid at bottom -->
                 ${images.length > 1 ? `
-                <p id="img-counter" style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; letter-spacing:0.1em; color:#9C7A3C; text-align:center; margin-bottom:0.75rem;">
-                    1 / ${images.length}
-                </p>
+                <div style="position:absolute; bottom:0; left:0; right:0; z-index:10;
+                            background:linear-gradient(to top, rgba(20,20,18,0.6) 0%, transparent 100%);
+                            padding:1.5rem 2rem 1rem;">
+                    <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; overflow-x:auto;">
+                        ${images.map((img, i) => `
+                            <button
+                                data-thumb="${i}"
+                                style="flex-shrink:0; width:64px; height:44px; border-radius:3px; overflow:hidden;
+                                       border:2px solid ${i === 0 ? '#FAF7F2' : 'rgba(250,247,242,0.3)'};
+                                       padding:0; cursor:pointer; transition:border-color 0.2s; background:none;">
+                                <img src="${img}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy">
+                            </button>
+                        `).join('')}
+                    </div>
+                    <p id="img-counter" style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.15em; color:rgba(250,247,242,0.7); text-align:center; margin-top:0.5rem;">
+                        1 / ${images.length}
+                    </p>
+                </div>
                 ` : ''}
 
-                <!-- THUMBNAIL STRIP -->
-                ${images.length > 1 ? `
-                <div id="thumbnail-strip"
-                    style="display:flex; gap:0.5rem; padding:0.5rem 0 1.5rem; overflow-x:auto;">
-                    ${images.map((img, i) => `
-                        <button
-                            data-thumb="${i}"
-                            style="flex-shrink:0; width:80px; height:56px; border-radius:3px; overflow:hidden; border:2px solid ${i === 0 ? '#2F3526' : 'transparent'}; padding:0; cursor:pointer; transition:border-color 0.2s; background:none;">
-                            <img src="${img}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy">
-                        </button>
-                    `).join('')}
-                </div>
-                ` : ''}
+            </div>
 
                 <!-- LIGHTBOX -->
                 <div id="lightbox"
@@ -121,44 +124,11 @@ export function renderPropertyDetail(id) {
 
                 </div>
 
-                <!-- ══ KEY STATS BAR ══ -->
-                <div style="display:flex; flex-wrap:wrap; gap:0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12); margin-bottom:3rem;">
+                <!-- ══ SCREEN 2: DESCRIPTION + SIDEBAR ══ -->
+            <div style="min-height:100vh; padding:4rem 0;">
+            <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                    <div style="flex:1; min-width:120px; padding:1.25rem 1.5rem; border-right:1px solid rgba(62,74,63,0.12);">
-                        <div class="label" style="margin-bottom:0.35rem;">Preço</div>
-                        <div style="font-family:'Instrument Serif',serif; font-size:1.1rem; color:#2F3526;">${prop.price}</div>
-                    </div>
-
-                    ${prop.areaTerreno > 0 ? `
-                    <div style="flex:1; min-width:120px; padding:1.25rem 1.5rem; border-right:1px solid rgba(62,74,63,0.12);">
-                        <div class="label" style="margin-bottom:0.35rem;">Terreno</div>
-                        <div style="font-family:'Instrument Serif',serif; font-size:1.1rem; color:#2F3526;">${prop.areaTerreno} ha</div>
-                    </div>
-                    ` : ''}
-
-                    ${prop.areaConstruida > 0 ? `
-                    <div style="flex:1; min-width:120px; padding:1.25rem 1.5rem; border-right:1px solid rgba(62,74,63,0.12);">
-                        <div class="label" style="margin-bottom:0.35rem;">Área Construída</div>
-                        <div style="font-family:'Instrument Serif',serif; font-size:1.1rem; color:#2F3526;">${prop.areaConstruida} m²</div>
-                    </div>
-                    ` : ''}
-
-                    ${prop.quartos > 0 ? `
-                    <div style="flex:1; min-width:120px; padding:1.25rem 1.5rem; border-right:1px solid rgba(62,74,63,0.12);">
-                        <div class="label" style="margin-bottom:0.35rem;">Quartos</div>
-                        <div style="font-family:'Instrument Serif',serif; font-size:1.1rem; color:#2F3526;">${prop.quartos}</div>
-                    </div>
-                    ` : ''}
-
-                    <div style="flex:1; min-width:120px; padding:1.25rem 1.5rem;">
-                        <div class="label" style="margin-bottom:0.35rem;">Tipologia</div>
-                        <div style="font-family:'Instrument Serif',serif; font-size:1.1rem; color:#2F3526;">${prop.tipologia || '—'}</div>
-                    </div>
-
-                </div>
-
-                <!-- ══ TWO COLUMN: Description + Sidebar ══ -->
-                <div class="grid grid-cols-1 lg:grid-cols-3" style="gap:4rem;">
+                <div class="grid grid-cols-1 lg:grid-cols-3" style="gap:4rem; align-items:start;">
 
                     <!-- LEFT: Description + Video -->
                     <div class="lg:col-span-2" style="display:flex; flex-direction:column; gap:2.5rem;">
@@ -239,6 +209,8 @@ export function renderPropertyDetail(id) {
                 </div>
 
             </div>
+            </div>
+
         </section>
     `;
 }
@@ -278,7 +250,7 @@ export function initPropertyDetail(id) {
 
         document.querySelectorAll('[data-thumb]').forEach(btn => {
             btn.style.borderColor = parseInt(btn.dataset.thumb) === currentIndex
-                ? '#2F3526' : 'transparent';
+                ? '#FAF7F2' : 'rgba(250,247,242,0.3)';
         });
     }
 

@@ -1,10 +1,10 @@
 export function renderSell() {
     return `
-        <section class="pt-6 pb-12 lg:pt-32 lg:pb-32" style="background:#FAF7F2;">
+        <section style="background:#FAF7F2;">
 
+            <div class="pt-6 pb-0 lg:pt-32 lg:pb-0">
             <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                <!-- HERO SECTION -->
                 <div class="grid grid-cols-1 lg:grid-cols-2" style="gap:2rem; margin-bottom:2rem;">
 
                     <!-- LEFT: Texto -->
@@ -59,30 +59,18 @@ export function renderSell() {
                         <div style="display:flex; flex-direction:column; gap:1.5rem;">
 
                             <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
-                                <input 
-                                    id="sell-name"
-                                    type="text" 
-                                    placeholder="Nome completo" 
+                                <input id="sell-name" type="text" placeholder="Nome completo"
                                     class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
-                                    style="padding-bottom:0.75rem;"
-                                >
-                                <input 
-                                    id="sell-phone"
-                                    type="tel" 
-                                    placeholder="Telefone" 
+                                    style="padding-bottom:0.75rem;">
+                                <input id="sell-phone" type="tel" placeholder="Telefone"
                                     class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
-                                    style="padding-bottom:0.75rem;"
-                                >
+                                    style="padding-bottom:0.75rem;">
                             </div>
 
                             <div>
-                                <input 
-                                    id="sell-email"
-                                    type="email" 
-                                    placeholder="E-mail de contato" 
+                                <input id="sell-email" type="email" placeholder="E-mail de contato"
                                     class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
-                                    style="padding-bottom:0.75rem;"
-                                >
+                                    style="padding-bottom:0.75rem;">
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
@@ -93,7 +81,6 @@ export function renderSell() {
                                     <option value="terreno">Terreno</option>
                                     <option value="moradia">Moradia</option>
                                 </select>
-
                                 <select id="sell-rooms" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Nº Quartos</option>
                                     <option value="all">Todos</option>
@@ -113,7 +100,6 @@ export function renderSell() {
                                     <option value="300">Até 300 m²</option>
                                     <option value="max">Mais de 300 m²</option>
                                 </select>
-
                                 <select id="sell-land" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Área do Terreno</option>
                                     <option value="all">Todas as áreas</option>
@@ -127,25 +113,17 @@ export function renderSell() {
                             </div>
 
                             <div>
-                                <textarea 
-                                    id="sell-message"
-                                    placeholder="Localização e breves detalhes..." 
+                                <textarea id="sell-message" placeholder="Localização e breves detalhes..."
                                     rows="3"
                                     class="w-full border-b border-gray-200 outline-none bg-transparent resize-none focus:border-brand-900 transition-colors"
-                                    style="padding-bottom:0.75rem;"
-                                ></textarea>
+                                    style="padding-bottom:0.75rem;"></textarea>
                             </div>
 
-                            <!-- Feedback message -->
                             <div id="sell-feedback" style="display:none; padding:1rem; text-align:center; font-size:0.85rem; border-radius:8px;"></div>
 
-                            <!-- Botão -->
-                            <button 
-                                id="sell-submit"
-                                type="button"
+                            <button id="sell-submit" type="button"
                                 class="w-full border border-brand-900 text-brand-900 hover:bg-brand-900 hover:text-white transition"
-                                style="padding:1rem 0; margin-top:0.5rem;"
-                            >
+                                style="padding:1rem 0; margin-top:0.5rem;">
                                 Enviar
                             </button>
 
@@ -155,6 +133,13 @@ export function renderSell() {
 
                 </div>
 
+            </div>
+            </div>
+
+            <!-- BOTTOM IMAGE -->
+            <div id="sell-bottom-img" style="width:100%; height:380px; position:relative; margin-top:3rem;
+                        background-size:cover; background-position:center 40%;">
+                <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(250,247,242,0.5) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(250,247,242,0.5) 100%);"></div>
             </div>
 
         </section>
@@ -172,6 +157,9 @@ export function initSell() {
     } else if (window.emailjs) {
         emailjs.init('wMlwvV8YGbVR5i6cO');
     }
+
+const bottomImg = document.getElementById('sell-bottom-img');
+    if (bottomImg) bottomImg.style.backgroundImage = "url('https://picsum.photos/id/1018/1600/600')";
 
     const btn = document.getElementById('sell-submit');
     if (!btn) return;

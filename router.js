@@ -18,20 +18,32 @@ export function navigateTo(route) {
 }
 
 /* ─────────────────────────────────────────────
+   Highlight the active nav link.
+───────────────────────────────────────────── */
+function highlightNav(hash) {
+    const route = hash.startsWith('property-') ? 'properties' : hash;
+    document.querySelectorAll('.nav-link, .mobile-nav-link, .footer-link').forEach(el => {
+        el.style.fontWeight = '';
+    });
+    document.querySelectorAll(`.nav-link[data-route="${route}"], .mobile-nav-link[data-route="${route}"]`).forEach(el => {
+        el.style.fontWeight = '600';
+    });
+}
+
+/* ─────────────────────────────────────────────
    Render whatever the current hash says.
 ───────────────────────────────────────────── */
 export function renderRoute() {
     const rawHash = window.location.hash.replace('#', '');
-const hash = rawHash || 'properties';
+    const hash = rawHash || 'properties';
     let content = '';
 
     switch (hash) {
-        case 'home':       content = renderHero();        break;
-        case 'properties': content = renderProperties();  break;
-        case 'sell':       content = renderSell();        break;
-        case 'contact':    content = renderSell();        break;
-        case 'invest':     content = renderInvest();      break;
-        case 'complexinvest': content = renderComplexInvest(); break;
+        case 'home':          content = renderHero();           break;
+        case 'properties':    content = renderProperties();     break;
+        case 'sell':          content = renderSell();           break;
+        case 'invest':        content = renderInvest();         break;
+        case 'complexinvest': content = renderComplexInvest();  break;
         default:
             if (hash.startsWith('property-')) {
                 content = renderPropertyDetail(hash.replace('property-', ''));
@@ -41,6 +53,7 @@ const hash = rawHash || 'properties';
     }
 
     // Fade out → swap content → fade in
+    app.style.transition = 'opacity 0.15s ease';
     app.style.opacity = '0';
 
     setTimeout(() => {
@@ -49,13 +62,14 @@ const hash = rawHash || 'properties';
 
         if (window.lucide) lucide.createIcons();
         FavManager.updateUI();
+        highlightNav(hash);
 
         // Each component owns its own init logic
         if (hash === 'properties' || rawHash === '')  initProperties();
-        if (hash === 'invest')                initInvest();
-        if (hash === 'complexinvest')         initComplexInvest();
-        if (hash === 'sell' || hash === 'contact') initSell();
-        if (hash.startsWith('property-'))     initPropertyDetail(hash.replace('property-', ''));
+        if (hash === 'invest')                        initInvest();
+        if (hash === 'complexinvest')                 initComplexInvest();
+        if (hash === 'sell')                          initSell();
+        if (hash.startsWith('property-'))             initPropertyDetail(hash.replace('property-', ''));
 
     }, 150);
 }

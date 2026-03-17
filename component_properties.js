@@ -1,6 +1,5 @@
 import { appData } from './content_data.js';
 
-
 /* =====================================================
    CARDS DAS PROPRIEDADES
 ===================================================== */
@@ -63,8 +62,6 @@ export function renderPropertyCards(properties) {
     `;
 }
 
-
-
 /* =====================================================
    PÁGINA COMPLETA DE PROPRIEDADES
 ===================================================== */
@@ -75,9 +72,19 @@ export function renderProperties() {
         <section class="pt-6 pb-16 lg:pt-20 lg:pb-32">
             <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
+                <!-- TOGGLE BUTTON — outside filters-bar so it stays visible -->
+                <div style="margin-bottom:1rem;">
+                    <button
+    id="btn-toggle-filters"
+    style="display:inline-block; font-size:0.78rem; border:1px solid black; padding:8px 16px; background:transparent; cursor:pointer;"
+>
+                        Filtros ▾
+                    </button>
+                </div>
+
                 <!-- FILTERS BAR -->
                 <div id="filters-bar"
-                    style="display:grid; margin-bottom:2rem; grid-template-columns:repeat(2, 1fr); gap:1rem;">
+    style="display:none; margin-bottom:2rem; grid-template-columns:repeat(2, 1fr); gap:1rem;">
 
                     ${renderSelect('filter-location', 'Localização',
                         [...new Set(appData.properties.map(p => p.locationNormalized))]
@@ -125,7 +132,6 @@ export function renderProperties() {
                         ])}
 
                     <!-- BOTÕES -->
-                    <!-- BOTÕES -->
                     <div style="grid-column: 1 / -1; display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.5rem; align-items:center;">
 
                         <select
@@ -141,9 +147,6 @@ export function renderProperties() {
                             <option value="rooms-asc">Quartos ↑</option>
                             <option value="rooms-desc">Quartos ↓</option>
                         </select>
-
-                        <button
-                            id="btn-apply-filters"
 
                         <button
                             id="btn-apply-filters"
@@ -168,13 +171,6 @@ export function renderProperties() {
                             Fechar Filtros ✕
                         </button>
 
-                        <button
-                            id="btn-toggle-filters"
-                            style="display:none; font-size:0.78rem; border:1px solid black; padding:8px 16px; background:transparent; cursor:pointer;"
-                        >
-                            Filtros ▾
-                        </button>
-
                     </div>
 
                 </div>
@@ -185,8 +181,6 @@ export function renderProperties() {
         </section>
     `;
 }
-
-
 
 /* =====================================================
    COMPONENTE AUXILIAR PARA SELECTS

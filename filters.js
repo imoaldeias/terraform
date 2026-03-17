@@ -39,6 +39,22 @@ function applySorting(properties) {
         });
     }
 
+    if (currentSort === 'area-asc') {
+        sorted.sort((a, b) => a.areaTerreno - b.areaTerreno);
+    }
+
+    if (currentSort === 'area-desc') {
+        sorted.sort((a, b) => b.areaTerreno - a.areaTerreno);
+    }
+
+    if (currentSort === 'rooms-asc') {
+        sorted.sort((a, b) => a.quartos - b.quartos);
+    }
+
+    if (currentSort === 'rooms-desc') {
+        sorted.sort((a, b) => b.quartos - a.quartos);
+    }
+
     return sorted;
 }
 

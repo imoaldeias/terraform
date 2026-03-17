@@ -114,11 +114,6 @@ document.body.addEventListener('click', e => {
         return;
     }
 
-    const sortSelect = document.getElementById('btn-sort');
-    if (sortSelect) {
-        sortSelect.addEventListener('change', cycleSort);
-    }
-
     // ── OPEN FILTERS ───────────────────────────────
     if (e.target.closest('#btn-toggle-filters')) {
         const bar      = document.getElementById('filters-bar');
