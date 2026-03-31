@@ -7,83 +7,89 @@ export function renderSell() {
             <div class="pt-6 pb-0 lg:pt-32 lg:pb-0">
             <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                <div class="grid grid-cols-1 lg:grid-cols-2" style="gap:2rem; margin-bottom:2rem;">
+                <div style="display:grid; grid-template-columns:1fr 420px; gap:5rem; align-items:stretch;">
+                <div>
 
-                    <!-- LEFT: Texto -->
-                    <div>
+                    <h1 style="margin-bottom:1.25rem;">
+                        Valorize o seu património
+                    </h1>
 
-                        <h1 style="margin-bottom:1.25rem;">
-                            Valorize o seu património
-                        </h1>
+                    <p style="margin-bottom:2rem; line-height:1.8; color:#2F3526;">
+                        Na TerraPrimus, representamos proprietários através de uma análise rigorosa de posicionamento e valorização.
+                        Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
+                    </p>
 
-                        <p style="margin-bottom:2rem; line-height:1.8; color:#2F3526;">
-                            Na TerraPrimus, representamos proprietários através de uma análise rigorosa de posicionamento e valorização. 
-                            Procuramos assegurar transações sólidas e maximizar o valor real do seu ativo no mercado global.
-                        </p>
+                    <div style="display:flex; flex-direction:column;">
 
-                        <div style="display:flex; flex-direction:column;">
-
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
-                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">01</span>
-                                <div>
-                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Confidencialidade</p>
-                                    <p style="line-height:1.7; color:#2F3526;">Proteção de informação e gestão reservada de todo o processo, com discrição absoluta em cada etapa.</p>
-                                </div>
+                        <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">01</span>
+                            <div>
+                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Confidencialidade</p>
+                                <p style="line-height:1.7; color:#2F3526;">Proteção de informação e gestão reservada de todo o processo, com discrição absoluta em cada etapa.</p>
                             </div>
+                        </div>
 
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
-                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">02</span>
-                                <div>
-                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Avaliação & Posicionamento</p>
-                                    <p style="line-height:1.7; color:#2F3526;">Análise técnica e estratégica assente no enquadramento real de mercado, para um posicionamento fundamentado.</p>
-                                </div>
+                        <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12);">
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">02</span>
+                            <div>
+                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Avaliação & Posicionamento</p>
+                                <p style="line-height:1.7; color:#2F3526;">Análise técnica e estratégica assente no enquadramento real de mercado, para um posicionamento fundamentado.</p>
                             </div>
+                        </div>
 
-                            <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
-                                <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">03</span>
-                                <div>
-                                    <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Acompanhamento Integral</p>
-                                    <p style="line-height:1.7; color:#2F3526;">Representação estratégica, negociação e orientação especializada até à conclusão da operação.</p>
-                                </div>
+                        <div style="display:grid; grid-template-columns:2rem 1fr; gap:1rem; padding:1.25rem 0; border-top:1px solid rgba(62,74,63,0.12); border-bottom:1px solid rgba(62,74,63,0.12);">
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; color:#9C7A3C; padding-top:3px;">03</span>
+                            <div>
+                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">Acompanhamento Integral</p>
+                                <p style="line-height:1.7; color:#2F3526;">Representação estratégica, negociação e orientação especializada até à conclusão da operação.</p>
                             </div>
-
                         </div>
 
                     </div>
 
-                    <!-- RIGHT: Formulário -->
-                    <div class="bg-white border border-brand-100 shadow-2xl shadow-brand-900/5" style="padding:1.5rem; border-radius:16px;">
+                    <!-- CTA BUTTON -->
+                    <button id="btn-show-form"
+                        style="margin-top:2rem; display:inline-flex; align-items:center; gap:0.75rem;
+                               font-family:'Instrument Sans',sans-serif; font-size:0.68rem;
+                               letter-spacing:0.22em; text-transform:uppercase;
+                               color:#2F3526; background:transparent;
+                               border:1px solid rgba(62,74,63,0.35);
+                               padding:0.85rem 1.75rem; cursor:pointer;
+                               transition:all 0.3s ease;">
+                        Solicitar Avaliação
+                    </button>
 
-                        <h2 style="margin-bottom:1.5rem; text-align:center;">
-                            Solicitar Avaliação
-                        </h2>
+                    <!-- FORM — hidden by default -->
+                    <div id="sell-form-wrapper"
+                        style="opacity:0; pointer-events:none; transition:opacity 0.4s ease;
+                               margin-top:2.5rem; max-width:560px;">
 
                         <div style="display:flex; flex-direction:column; gap:1.5rem;">
 
                             <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
                                 <input id="sell-name" type="text" placeholder="Nome completo"
-                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent"
                                     style="padding-bottom:0.75rem;">
                                 <input id="sell-phone" type="tel" placeholder="Telefone"
-                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent"
                                     style="padding-bottom:0.75rem;">
                             </div>
 
                             <div>
-                                <input id="sell-email" type="email" placeholder="E-mail de contato"
-                                    class="w-full border-b border-gray-200 outline-none bg-transparent focus:border-brand-900 transition-colors"
+                                <input id="sell-email" type="email" placeholder="E-mail de contacto"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent"
                                     style="padding-bottom:0.75rem;">
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
-                                <select id="sell-tipologia" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
+                                <select id="sell-tipologia" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Tipologia</option>
                                     <option value="herdade">Herdade</option>
                                     <option value="quinta">Quinta</option>
                                     <option value="terreno">Terreno</option>
                                     <option value="moradia">Moradia</option>
                                 </select>
-                                <select id="sell-rooms" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
+                                <select id="sell-rooms" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Nº Quartos</option>
                                     <option value="all">Todos</option>
                                     <option value="1">1 Quarto</option>
@@ -94,7 +100,7 @@ export function renderSell() {
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2" style="gap:1.25rem;">
-                                <select id="sell-build" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
+                                <select id="sell-build" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Área Construída</option>
                                     <option value="all">Todas as áreas</option>
                                     <option value="100">Até 100 m²</option>
@@ -102,7 +108,7 @@ export function renderSell() {
                                     <option value="300">Até 300 m²</option>
                                     <option value="max">Mais de 300 m²</option>
                                 </select>
-                                <select id="sell-land" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer focus:border-brand-900 transition-colors" style="padding-bottom:0.75rem;">
+                                <select id="sell-land" class="border-b border-gray-200 bg-transparent outline-none cursor-pointer" style="padding-bottom:0.75rem;">
                                     <option value="" disabled selected>Área do Terreno</option>
                                     <option value="all">Todas as áreas</option>
                                     <option value="1">Até 1 ha</option>
@@ -117,23 +123,35 @@ export function renderSell() {
                             <div>
                                 <textarea id="sell-message" placeholder="Localização e breves detalhes..."
                                     rows="3"
-                                    class="w-full border-b border-gray-200 outline-none bg-transparent resize-none focus:border-brand-900 transition-colors"
+                                    class="w-full border-b border-gray-200 outline-none bg-transparent resize-none"
                                     style="padding-bottom:0.75rem;"></textarea>
                             </div>
 
                             <div id="sell-feedback" style="display:none; padding:1rem; text-align:center; font-size:0.85rem; border-radius:8px;"></div>
 
                             <button id="sell-submit" type="button"
-                                class="w-full border border-brand-900 text-brand-900 hover:bg-brand-900 hover:text-white transition"
-                                style="padding:1rem 0; margin-top:0.5rem;">
+                                style="width:100%; border:1px solid #2F3526; color:#2F3526;
+                                       background:transparent; padding:1rem 0;
+                                       font-family:'Instrument Sans',sans-serif;
+                                       font-size:0.68rem; letter-spacing:0.22em;
+                                       text-transform:uppercase; cursor:pointer;
+                                       transition:all 0.3s ease;">
                                 Enviar
                             </button>
 
                         </div>
-
                     </div>
 
                 </div>
+
+                <!-- RIGHT: Vertical image -->
+                <div style="position:relative; min-height:600px; border-radius:2px; overflow:hidden;">
+                    <img
+                        src="https://picsum.photos/seed/alentejo/800/1200"
+                        style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+
+            </div>
 
             </div>
             </div>
@@ -160,8 +178,26 @@ export function initSell() {
         emailjs.init(EMAILJS_PUBLIC_KEY);
     }
 
-const bottomImg = document.getElementById('sell-bottom-img');
+    const bottomImg = document.getElementById('sell-bottom-img');
     if (bottomImg) bottomImg.style.backgroundImage = "url('https://picsum.photos/id/1018/1600/600')";
+
+    // Toggle form visibility
+    const toggleBtn = document.getElementById('btn-show-form');
+    const formWrapper = document.getElementById('sell-form-wrapper');
+    let formVisible = false;
+
+    if (toggleBtn && formWrapper) {
+        toggleBtn.addEventListener('click', () => {
+            formVisible = !formVisible;
+            if (formVisible) {
+                formWrapper.style.opacity = '1';
+                formWrapper.style.pointerEvents = 'all';
+            } else {
+                formWrapper.style.opacity = '0';
+                formWrapper.style.pointerEvents = 'none';
+            }
+        });
+    }
 
     const btn = document.getElementById('sell-submit');
     if (!btn) return;
@@ -175,7 +211,6 @@ const bottomImg = document.getElementById('sell-bottom-img');
         const build   = document.getElementById('sell-build')?.value;
         const land    = document.getElementById('sell-land')?.value;
         const message = document.getElementById('sell-message')?.value.trim();
-
         const feedback = document.getElementById('sell-feedback');
 
         if (!name || !email) {
