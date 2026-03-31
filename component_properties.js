@@ -45,12 +45,12 @@ export function renderPropertyCards(properties) {
                     <!-- ESTATE TAG -->
                     <div style="background:#EDE8E0; padding:14px 16px 12px; border-radius:0 0 4px 4px;">
                         <div style="display:flex; justify-content:space-between; align-items:baseline; margin:0 0 10px 0; gap:8px;">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.title}</span>
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526; flex-shrink:0;">${p.location}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#2F3526; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.title}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#2F3526; flex-shrink:0;">${p.location}</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid rgba(62,74,63,0.12); padding-top:8px;">
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.price}</span>
-                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.85rem; color:#2F3526;">${p.areaTerreno > 0 ? p.areaTerreno + ' ha' : p.areaConstruida + ' m²'}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#2F3526;">${p.price}</span>
+                            <span style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#2F3526;">${p.areaTerreno > 0 ? p.areaTerreno + ' ha' : p.areaConstruida + ' m²'}</span>
                         </div>
                     </div>
 

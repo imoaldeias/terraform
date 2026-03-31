@@ -40,10 +40,12 @@ body {
 ===================================================== */
 
 h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.1;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    line-height: 1.4;
     color: #2F3526;
     margin-bottom: 20px;
 }
@@ -68,7 +70,10 @@ h2 {
 p {
     margin: 0;
     font-family: var(--tp-sans);
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
     color: var(--tp-text-secondary);
 }
 
@@ -178,4 +183,35 @@ textarea:focus {
         grid-template-columns: repeat(3, 1fr) !important; 
         gap: 1.5rem !important; 
     }
+}
+
+/* =====================================================
+   PROPERTY DETAIL — GALLERY ARROWS
+===================================================== */
+
+.pd-arrow-btn:hover {
+    color: rgba(250,247,242,0.95) !important;
+}
+
+.pd-back-btn:hover {
+    color: rgba(250,247,242,1) !important;
+}
+
+.pd-lightbox-close-btn:hover {
+    color: rgba(250,247,242,0.9) !important;
+}
+
+.pd-lightbox-arrow-btn:hover {
+    color: rgba(250,247,242,0.9) !important;
+}
+
+/* =====================================================
+   PROPERTY DETAIL — SIDEBAR CTA
+===================================================== */
+
+button[data-route="sell"] {
+    transition: background 0.35s ease;
+}
+button[data-route="sell"]:hover {
+    background: #9C7A3C !important;
 }

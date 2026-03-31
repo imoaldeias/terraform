@@ -2,8 +2,7 @@
 
 import { navigateTo, renderRoute } from './router.js';
 import { loadSiteData } from './content_data.js';
-import { applyFilters, clearFilters, cycleSort, handlePageClick } from './filters.js';
-
+import { applyFilters, clearFilters, handlePageClick } from './filters.js';
 
 /* =====================================================
    FAVORITOS
@@ -105,12 +104,6 @@ document.body.addEventListener('click', e => {
 
     if (e.target.closest('#btn-clear-filters')) {
         clearFilters();
-        return;
-    }
-
-    // ── SORT ───────────────────────────────────────
-    if (e.target.closest('#btn-sort')) {
-        cycleSort();
         return;
     }
 

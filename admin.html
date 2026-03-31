@@ -736,8 +736,7 @@ const FIELDS = [
     { key: 'areaConstruida',label: 'Área Construída m²',type: 'number' },
     { key: 'areaTerreno',   label: 'Área Terreno ha',   type: 'number' },
     { key: 'quartos',       label: 'Quartos',           type: 'number' },
-    { key: 'image_capa',    label: 'Imagem Capa (URL)', type: 'image',    placeholder: './assets/foto.jpg' },
-   { key: 'gallery_ids',   label: 'Galeria de Imagens', type: 'gallery', full: true },
+    { key: 'gallery_ids',   label: 'Galeria de Imagens', type: 'gallery', full: true },
     { key: 'youtube_id',    label: 'YouTube ID',        type: 'text',     placeholder: 'ex: dQw4w9WgXcQ' },
     { key: 'description',   label: 'Descrição',         type: 'textarea', full: true },
 ];
@@ -940,7 +939,7 @@ function buildForm(data = {}) {
                                 <input type="text" id="gallery-manual-input" placeholder="./assets/foto.jpg" style="padding:0.5rem 0.75rem;border:1px solid rgba(62,74,63,0.12);border-radius:6px;background:var(--bg);font-family:'Instrument Sans',sans-serif;font-size:0.82rem;width:200px;outline:none;" onkeydown="if(event.key==='Enter'){event.preventDefault();addGalleryManual();}">
                                 <button type="button" class="btn btn-ghost" onclick="addGalleryManual()" style="padding:0.4rem 0.75rem;">Adicionar</button>
                             </div>
-                            <small style="color:var(--muted);font-size:0.68rem;">Clique no ✕ vermelho para remover uma imagem.</small>
+                            <small style="color:var(--muted);font-size:0.68rem;">Clique no ✕ vermelho para remover. A <strong>primeira imagem</strong> é usada como capa.</small>
                         </div>
                     </div>`;
 
@@ -1000,6 +999,7 @@ function openEdit(id) {
     editingId = id;
     document.getElementById('modal-title').textContent = 'Editar — ' + (prop.title || 'Propriedade');
     document.getElementById('modal-body').innerHTML = buildForm(prop);
+    buildGalleryGrid();
     document.getElementById('edit-modal').classList.add('open');
 }
 
@@ -1148,6 +1148,7 @@ function buildGalleryGrid() {
             data-index="${i}"
             ondragstart="onDragStart(event, ${i})"
             ondragover="onDragOver(event)"
+            ondragleave="onDragLeave(event)"
             ondrop="onDrop(event, ${i})"
             ondragend="onDragEnd(event)"
             style="position:relative; aspect-ratio:4/3; border-radius:6px;
@@ -1228,8 +1229,11 @@ function onDragStart(event, index) {
 function onDragOver(event) {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
-    // Highlight drop target
     event.currentTarget.style.borderColor = 'var(--olive)';
+}
+
+function onDragLeave(event) {
+    event.currentTarget.style.borderColor = 'rgba(62,74,63,0.12)';
 }
 
 function onDrop(event, targetIndex) {

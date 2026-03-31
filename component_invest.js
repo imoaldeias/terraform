@@ -1,3 +1,5 @@
+import { EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID } from './config.js';
+
 export function renderInvest() {
     return `
         <section class="pt-6 pb-16 lg:pt-12 lg:pb-24" style="background:#FAF7F2;">
@@ -523,10 +525,10 @@ export function initInvest() {
 
     // ─── EMAILJS ──────────────────────────────────────────────────────────────
     if (!document.getElementById('emailjs-sdk')) {
-        const script    = document.createElement('script');
-        script.id       = 'emailjs-sdk';
-        script.src      = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-        script.onload   = () => emailjs.init('wMlwvV8YGbVR5i6cO');
+        const script  = document.createElement('script');
+        script.id     = 'emailjs-sdk';
+        script.src    = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.onload = () => emailjs.init('wMlwvV8YGbVR5i6cO');
         document.head.appendChild(script);
     } else if (window.emailjs) {
         emailjs.init('wMlwvV8YGbVR5i6cO');

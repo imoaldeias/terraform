@@ -1,3 +1,5 @@
+import { EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID } from './config.js';
+
 export function renderSell() {
     return `
         <section style="background:#FAF7F2;">
@@ -152,10 +154,10 @@ export function initSell() {
         const script = document.createElement('script');
         script.id  = 'emailjs-sdk';
         script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-        script.onload = () => emailjs.init('wMlwvV8YGbVR5i6cO');
+        script.onload = () => emailjs.init(EMAILJS_PUBLIC_KEY);
         document.head.appendChild(script);
     } else if (window.emailjs) {
-        emailjs.init('wMlwvV8YGbVR5i6cO');
+        emailjs.init(EMAILJS_PUBLIC_KEY);
     }
 
 const bottomImg = document.getElementById('sell-bottom-img');
@@ -188,7 +190,7 @@ const bottomImg = document.getElementById('sell-bottom-img');
         btn.innerText = 'A enviar...';
 
         try {
-            await emailjs.send('service_ad9oepj', 'template_zmv6ks9', {
+            await emailjs.send(EMAILJS_SERVICE_ID, 'template_zmv6ks9', {
                 from_name: name,
                 from_email: email,
                 phone:     phone   || '—',

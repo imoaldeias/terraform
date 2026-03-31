@@ -1,5 +1,17 @@
 import { appData } from './content_data.js';
 
+function getGalleryImages(prop) {
+    const galleryImages = prop.gallery_ids && prop.gallery_ids.trim().length > 0
+        ? prop.gallery_ids
+            .replace(/\r/g, '')
+            .replace(/\n/g, ',')
+            .split(',')
+            .map(img => img.trim())
+            .filter(img => img.length > 5)
+        : [];
+    return galleryImages.length > 0 ? galleryImages : [prop.image];
+}
+
 export function renderPropertyDetail(id) {
     const prop = appData.properties.find(p => p.id === parseInt(id));
 
@@ -11,197 +23,326 @@ export function renderPropertyDetail(id) {
         `;
     }
 
-    const galleryImages = prop.gallery_ids && prop.gallery_ids.trim().length > 0
-        ? prop.gallery_ids
-            .replace(/\r/g, '')
-            .replace(/\n/g, ',')
-            .split(',')
-            .map(img => img.trim())
-            .filter(img => img.length > 5)
-        : [];
-
-    const images = galleryImages.length > 0 ? galleryImages : [prop.image];
-
+    const images = getGalleryImages(prop);
 
     return `
         <section style="background:#FAF7F2;">
 
-            <!-- ══ SCREEN 1: GALLERY ══ -->
-            <div style="position:relative; height:calc(100vh - 64px); display:flex; flex-direction:column;">
+            <!-- ══ HERO GALLERY — full viewport, image fills frame ══ -->
+            <div style="position:relative; height:calc(100vh - 64px); overflow:hidden; background:#FAF7F2;">
 
-                <!-- TITLE BLOCK -->
-                <div style="padding:2.5rem 2rem 1.5rem;">
-                    <div class="max-w-7xl mx-auto px-4 lg:px-6">
-                        <p style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:#9C7A3C; margin-bottom:0.5rem;">${prop.tipologia || ''}</p>
-                        <h1 style="font-size:1.75rem; margin-bottom:0;">${prop.location} — ${prop.title}</h1>
-                    </div>
+                <!-- MAIN IMAGE -->
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding:0 12.5%; background:#FAF7F2;">
+                <img
+                    id="main-gallery-image"
+                    src="${images[0]}"
+                    alt="${prop.title}"
+                    style="width:100%; height:100%; object-fit:cover; display:block;
+                           transition:opacity 0.5s ease; cursor:zoom-in;"
+                >
                 </div>
 
-                <!-- MAIN IMAGE + ARROWS -->
-                <div style="flex:1; position:relative; overflow:hidden; display:flex; align-items:center;">
-
-                <!-- ══ MAIN GALLERY WRAPPER (arrows outside image) ══ -->
-                ${images.length > 1 ? `
-                    <button id="btn-prev"
-                        style="position:absolute; left:1rem; z-index:10; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(250,247,242,0.4); background:rgba(20,20,18,0.35); color:#FAF7F2; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
-                        onmouseover="this.style.background='rgba(20,20,18,0.7)'"
-                        onmouseout="this.style.background='rgba(20,20,18,0.35)'">
-                        ‹
+                <!-- BACK LINK — top left -->
+                <div style="position:absolute; top:2rem; left:2rem; z-index:20;">
+                    <button data-route="properties"
+                        style="display:inline-flex; align-items:center; gap:0.5rem;
+                               background:none; border:none; cursor:pointer;
+                               font-family:'Instrument Sans',sans-serif;
+                               font-size:0.65rem; letter-spacing:0.22em;
+                               text-transform:uppercase; color:rgba(250,247,242,0.7);
+                               transition:color 0.2s; padding:0;"
+                        class="pd-back-btn">
+                        ← Portfólio
                     </button>
-                    ` : ''}
-
-                    <div id="gallery-container" style="width:100%; height:100%; background:#EDE8E0; cursor:zoom-in;">
-                        <img
-                            id="main-gallery-image"
-                            src="${images[0]}"
-                            alt="${prop.title}"
-                            style="width:100%; height:100%; object-fit:contain; display:block; transition:opacity 0.4s ease;"
-                        >
-                    </div>
-
-                    ${images.length > 1 ? `
-                    <button id="btn-next"
-                        style="position:absolute; right:1rem; z-index:10; width:2.5rem; height:2.5rem; border-radius:50%; border:1px solid rgba(250,247,242,0.4); background:rgba(20,20,18,0.35); color:#FAF7F2; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
-                        onmouseover="this.style.background='rgba(20,20,18,0.7)'"
-                        onmouseout="this.style.background='rgba(20,20,18,0.35)'">
-                        ›
-                    </button>
-                    ` : ''}
-
                 </div>
 
-                <!-- THUMBNAIL STRIP + COUNTER overlaid at bottom -->
+                <!-- IMAGE COUNTER — top right -->
                 ${images.length > 1 ? `
-                <div style="position:absolute; bottom:0; left:0; right:0; z-index:10;
-                            background:linear-gradient(to top, rgba(20,20,18,0.6) 0%, transparent 100%);
-                            padding:1.5rem 2rem 1rem;">
-                    <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; overflow-x:auto;">
-                        ${images.map((img, i) => `
-                            <button
-                                data-thumb="${i}"
-                                style="flex-shrink:0; width:64px; height:44px; border-radius:3px; overflow:hidden;
-                                       border:2px solid ${i === 0 ? '#FAF7F2' : 'rgba(250,247,242,0.3)'};
-                                       padding:0; cursor:pointer; transition:border-color 0.2s; background:none;">
-                                <img src="${img}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy">
-                            </button>
-                        `).join('')}
-                    </div>
-                    <p id="img-counter" style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.15em; color:rgba(250,247,242,0.7); text-align:center; margin-top:0.5rem;">
+                <div style="position:absolute; top:2rem; right:2rem; z-index:20;">
+                    <span id="img-counter"
+                        style="font-family:'Instrument Sans',sans-serif;
+                               font-size:0.62rem; letter-spacing:0.2em;
+                               color:rgba(250,247,242,0.6);">
                         1 / ${images.length}
-                    </p>
+                    </span>
+                </div>
+                ` : ''}
+
+                <!-- PREV / NEXT ARROWS -->
+                ${images.length > 1 ? `
+                <button id="btn-prev"
+                    style="position:absolute; left:12.5%; top:50%; transform:translateY(-50%);
+                           z-index:10; width:3.5rem; height:6rem;
+                           background:rgba(0,0,0,0.25); border:none;
+                           color:#FAF7F2; font-size:2rem;
+                           cursor:pointer; display:flex; align-items:center;
+                           justify-content:center; transition:all 0.2s;
+                           border-radius:2px;"
+                    class="pd-arrow-btn">
+                    ‹
+                </button>
+                <button id="btn-next"
+                    style="position:absolute; right:12.5%; top:50%; transform:translateY(-50%);
+                           z-index:10; width:3.5rem; height:6rem;
+                           background:rgba(0,0,0,0.25); border:none;
+                           color:#FAF7F2; font-size:2rem;
+                           cursor:pointer; display:flex; align-items:center;
+                           justify-content:center; transition:all 0.2s;
+                           border-radius:2px;"
+                    class="pd-arrow-btn">
+                    ›
+                </button>
+                ` : ''}
+
+                <!-- TITLE + PRICE OVERLAY — bottom left -->
+                <div style="position:absolute; bottom:0; left:12.5%; right:12.5%; z-index:10;
+                            padding:2rem 2.5rem 2rem;
+                            background:linear-gradient(to top, rgba(15,17,12,0.75) 0%, rgba(15,17,12,0) 100%);">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; flex-wrap:wrap;">
+
+                        <!-- LEFT: typology + title + location -->
+                        <div>
+                            <p style="font-family:'Instrument Sans',sans-serif;
+                                      font-size:0.6rem; letter-spacing:0.35em;
+                                      text-transform:uppercase; color:#9C7A3C;
+                                      margin-bottom:0.6rem;">
+                                ${prop.tipologia || ''}${prop.tipologia && prop.location ? ' · ' : ''}${prop.location || ''}
+                            </p>
+                            <h1 style="font-family:'Instrument Serif',serif;
+                                       font-size:clamp(1.6rem, 3.5vw, 2.8rem);
+                                       font-weight:400; letter-spacing:0.01em;
+                                       text-transform:none; color:#FAF7F2;
+                                       line-height:1.15; margin:0;">
+                                ${prop.title}
+                            </h1>
+                        </div>
+
+                        <!-- RIGHT: price -->
+                        ${prop.price ? `
+                        <div style="text-align:right; flex-shrink:0;">
+                            <p style="font-family:'Instrument Sans',sans-serif;
+                                      font-size:0.58rem; letter-spacing:0.25em;
+                                      text-transform:uppercase;
+                                      color:rgba(250,247,242,0.5); margin-bottom:0.3rem;">
+                                Valor
+                            </p>
+                            <p style="font-family:'Instrument Serif',serif;
+                                      font-size:clamp(1.2rem, 2vw, 1.6rem);
+                                      color:#FAF7F2; margin:0; letter-spacing:0.02em;">
+                                ${prop.price}
+                            </p>
+                        </div>
+                        ` : ''}
+
+                    </div>
+                </div>
+
+                <!-- THUMBNAIL STRIP — bottom, centered, above title area -->
+                ${images.length > 1 ? `
+                <div style="position:absolute; bottom:7.5rem; left:50%; transform:translateX(-50%);
+                            z-index:20; display:flex; gap:0.4rem; align-items:center;">
+                    ${images.map((img, i) => `
+                        <button
+                            data-thumb="${i}"
+                            style="flex-shrink:0; width:48px; height:32px;
+                                   border-radius:2px; overflow:hidden; padding:0;
+                                   cursor:pointer; transition:all 0.25s;
+                                   border:1.5px solid ${i === 0 ? '#FAF7F2' : 'rgba(250,247,242,0.25)'};
+                                   opacity:${i === 0 ? '1' : '0.6'};
+                                   background:none;">
+                            <img src="${img}"
+                                 style="width:100%; height:100%; object-fit:cover; display:block;"
+                                 loading="lazy">
+                        </button>
+                    `).join('')}
                 </div>
                 ` : ''}
 
             </div>
 
-                <!-- LIGHTBOX -->
-                <div id="lightbox"
-                    style="display:none; position:fixed; inset:0; z-index:1000;
-                           background:rgba(20,20,18,0.96);
-                           align-items:center; justify-content:center;">
+            <!-- ══ LIGHTBOX ══ -->
+            <div id="lightbox"
+                style="display:none; position:fixed; inset:0; z-index:1000;
+                       background:rgba(12,13,10,0.97);
+                       align-items:center; justify-content:center;">
 
-                    <button id="lightbox-close"
-                        style="position:absolute; top:1.25rem; right:1.5rem; background:none; border:none; color:#FAF7F2; font-family:'Instrument Sans',sans-serif; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; opacity:0.7;">
-                        Fechar ✕
-                    </button>
+                <button id="lightbox-close"
+                    style="position:absolute; top:1.5rem; right:2rem;
+                           background:none; border:none; color:rgba(250,247,242,0.5);
+                           font-family:'Instrument Sans',sans-serif;
+                           font-size:0.65rem; letter-spacing:0.25em;
+                           text-transform:uppercase; cursor:pointer;
+                           transition:color 0.2s;"
+                    class="pd-lightbox-close-btn">
+                    Fechar ✕
+                </button>
 
-                    ${images.length > 1 ? `
-                    <button id="lightbox-prev"
-                        style="position:absolute; left:1.5rem; top:50%; transform:translateY(-50%); background:rgba(250,247,242,0.1); border:1px solid rgba(250,247,242,0.2); color:#FAF7F2; font-size:1.5rem; cursor:pointer; width:3rem; height:3rem; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
-                        ‹
-                    </button>
-                    <button id="lightbox-next"
-                        style="position:absolute; right:1.5rem; top:50%; transform:translateY(-50%); background:rgba(250,247,242,0.1); border:1px solid rgba(250,247,242,0.2); color:#FAF7F2; font-size:1.5rem; cursor:pointer; width:3rem; height:3rem; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
-                        ›
-                    </button>
-                    ` : ''}
+                ${images.length > 1 ? `
+                <button id="lightbox-prev"
+                    style="position:absolute; left:1.5rem; top:50%; transform:translateY(-50%);
+                           background:none; border:none; color:rgba(250,247,242,0.4);
+                           font-size:2rem; cursor:pointer; padding:1rem;
+                           transition:color 0.2s;"
+                    class="pd-lightbox-arrow-btn">
+                    ‹
+                </button>
+                <button id="lightbox-next"
+                    style="position:absolute; right:1.5rem; top:50%; transform:translateY(-50%);
+                           background:none; border:none; color:rgba(250,247,242,0.4);
+                           font-size:2rem; cursor:pointer; padding:1rem;
+                           transition:color 0.2s;"
+                    class="pd-lightbox-arrow-btn">
+                    ›
+                </button>
+                ` : ''}
 
-                    <div style="width:calc(100% - 10rem); height:calc(100% - 6rem); display:flex; align-items:center; justify-content:center;">
-                        <img id="lightbox-image"
-                            src="${images[0]}"
-                            style="max-width:100%; max-height:100%; object-fit:contain; border-radius:4px;">
-                    </div>
-
+                <div style="width:calc(100% - 8rem); height:calc(100% - 5rem);
+                            display:flex; align-items:center; justify-content:center;">
+                    <img id="lightbox-image"
+                        src="${images[0]}"
+                        style="max-width:100%; max-height:100%;
+                               object-fit:contain;">
                 </div>
 
-                <!-- ══ SCREEN 2: DESCRIPTION + SIDEBAR ══ -->
-            <div style="min-height:100vh; padding:4rem 0;">
+            </div>
+
+            <!-- ══ CONTENT: DESCRIPTION + SIDEBAR ══ -->
+            <div style="padding:5rem 0 6rem;">
             <div class="max-w-7xl mx-auto px-4 lg:px-6">
 
-                <div class="grid grid-cols-1 lg:grid-cols-3" style="gap:4rem; align-items:start;">
+                <div class="grid grid-cols-1 lg:grid-cols-3" style="gap:5rem; align-items:start;">
 
-                    <!-- LEFT: Description + Video -->
-                    <div class="lg:col-span-2" style="display:flex; flex-direction:column; gap:2.5rem;">
+                    <!-- LEFT: Description -->
+                    <div class="lg:col-span-2">
 
-                        <div>
-                            <p style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:#9C7A3C; margin-bottom:1.25rem;">Descrição</p>
-                            <div style="font-family:'Instrument Sans',sans-serif; font-size:0.95rem; line-height:1.9; color:#2F3526; white-space:pre-line;">${prop.description || 'Informação sob consulta.'}</div>
+                        <!-- SECTION DIVIDER -->
+                        <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:3rem;">
+                            <span style="font-family:'Instrument Sans',sans-serif;
+                                         font-size:0.6rem; letter-spacing:0.3em;
+                                         text-transform:uppercase; color:#9C7A3C;">
+                                Descrição
+                            </span>
+                            <div style="flex:1; height:1px; background:rgba(62,74,63,0.12);"></div>
                         </div>
 
-                        
+                        <!-- DESCRIPTION TEXT -->
+                        <div style="font-family:'Instrument Sans',sans-serif;
+                                    font-size:0.95rem; line-height:2;
+                                    color:#3D4532; white-space:pre-line;
+                                    letter-spacing:0.02em;">
+                            ${prop.description || 'Informação sob consulta.'}
+                        </div>
+
                     </div>
 
                     <!-- RIGHT: Sticky Sidebar -->
                     <div class="lg:col-span-1">
-                        <div style="position:sticky; top:100px; display:flex; flex-direction:column; gap:0; border:1px solid rgba(62,74,63,0.15); border-radius:4px; overflow:hidden;">
+                        <div style="position:sticky; top:100px;">
 
-                            <div style="background:#2F3526; padding:1.5rem;">
-                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(250,247,242,0.6); margin-bottom:0.5rem;">Referência</p>
-                                <p style="font-family:'Instrument Serif',serif; font-size:1.4rem; color:#FAF7F2; line-height:1.2; margin:0;">${prop.title}</p>
-                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.8rem; color:rgba(250,247,242,0.6); margin-top:0.35rem;">${prop.location}</p>
-                            </div>
+                            <!-- GOLD ACCENT LINE -->
+                            <div style="width:2rem; height:1px; background:#9C7A3C; margin-bottom:2rem;"></div>
 
-                            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem; background:white;">
+                            <!-- SPECS LIST -->
+                            <div style="display:flex; flex-direction:column; gap:0;
+                                        border-top:1px solid rgba(62,74,63,0.1);
+                                        margin-bottom:2.5rem;">
 
-                                <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.75rem; border-bottom:1px solid rgba(62,74,63,0.08);">
-                                    <span class="label">Preço</span>
-                                    <span style="font-family:'Instrument Serif',serif; font-size:1rem; color:#2F3526;">${prop.price}</span>
+                                <div style="display:flex; justify-content:space-between;
+                                            align-items:baseline; padding:0.9rem 0;
+                                            border-bottom:1px solid rgba(62,74,63,0.07);">
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.62rem; letter-spacing:0.18em;
+                                                 text-transform:uppercase; color:#9C7A3C;">
+                                        Tipologia
+                                    </span>
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.82rem; color:#2F3526;">
+                                        ${prop.tipologia || '—'}
+                                    </span>
+                                </div>
+
+                                <div style="display:flex; justify-content:space-between;
+                                            align-items:baseline; padding:0.9rem 0;
+                                            border-bottom:1px solid rgba(62,74,63,0.07);">
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.62rem; letter-spacing:0.18em;
+                                                 text-transform:uppercase; color:#9C7A3C;">
+                                        Localização
+                                    </span>
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.82rem; color:#2F3526;">
+                                        ${prop.location}
+                                    </span>
                                 </div>
 
                                 ${prop.areaTerreno > 0 ? `
-                                <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.75rem; border-bottom:1px solid rgba(62,74,63,0.08);">
-                                    <span class="label">Terreno</span>
-                                    <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">${prop.areaTerreno} ha</span>
+                                <div style="display:flex; justify-content:space-between;
+                                            align-items:baseline; padding:0.9rem 0;
+                                            border-bottom:1px solid rgba(62,74,63,0.07);">
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.62rem; letter-spacing:0.18em;
+                                                 text-transform:uppercase; color:#9C7A3C;">
+                                        Terreno
+                                    </span>
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.82rem; color:#2F3526;">
+                                        ${prop.areaTerreno} ha
+                                    </span>
                                 </div>
                                 ` : ''}
 
                                 ${prop.areaConstruida > 0 ? `
-                                <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.75rem; border-bottom:1px solid rgba(62,74,63,0.08);">
-                                    <span class="label">Construída</span>
-                                    <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">${prop.areaConstruida} m²</span>
+                                <div style="display:flex; justify-content:space-between;
+                                            align-items:baseline; padding:0.9rem 0;
+                                            border-bottom:1px solid rgba(62,74,63,0.07);">
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.62rem; letter-spacing:0.18em;
+                                                 text-transform:uppercase; color:#9C7A3C;">
+                                        Construída
+                                    </span>
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.82rem; color:#2F3526;">
+                                        ${prop.areaConstruida} m²
+                                    </span>
                                 </div>
                                 ` : ''}
 
                                 ${prop.quartos > 0 ? `
-                                <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.75rem; border-bottom:1px solid rgba(62,74,63,0.08);">
-                                    <span class="label">Quartos</span>
-                                    <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">${prop.quartos}</span>
+                                <div style="display:flex; justify-content:space-between;
+                                            align-items:baseline; padding:0.9rem 0;
+                                            border-bottom:1px solid rgba(62,74,63,0.07);">
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.62rem; letter-spacing:0.18em;
+                                                 text-transform:uppercase; color:#9C7A3C;">
+                                        Quartos
+                                    </span>
+                                    <span style="font-family:'Instrument Sans',sans-serif;
+                                                 font-size:0.82rem; color:#2F3526;">
+                                        ${prop.quartos}
+                                    </span>
                                 </div>
                                 ` : ''}
 
-                                <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.75rem; border-bottom:1px solid rgba(62,74,63,0.08);">
-                                    <span class="label">Tipologia</span>
-                                    <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">${prop.tipologia || '—'}</span>
-                                </div>
-
-                                <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                    <span class="label">Localização</span>
-                                    <span style="font-family:'Instrument Sans',sans-serif; font-size:0.9rem; color:#2F3526;">${prop.location}</span>
-                                </div>
-
                             </div>
 
-                            <div style="padding:1.25rem; background:#FAF7F2; border-top:1px solid rgba(62,74,63,0.1);">
-                                <button
-                                    data-route="sell"
-                                    style="width:100%; background:#2F3526; color:#FAF7F2; border:none; padding:1rem; font-family:'Instrument Sans',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; cursor:pointer; transition:background 0.3s;"
-                                    onmouseover="this.style.background='#9C7A3C'"
-                                    onmouseout="this.style.background='#2F3526'"
-                                >
-                                    Solicitar Informações
-                                </button>
-                                <p style="font-family:'Instrument Sans',sans-serif; font-size:0.7rem; color:#9C7A3C; text-align:center; margin-top:0.75rem; letter-spacing:0.05em;">Resposta em menos de 24 horas</p>
-                            </div>
+                            <!-- CTA BUTTON -->
+                            <button
+                                data-route="sell"
+                                style="width:100%; background:#2F3526; color:#FAF7F2;
+                                       border:none; padding:1.1rem 1rem;
+                                       font-family:'Instrument Sans',sans-serif;
+                                       font-size:0.65rem; letter-spacing:0.28em;
+                                       text-transform:uppercase; cursor:pointer;
+                                       transition:background 0.35s ease;">
+                                Solicitar Informações
+                            </button>
+
+                            <p style="font-family:'Instrument Sans',sans-serif;
+                                      font-size:0.65rem; color:#9C7A3C;
+                                      text-align:center; margin-top:1rem;
+                                      letter-spacing:0.08em;">
+                                Resposta em menos de 24 horas
+                            </p>
 
                         </div>
                     </div>
@@ -219,23 +360,14 @@ export function initPropertyDetail(id) {
     const prop = appData.properties.find(p => p.id === parseInt(id));
     if (!prop) return;
 
-    const galleryImages = prop.gallery_ids && prop.gallery_ids.trim().length > 0
-        ? prop.gallery_ids
-            .replace(/\r/g, '')
-            .replace(/\n/g, ',')
-            .split(',')
-            .map(img => img.trim())
-            .filter(img => img.length > 5)
-        : [];
-
-    const images = galleryImages.length > 0 ? galleryImages : [prop.image];
+    const images = getGalleryImages(prop);
     let currentIndex = 0;
 
     function updateImage(index) {
         currentIndex = (index + images.length) % images.length;
 
-        const main    = document.getElementById('main-gallery-image');
-        const lightbox = document.getElementById('lightbox-image');
+        const main     = document.getElementById('main-gallery-image');
+        const lbImg    = document.getElementById('lightbox-image');
         const counter  = document.getElementById('img-counter');
 
         if (main) {
@@ -243,21 +375,22 @@ export function initPropertyDetail(id) {
             setTimeout(() => {
                 main.src = images[currentIndex];
                 main.style.opacity = '1';
-            }, 200);
+            }, 250);
         }
-        if (lightbox) lightbox.src = images[currentIndex];
-        if (counter)  counter.innerText = `${currentIndex + 1} / ${images.length}`;
+        if (lbImg)   lbImg.src = images[currentIndex];
+        if (counter) counter.innerText = `${currentIndex + 1} / ${images.length}`;
 
         document.querySelectorAll('[data-thumb]').forEach(btn => {
-            btn.style.borderColor = parseInt(btn.dataset.thumb) === currentIndex
-                ? '#FAF7F2' : 'rgba(250,247,242,0.3)';
+            const active = parseInt(btn.dataset.thumb) === currentIndex;
+            btn.style.borderColor = active ? '#FAF7F2' : 'rgba(250,247,242,0.25)';
+            btn.style.opacity     = active ? '1' : '0.6';
         });
     }
 
     // Main image → open lightbox
     const mainImg = document.getElementById('main-gallery-image');
     if (mainImg) mainImg.addEventListener('click', () => {
-        const lb = document.getElementById('lightbox');
+        const lb    = document.getElementById('lightbox');
         const lbImg = document.getElementById('lightbox-image');
         if (lb && lbImg) {
             lbImg.src = images[currentIndex];
@@ -266,8 +399,7 @@ export function initPropertyDetail(id) {
     });
 
     // Lightbox close
-    const closeBtn = document.getElementById('lightbox-close');
-    if (closeBtn) closeBtn.addEventListener('click', () => {
+    document.getElementById('lightbox-close')?.addEventListener('click', () => {
         document.getElementById('lightbox').style.display = 'none';
     });
 
@@ -278,16 +410,12 @@ export function initPropertyDetail(id) {
     });
 
     // Main gallery arrows
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-    if (btnPrev) btnPrev.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex - 1); });
-    if (btnNext) btnNext.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex + 1); });
+    document.getElementById('btn-prev')?.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex - 1); });
+    document.getElementById('btn-next')?.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex + 1); });
 
     // Lightbox arrows
-    const lbPrev = document.getElementById('lightbox-prev');
-    const lbNext = document.getElementById('lightbox-next');
-    if (lbPrev) lbPrev.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex - 1); });
-    if (lbNext) lbNext.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex + 1); });
+    document.getElementById('lightbox-prev')?.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex - 1); });
+    document.getElementById('lightbox-next')?.addEventListener('click', e => { e.stopPropagation(); updateImage(currentIndex + 1); });
 
     // Thumbnail clicks
     document.querySelectorAll('[data-thumb]').forEach(btn => {
@@ -295,10 +423,16 @@ export function initPropertyDetail(id) {
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', e => {
+    const keyHandler = e => {
         const lb = document.getElementById('lightbox');
         if (e.key === 'ArrowLeft')  updateImage(currentIndex - 1);
         if (e.key === 'ArrowRight') updateImage(currentIndex + 1);
         if (e.key === 'Escape' && lb) lb.style.display = 'none';
-    });
+    };
+    document.addEventListener('keydown', keyHandler);
+
+    // Clean up when the user navigates away
+    window.addEventListener('hashchange', () => {
+        document.removeEventListener('keydown', keyHandler);
+    }, { once: true });
 }

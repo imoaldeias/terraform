@@ -64,9 +64,12 @@ function normalizeProperty(p) {
 
         youtube_id: (p.youtube_id || '').trim(),
 
-        image: p.image_capa && p.image_capa.trim() !== ''
-            ? p.image_capa.trim()
-            : 'https://placehold.co/600x800?text=TerraPrimus'
+        image: (() => {
+            const firstGallery = (p.gallery_ids || '').trim().split(',')[0].trim();
+            return firstGallery.length > 5
+                ? firstGallery
+                : 'https://placehold.co/600x800?text=TerraPrimus';
+        })()
     };
 }
 
